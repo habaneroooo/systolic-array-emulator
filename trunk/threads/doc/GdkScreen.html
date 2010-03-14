@@ -1,0 +1,1509 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0058)http://library.gnome.org/devel/gdk/unstable/GdkScreen.html -->
+<HTML xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml"><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META content="text/html; charset=utf-8"><LINK rel="stylesheet" type="text/css" href="./GdkScreen_files/lgo.css"><LINK media="print" rel="stylesheet" type="text/css" href="./GdkScreen_files/print.css"><LINK rel="icon" type="image/png" href="http://library.gnome.org/skin/gnome-16.png"><LINK rel="SHORTCUT ICON" type="image/png" href="http://library.gnome.org/skin/gnome-16.png"><LINK rel="search" type="application/opensearchdescription+xml" href="http://library.gnome.org/gnome-library-search.xml" title="GNOME Library Search"><TITLE>GdkScreen</TITLE><LINK href="http://library.gnome.org/devel/gdk/unstable/index.html" rel="home" title="GDK Reference Manual"><LINK href="http://library.gnome.org/devel/gdk/unstable/reference.html" rel="up" title="API Reference"><LINK href="http://library.gnome.org/devel/gdk/unstable/GdkDisplayManager.html" rel="prev" title="GdkDisplayManager"><LINK href="http://library.gnome.org/devel/gdk/unstable/gdk-Points-Rectangles-and-Regions.html" rel="next" title="Points, Rectangles and Regions"><LINK href="http://library.gnome.org/devel/gdk/unstable/reference.html" rel="reference" title="API Reference"><LINK href="http://library.gnome.org/devel/gdk/unstable/api-index-full.html" rel="index" title="Index of all symbols"><LINK href="http://library.gnome.org/devel/gdk/unstable/api-index-deprecated.html" rel="index" title="Index of deprecated symbols"><LINK href="http://library.gnome.org/devel/gdk/unstable/api-index-2-2.html" rel="index" title="Index of new symbols in 2.2"><LINK href="http://library.gnome.org/devel/gdk/unstable/api-index-2-4.html" rel="index" title="Index of new symbols in 2.4"><LINK href="http://library.gnome.org/devel/gdk/unstable/api-index-2-6.html" rel="index" title="Index of new symbols in 2.6"><LINK href="http://library.gnome.org/devel/gdk/unstable/api-index-2-8.html" rel="index" title="Index of new symbols in 2.8"><LINK href="http://library.gnome.org/devel/gdk/unstable/api-index-2-10.html" rel="index" title="Index of new symbols in 2.10"><LINK href="http://library.gnome.org/devel/gdk/unstable/api-index-2-12.html" rel="index" title="Index of new symbols in 2.12"><LINK href="http://library.gnome.org/devel/gdk/unstable/api-index-2-14.html" rel="index" title="Index of new symbols in 2.14"><LINK href="http://library.gnome.org/devel/gdk/unstable/api-index-2-16.html" rel="index" title="Index of new symbols in 2.16"><LINK href="http://library.gnome.org/devel/gdk/unstable/api-index-2-18.html" rel="index" title="Index of new symbols in 2.18"><LINK href="http://library.gnome.org/devel/gdk/unstable/annotation-glossary.html" rel="glossary" title="Annotation Glossary"></HEAD><BODY><DIV id="page"><UL id="general"><LI id="siteaction-gnome_home" class="home"><A href="http://www.gnome.org/">Home</A></LI><LI id="siteaction-gnome_news"><A href="http://news.gnome.org/">News</A></LI><LI id="siteaction-gnome_projects"><A href="http://www.gnome.org/projects/">Projects</A></LI><LI id="siteaction-gnome_art"><A href="http://art.gnome.org/">Art</A></LI><LI id="siteaction-gnome_support"><A href="http://www.gnome.org/support/">Support</A></LI><LI id="siteaction-gnome_development"><A href="http://developer.gnome.org/">Development</A></LI><LI id="siteaction-gnome_community"><A href="http://www.gnome.org/community/">Community</A></LI></UL><DIV id="header"><DIV id="header-wrap"><H1>GNOME Documentation Library</H1><DIV id="control"><DIV id="search"><FORM method="get" action="http://www.google.com/custom"><INPUT type="hidden" name="domains" value="library.gnome.org"><INPUT type="hidden" name="sitesearch" value="library.gnome.org"><INPUT type="text" name="q" maxlength="255" size="15" class="searchTerms"><INPUT type="submit" class="searchButton" value="Search"></FORM></DIV></DIV><DIV id="tabs"><UL id="portal-globalnav"><LI id="portaltab-root"><A href="http://library.gnome.org/"><SPAN>Home</SPAN></A></LI><LI id="portaltab-users"><A href="http://library.gnome.org/users/"><SPAN>Users</SPAN></A></LI><LI id="portaltab-sysadmins"><A href="http://library.gnome.org/admin/"><SPAN>Administrators</SPAN></A></LI><LI id="portaltab-developers" class="selected"><A href="http://library.gnome.org/devel/"><SPAN>Developers</SPAN></A></LI><LI id="portaltab-about"><A href="http://library.gnome.org/about/about"><SPAN>About</SPAN></A></LI></UL></DIV></DIV></DIV></DIV><DIV class="body gtk-doc"><TABLE id="top" width="100%" cellpadding="2" summary="Navigation header" cellspacing="2" class="navigation">
+<TBODY><TR valign="middle">
+<TD><A accesskey="p" href="http://library.gnome.org/devel/gdk/unstable/GdkDisplayManager.html"><IMG width="24" alt="Prev" src="./GdkScreen_files/left.png" border="0" height="24"></A></TD>
+<TD><A accesskey="u" href="http://library.gnome.org/devel/gdk/unstable/reference.html"><IMG width="24" alt="Up" src="./GdkScreen_files/up.png" border="0" height="24"></A></TD>
+<TD><A accesskey="h" href="http://library.gnome.org/devel/gdk/unstable/index.html"><IMG width="24" alt="Home" src="./GdkScreen_files/home.png" border="0" height="24"></A></TD>
+<TH width="100%" align="center">GDK Reference Manual</TH>
+<TD><A accesskey="n" href="http://library.gnome.org/devel/gdk/unstable/gdk-Points-Rectangles-and-Regions.html"><IMG width="24" alt="Next" src="./GdkScreen_files/right.png" border="0" height="24"></A></TD>
+</TR>
+<TR><TD colspan="5" class="shortcuts">
+<A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#GdkScreen.synopsis" class="shortcut">Top</A>
+                  &nbsp;|&nbsp;
+                  <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#GdkScreen.description" class="shortcut">Description</A>
+                  &nbsp;|&nbsp;
+                  <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#GdkScreen.object-hierarchy" class="shortcut">Object Hierarchy</A>
+                  &nbsp;|&nbsp;
+                  <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#GdkScreen.properties" class="shortcut">Properties</A>
+                  &nbsp;|&nbsp;
+                  <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#GdkScreen.signals" class="shortcut">Signals</A>
+</TD></TR>
+</TBODY></TABLE><DIV class="refentry" title="GdkScreen">
+<A name="GdkScreen"></A><DIV class="titlepage"></DIV>
+<DIV class="refnamediv"><TABLE width="100%"><TBODY><TR>
+<TD valign="top">
+<H2><SPAN class="refentrytitle"><A name="GdkScreen.top_of_page"></A>GdkScreen</SPAN></H2>
+<P>GdkScreen — Object representing a physical screen</P>
+</TD>
+<TD align="right" valign="top">
+</TR></TBODY></TABLE></DIV>
+<DIV class="refsynopsisdiv" title="Synopsis">
+<A name="GdkScreen.synopsis"></A><H2>Synopsis</H2>
+<PRE class="synopsis">#include &lt;gdk/gdk.h&gt;
+
+                    <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#GdkScreen-struct" class="link" title="GdkScreen">GdkScreen</A>;
+<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *         <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-default" class="link" title="gdk_screen_get_default ()">gdk_screen_get_default</A>              (void);
+<A href="http://library.gnome.org/devel/gdk/unstable/gdk-Colormaps-and-Colors.html#GdkColormap" class="link" title="GdkColormap"><SPAN class="returnvalue">GdkColormap</SPAN></A> *       <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-default-colormap" class="link" title="gdk_screen_get_default_colormap ()">gdk_screen_get_default_colormap</A>     (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<SPAN class="returnvalue">void</SPAN>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-set-default-colormap" class="link" title="gdk_screen_set_default_colormap ()">gdk_screen_set_default_colormap</A>     (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Colormaps-and-Colors.html#GdkColormap" class="link" title="GdkColormap"><SPAN class="returnvalue">GdkColormap</SPAN></A> *colormap);
+<A href="http://library.gnome.org/devel/gdk/unstable/gdk-Colormaps-and-Colors.html#GdkColormap" class="link" title="GdkColormap"><SPAN class="returnvalue">GdkColormap</SPAN></A>*        <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-system-colormap" class="link" title="gdk_screen_get_system_colormap ()">gdk_screen_get_system_colormap</A>      (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/gdk/unstable/gdk-Visuals.html#GdkVisual" class="link" title="GdkVisual"><SPAN class="returnvalue">GdkVisual</SPAN></A>*          <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-system-visual" class="link" title="gdk_screen_get_system_visual ()">gdk_screen_get_system_visual</A>        (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/gdk/unstable/gdk-Colormaps-and-Colors.html#GdkColormap" class="link" title="GdkColormap"><SPAN class="returnvalue">GdkColormap</SPAN></A> *       <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-rgb-colormap" class="link" title="gdk_screen_get_rgb_colormap ()">gdk_screen_get_rgb_colormap</A>         (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/gdk/unstable/gdk-Visuals.html#GdkVisual" class="link" title="GdkVisual"><SPAN class="returnvalue">GdkVisual</SPAN></A> *         <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-rgb-visual" class="link" title="gdk_screen_get_rgb_visual ()">gdk_screen_get_rgb_visual</A>           (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/gdk/unstable/gdk-Colormaps-and-Colors.html#GdkColormap" class="link" title="GdkColormap"><SPAN class="returnvalue">GdkColormap</SPAN></A> *       <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-rgba-colormap" class="link" title="gdk_screen_get_rgba_colormap ()">gdk_screen_get_rgba_colormap</A>        (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/gdk/unstable/gdk-Visuals.html#GdkVisual" class="link" title="GdkVisual"><SPAN class="returnvalue">GdkVisual</SPAN></A> *         <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-rgba-visual" class="link" title="gdk_screen_get_rgba_visual ()">gdk_screen_get_rgba_visual</A>          (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><SPAN class="returnvalue">gboolean</SPAN></A>            <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-is-composited" class="link" title="gdk_screen_is_composited ()">gdk_screen_is_composited</A>            (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/gdk/unstable/gdk-Windows.html#GdkWindow" class="link"><SPAN class="returnvalue">GdkWindow</SPAN></A> *         <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-root-window" class="link" title="gdk_screen_get_root_window ()">gdk_screen_get_root_window</A>          (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/gdk/unstable/GdkDisplay.html" class="link" title="GdkDisplay"><SPAN class="returnvalue">GdkDisplay</SPAN></A> *        <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-display" class="link" title="gdk_screen_get_display ()">gdk_screen_get_display</A>              (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-number" class="link" title="gdk_screen_get_number ()">gdk_screen_get_number</A>               (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-width" class="link" title="gdk_screen_get_width ()">gdk_screen_get_width</A>                (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-height" class="link" title="gdk_screen_get_height ()">gdk_screen_get_height</A>               (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-width-mm" class="link" title="gdk_screen_get_width_mm ()">gdk_screen_get_width_mm</A>             (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-height-mm" class="link" title="gdk_screen_get_height_mm ()">gdk_screen_get_height_mm</A>            (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><SPAN class="returnvalue">GList</SPAN></A> *             <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-list-visuals" class="link" title="gdk_screen_list_visuals ()">gdk_screen_list_visuals</A>             (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><SPAN class="returnvalue">GList</SPAN></A> *             <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-toplevel-windows" class="link" title="gdk_screen_get_toplevel_windows ()">gdk_screen_get_toplevel_windows</A>     (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> *             <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-make-display-name" class="link" title="gdk_screen_make_display_name ()">gdk_screen_make_display_name</A>        (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-n-monitors" class="link" title="gdk_screen_get_n_monitors ()">gdk_screen_get_n_monitors</A>           (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-primary-monitor" class="link" title="gdk_screen_get_primary_monitor ()">gdk_screen_get_primary_monitor</A>      (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<SPAN class="returnvalue">void</SPAN>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-monitor-geometry" class="link" title="gdk_screen_get_monitor_geometry ()">gdk_screen_get_monitor_geometry</A>     (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> monitor_num,
+                                                         <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Points-Rectangles-and-Regions.html#GdkRectangle" class="link" title="GdkRectangle"><SPAN class="returnvalue">GdkRectangle</SPAN></A> *dest);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-monitor-at-point" class="link" title="gdk_screen_get_monitor_at_point ()">gdk_screen_get_monitor_at_point</A>     (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> x,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> y);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-monitor-at-window" class="link" title="gdk_screen_get_monitor_at_window ()">gdk_screen_get_monitor_at_window</A>    (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Windows.html#GdkWindow" class="link"><SPAN class="returnvalue">GdkWindow</SPAN></A> *window);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-monitor-height-mm" class="link" title="gdk_screen_get_monitor_height_mm ()">gdk_screen_get_monitor_height_mm</A>    (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> monitor_num);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-monitor-width-mm" class="link" title="gdk_screen_get_monitor_width_mm ()">gdk_screen_get_monitor_width_mm</A>     (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> monitor_num);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> *             <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-monitor-plug-name" class="link" title="gdk_screen_get_monitor_plug_name ()">gdk_screen_get_monitor_plug_name</A>    (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> monitor_num);
+<SPAN class="returnvalue">void</SPAN>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-broadcast-client-message" class="link" title="gdk_screen_broadcast_client_message ()">gdk_screen_broadcast_client_message</A> (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Event-Structures.html#GdkEvent" class="link" title="union GdkEvent"><SPAN class="returnvalue">GdkEvent</SPAN></A> *event);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><SPAN class="returnvalue">gboolean</SPAN></A>            <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-setting" class="link" title="gdk_screen_get_setting ()">gdk_screen_get_setting</A>              (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         const <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> *name,
+                                                         <A href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><SPAN class="returnvalue">GValue</SPAN></A> *value);
+const <A href="http://library.gnome.org/usr/share/gtk-doc/html/cairo/cairo-font-options.html#cairo-font-options-t"><SPAN class="returnvalue">cairo_font_options_t</SPAN></A> * <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-font-options" class="link" title="gdk_screen_get_font_options ()">gdk_screen_get_font_options</A>
+                                                        (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<SPAN class="returnvalue">void</SPAN>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-set-font-options" class="link" title="gdk_screen_set_font_options ()">gdk_screen_set_font_options</A>         (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         const <A href="http://library.gnome.org/usr/share/gtk-doc/html/cairo/cairo-font-options.html#cairo-font-options-t"><SPAN class="returnvalue">cairo_font_options_t</SPAN></A> *options);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><SPAN class="returnvalue">gdouble</SPAN></A>             <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-resolution" class="link" title="gdk_screen_get_resolution ()">gdk_screen_get_resolution</A>           (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<SPAN class="returnvalue">void</SPAN>                <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-set-resolution" class="link" title="gdk_screen_set_resolution ()">gdk_screen_set_resolution</A>           (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><SPAN class="returnvalue">gdouble</SPAN></A> dpi);
+<A href="http://library.gnome.org/devel/gdk/unstable/gdk-Windows.html#GdkWindow" class="link"><SPAN class="returnvalue">GdkWindow</SPAN></A> *         <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-active-window" class="link" title="gdk_screen_get_active_window ()">gdk_screen_get_active_window</A>        (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><SPAN class="returnvalue">GList</SPAN></A> *             <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-window-stack" class="link" title="gdk_screen_get_window_stack ()">gdk_screen_get_window_stack</A>         (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);
+
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><SPAN class="returnvalue">gboolean</SPAN></A>            <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-spawn-on-screen" class="link" title="gdk_spawn_on_screen ()">gdk_spawn_on_screen</A>                 (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         const <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> *working_directory,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> **argv,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> **envp,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Spawning-Processes.html#GSpawnFlags"><SPAN class="returnvalue">GSpawnFlags</SPAN></A> flags,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Spawning-Processes.html#GSpawnChildSetupFunc"><SPAN class="returnvalue">GSpawnChildSetupFunc</SPAN></A> child_setup,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><SPAN class="returnvalue">gpointer</SPAN></A> user_data,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> *child_pid,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><SPAN class="returnvalue">GError</SPAN></A> **error);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><SPAN class="returnvalue">gboolean</SPAN></A>            <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-spawn-on-screen-with-pipes" class="link" title="gdk_spawn_on_screen_with_pipes ()">gdk_spawn_on_screen_with_pipes</A>      (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         const <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> *working_directory,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> **argv,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> **envp,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Spawning-Processes.html#GSpawnFlags"><SPAN class="returnvalue">GSpawnFlags</SPAN></A> flags,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Spawning-Processes.html#GSpawnChildSetupFunc"><SPAN class="returnvalue">GSpawnChildSetupFunc</SPAN></A> child_setup,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><SPAN class="returnvalue">gpointer</SPAN></A> user_data,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> *child_pid,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> *standard_input,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> *standard_output,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> *standard_error,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><SPAN class="returnvalue">GError</SPAN></A> **error);
+<A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><SPAN class="returnvalue">gboolean</SPAN></A>            <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-spawn-command-line-on-screen" class="link" title="gdk_spawn_command_line_on_screen ()">gdk_spawn_command_line_on_screen</A>    (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         const <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> *command_line,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><SPAN class="returnvalue">GError</SPAN></A> **error);
+</PRE>
+</DIV>
+<DIV class="refsect1" title="Object Hierarchy">
+<A name="GdkScreen.object-hierarchy"></A><H2>Object Hierarchy</H2>
+<PRE class="synopsis">  <A href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</A>
+   +----GdkScreen
+</PRE>
+</DIV>
+<DIV class="refsect1" title="Properties">
+<A name="GdkScreen.properties"></A><H2>Properties</H2>
+<PRE class="synopsis">  "<A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#GdkScreen--font-options" class="link" title="The &quot;font-options&quot; property">font-options</A>"             <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><SPAN class="type">gpointer</SPAN></A>              : Read / Write
+  "<A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#GdkScreen--resolution" class="link" title="The &quot;resolution&quot; property">resolution</A>"               <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><SPAN class="type">gdouble</SPAN></A>               : Read / Write
+</PRE>
+</DIV>
+<DIV class="refsect1" title="Signals">
+<A name="GdkScreen.signals"></A><H2>Signals</H2>
+<PRE class="synopsis">  "<A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#GdkScreen-composited-changed" class="link" title="The &quot;composited-changed&quot; signal">composited-changed</A>"                             : Run Last
+  "<A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#GdkScreen-monitors-changed" class="link" title="The &quot;monitors-changed&quot; signal">monitors-changed</A>"                               : Run Last
+  "<A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#GdkScreen-size-changed" class="link" title="The &quot;size-changed&quot; signal">size-changed</A>"                                   : Run Last
+</PRE>
+</DIV>
+<DIV class="refsect1" title="Description">
+<A name="GdkScreen.description"></A><H2>Description</H2>
+<P>
+  <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A> objects are the GDK representation of a physical screen. It is used
+  throughout GDK and GTK+ to specify which screen the top level windows
+  are to be displayed on.
+  It is also used to query the screen specification and default settings such as
+  the default colormap (<A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-default-colormap" class="link" title="gdk_screen_get_default_colormap ()"><CODE class="function">gdk_screen_get_default_colormap()</CODE></A>),
+  the screen width (<A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-width" class="link" title="gdk_screen_get_width ()"><CODE class="function">gdk_screen_get_width()</CODE></A>), etc.
+</P>
+<P>Note that a screen may consist of multiple monitors which are merged to
+form a large screen area.
+</P>
+</DIV>
+<DIV class="refsect1" title="Details">
+<A name="GdkScreen.details"></A><H2>Details</H2>
+<DIV class="refsect2" title="GdkScreen">
+<A name="GdkScreen-struct"></A><H3>GdkScreen</H3>
+<PRE class="programlisting">typedef struct _GdkScreen GdkScreen;</PRE>
+<P>
+This is a currently just a placeholder typedef for the first argument of
+the <EM class="parameter"><CODE>window_at_pointer</CODE></EM> function in <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Windows.html#GdkPointerHooks" class="link" title="GdkPointerHooks"><SPAN class="type">GdkPointerHooks</SPAN></A>. It will be used
+when GDK gets multihead support.
+</P>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_default ()">
+<A name="gdk-screen-get-default"></A><H3>gdk_screen_get_default ()</H3>
+<PRE class="programlisting"><A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *         gdk_screen_get_default              (void);</PRE>
+<P>
+Gets the default screen for the default display. (See
+<A href="http://library.gnome.org/devel/gdk/unstable/GdkDisplay.html#gdk-display-get-default" class="link" title="gdk_display_get_default ()"><CODE class="function">gdk_display_get_default()</CODE></A>).</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY><TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>, or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A> if there is no default display.. <ACRONYM title="Don&#39;t free data after the code is done."><SPAN class="acronym">transfer none</SPAN></ACRONYM>. </TD>
+</TR></TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_default_colormap ()">
+<A name="gdk-screen-get-default-colormap"></A><H3>gdk_screen_get_default_colormap ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/gdk/unstable/gdk-Colormaps-and-Colors.html#GdkColormap" class="link" title="GdkColormap"><SPAN class="returnvalue">GdkColormap</SPAN></A> *       gdk_screen_get_default_colormap     (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets the default colormap for <EM class="parameter"><CODE>screen</CODE></EM>.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the default <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Colormaps-and-Colors.html#GdkColormap" class="link" title="GdkColormap"><SPAN class="type">GdkColormap</SPAN></A>.. <ACRONYM title="Don&#39;t free data after the code is done."><SPAN class="acronym">transfer none</SPAN></ACRONYM>. </TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_set_default_colormap ()">
+<A name="gdk-screen-set-default-colormap"></A><H3>gdk_screen_set_default_colormap ()</H3>
+<PRE class="programlisting"><SPAN class="returnvalue">void</SPAN>                gdk_screen_set_default_colormap     (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Colormaps-and-Colors.html#GdkColormap" class="link" title="GdkColormap"><SPAN class="returnvalue">GdkColormap</SPAN></A> *colormap);</PRE>
+<P>
+Sets the default <EM class="parameter"><CODE>colormap</CODE></EM> for <EM class="parameter"><CODE>screen</CODE></EM>.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>colormap</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Colormaps-and-Colors.html#GdkColormap" class="link" title="GdkColormap"><SPAN class="type">GdkColormap</SPAN></A>
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_system_colormap ()">
+<A name="gdk-screen-get-system-colormap"></A><H3>gdk_screen_get_system_colormap ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/gdk/unstable/gdk-Colormaps-and-Colors.html#GdkColormap" class="link" title="GdkColormap"><SPAN class="returnvalue">GdkColormap</SPAN></A>*        gdk_screen_get_system_colormap      (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets the system's default colormap for <EM class="parameter"><CODE>screen</CODE></EM></P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the default colormap for <EM class="parameter"><CODE>screen</CODE></EM>.. <ACRONYM title="Don&#39;t free data after the code is done."><SPAN class="acronym">transfer none</SPAN></ACRONYM>. </TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_system_visual ()">
+<A name="gdk-screen-get-system-visual"></A><H3>gdk_screen_get_system_visual ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/gdk/unstable/gdk-Visuals.html#GdkVisual" class="link" title="GdkVisual"><SPAN class="returnvalue">GdkVisual</SPAN></A>*          gdk_screen_get_system_visual        (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Get the system's default visual for <EM class="parameter"><CODE>screen</CODE></EM>.
+This is the visual for the root window of the display.
+The return value should not be freed.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>.
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the system visual. <ACRONYM title="Don&#39;t free data after the code is done."><SPAN class="acronym">transfer none</SPAN></ACRONYM>. </TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_rgb_colormap ()">
+<A name="gdk-screen-get-rgb-colormap"></A><H3>gdk_screen_get_rgb_colormap ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/gdk/unstable/gdk-Colormaps-and-Colors.html#GdkColormap" class="link" title="GdkColormap"><SPAN class="returnvalue">GdkColormap</SPAN></A> *       gdk_screen_get_rgb_colormap         (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets the preferred colormap for rendering image data on <EM class="parameter"><CODE>screen</CODE></EM>.
+Not a very useful function; historically, GDK could only render RGB
+image data to one colormap and visual, but in the current version
+it can render to any colormap and visual. So there's no need to
+call this function.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>.
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the preferred colormap
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_rgb_visual ()">
+<A name="gdk-screen-get-rgb-visual"></A><H3>gdk_screen_get_rgb_visual ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/gdk/unstable/gdk-Visuals.html#GdkVisual" class="link" title="GdkVisual"><SPAN class="returnvalue">GdkVisual</SPAN></A> *         gdk_screen_get_rgb_visual           (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets a "preferred visual" chosen by GdkRGB for rendering image data
+on <EM class="parameter"><CODE>screen</CODE></EM>. In previous versions of
+GDK, this was the only visual GdkRGB could use for rendering. In
+current versions, it's simply the visual GdkRGB would have chosen as 
+the optimal one in those previous versions. GdkRGB can now render to 
+drawables with any visual.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> The <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Visuals.html#GdkVisual" class="link" title="GdkVisual"><SPAN class="type">GdkVisual</SPAN></A> chosen by GdkRGB.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_rgba_colormap ()">
+<A name="gdk-screen-get-rgba-colormap"></A><H3>gdk_screen_get_rgba_colormap ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/gdk/unstable/gdk-Colormaps-and-Colors.html#GdkColormap" class="link" title="GdkColormap"><SPAN class="returnvalue">GdkColormap</SPAN></A> *       gdk_screen_get_rgba_colormap        (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets a colormap to use for creating windows or pixmaps with an
+alpha channel. The windowing system on which GTK+ is running
+may not support this capability, in which case <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A> will
+be returned. Even if a non-<A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A> value is returned, its
+possible that the window's alpha channel won't be honored
+when displaying the window on the screen: in particular, for
+X an appropriate windowing manager and compositing manager
+must be running to provide appropriate display.
+</P>
+<P>
+This functionality is not implemented in the Windows backend.
+</P>
+<P>
+For setting an overall opacity for a top-level window, see
+<A href="http://library.gnome.org/devel/gdk/unstable/gdk-Windows.html#gdk-window-set-opacity" class="link" title="gdk_window_set_opacity ()"><CODE class="function">gdk_window_set_opacity()</CODE></A>.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>.
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD>transfer none. <ACRONYM title="Don&#39;t free data after the code is done."><SPAN class="acronym">transfer none</SPAN></ACRONYM>. </TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.8</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_rgba_visual ()">
+<A name="gdk-screen-get-rgba-visual"></A><H3>gdk_screen_get_rgba_visual ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/gdk/unstable/gdk-Visuals.html#GdkVisual" class="link" title="GdkVisual"><SPAN class="returnvalue">GdkVisual</SPAN></A> *         gdk_screen_get_rgba_visual          (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets a visual to use for creating windows or pixmaps with an
+alpha channel. See the docs for <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-rgba-colormap" class="link" title="gdk_screen_get_rgba_colormap ()"><CODE class="function">gdk_screen_get_rgba_colormap()</CODE></A>
+for caveats.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD>transfer none. <ACRONYM title="Don&#39;t free data after the code is done."><SPAN class="acronym">transfer none</SPAN></ACRONYM>. </TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.8</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_is_composited ()">
+<A name="gdk-screen-is-composited"></A><H3>gdk_screen_is_composited ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><SPAN class="returnvalue">gboolean</SPAN></A>            gdk_screen_is_composited            (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Returns whether windows with an RGBA visual can reasonably
+be expected to have their alpha channel drawn correctly on
+the screen.
+</P>
+<P>
+On X11 this function returns whether a compositing manager is
+compositing <EM class="parameter"><CODE>screen</CODE></EM>.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> Whether windows with RGBA visuals can reasonably be
+expected to have their alpha channels drawn correctly on the screen.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.10</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_root_window ()">
+<A name="gdk-screen-get-root-window"></A><H3>gdk_screen_get_root_window ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/gdk/unstable/gdk-Windows.html#GdkWindow" class="link"><SPAN class="returnvalue">GdkWindow</SPAN></A> *         gdk_screen_get_root_window          (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets the root window of <EM class="parameter"><CODE>screen</CODE></EM>.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the root window. <ACRONYM title="Don&#39;t free data after the code is done."><SPAN class="acronym">transfer none</SPAN></ACRONYM>. </TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_display ()">
+<A name="gdk-screen-get-display"></A><H3>gdk_screen_get_display ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/gdk/unstable/GdkDisplay.html" class="link" title="GdkDisplay"><SPAN class="returnvalue">GdkDisplay</SPAN></A> *        gdk_screen_get_display              (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets the display to which the <EM class="parameter"><CODE>screen</CODE></EM> belongs.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the display to which <EM class="parameter"><CODE>screen</CODE></EM> belongs
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_number ()">
+<A name="gdk-screen-get-number"></A><H3>gdk_screen_get_number ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                gdk_screen_get_number               (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets the index of <EM class="parameter"><CODE>screen</CODE></EM> among the screens in the display
+to which it belongs. (See <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-display" class="link" title="gdk_screen_get_display ()"><CODE class="function">gdk_screen_get_display()</CODE></A>)</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the index
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_width ()">
+<A name="gdk-screen-get-width"></A><H3>gdk_screen_get_width ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                gdk_screen_get_width                (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets the width of <EM class="parameter"><CODE>screen</CODE></EM> in pixels</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the width of <EM class="parameter"><CODE>screen</CODE></EM> in pixels.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_height ()">
+<A name="gdk-screen-get-height"></A><H3>gdk_screen_get_height ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                gdk_screen_get_height               (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets the height of <EM class="parameter"><CODE>screen</CODE></EM> in pixels</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the height of <EM class="parameter"><CODE>screen</CODE></EM> in pixels.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_width_mm ()">
+<A name="gdk-screen-get-width-mm"></A><H3>gdk_screen_get_width_mm ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                gdk_screen_get_width_mm             (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets the width of <EM class="parameter"><CODE>screen</CODE></EM> in millimeters. 
+Note that on some X servers this value will not be correct.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the width of <EM class="parameter"><CODE>screen</CODE></EM> in millimeters.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_height_mm ()">
+<A name="gdk-screen-get-height-mm"></A><H3>gdk_screen_get_height_mm ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                gdk_screen_get_height_mm            (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Returns the height of <EM class="parameter"><CODE>screen</CODE></EM> in millimeters. 
+Note that on some X servers this value will not be correct.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the heigth of <EM class="parameter"><CODE>screen</CODE></EM> in millimeters.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_list_visuals ()">
+<A name="gdk-screen-list-visuals"></A><H3>gdk_screen_list_visuals ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><SPAN class="returnvalue">GList</SPAN></A> *             gdk_screen_list_visuals             (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Lists the available visuals for the specified <EM class="parameter"><CODE>screen</CODE></EM>.
+A visual describes a hardware image data format.
+For example, a visual might support 24-bit color, or 8-bit color,
+and might expect pixels to be in a certain format.
+</P>
+<P>
+Call <A href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#g-list-free"><CODE class="function">g_list_free()</CODE></A> on the return value when you're finished with it.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> the relevant <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>.
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> a list of visuals; the list must be freed, but not its 
+contents
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_toplevel_windows ()">
+<A name="gdk-screen-get-toplevel-windows"></A><H3>gdk_screen_get_toplevel_windows ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><SPAN class="returnvalue">GList</SPAN></A> *             gdk_screen_get_toplevel_windows     (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Obtains a list of all toplevel windows known to GDK on the screen <EM class="parameter"><CODE>screen</CODE></EM>.
+A toplevel window is a child of the root window (see
+<A href="http://library.gnome.org/devel/gdk/unstable/gdk-Windows.html#gdk-get-default-root-window" class="link" title="gdk_get_default_root_window ()"><CODE class="function">gdk_get_default_root_window()</CODE></A>).
+</P>
+<P>
+The returned list should be freed with <A href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#g-list-free"><CODE class="function">g_list_free()</CODE></A>, but
+its elements need not be freed.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> The <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A> where the toplevels are located.
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> list of toplevel windows, free with <A href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#g-list-free"><CODE class="function">g_list_free()</CODE></A>
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_make_display_name ()">
+<A name="gdk-screen-make-display-name"></A><H3>gdk_screen_make_display_name ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> *             gdk_screen_make_display_name        (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Determines the name to pass to <A href="http://library.gnome.org/devel/gdk/unstable/GdkDisplay.html#gdk-display-open" class="link" title="gdk_display_open ()"><CODE class="function">gdk_display_open()</CODE></A> to get
+a <A href="http://library.gnome.org/devel/gdk/unstable/GdkDisplay.html" class="link" title="GdkDisplay"><SPAN class="type">GdkDisplay</SPAN></A> with this screen as the default screen.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> a newly allocated string, free with <A href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><CODE class="function">g_free()</CODE></A>
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_n_monitors ()">
+<A name="gdk-screen-get-n-monitors"></A><H3>gdk_screen_get_n_monitors ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                gdk_screen_get_n_monitors           (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Returns the number of monitors which <EM class="parameter"><CODE>screen</CODE></EM> consists of.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> number of monitors which <EM class="parameter"><CODE>screen</CODE></EM> consists of
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_primary_monitor ()">
+<A name="gdk-screen-get-primary-monitor"></A><H3>gdk_screen_get_primary_monitor ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                gdk_screen_get_primary_monitor      (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets the primary monitor for <EM class="parameter"><CODE>screen</CODE></EM>.  The primary monitor
+is considered the monitor where the 'main desktop' lives.
+While normal application windows typically allow the window
+manager to place the windows, specialized desktop applications
+such as panels should place themselves on the primary monitor.
+</P>
+<P>
+If no primary monitor is configured by the user, the return value
+will be 0, defaulting to the first monitor.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>.
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> An integer index for the primary monitor, or 0 if none is configured.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.20</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_monitor_geometry ()">
+<A name="gdk-screen-get-monitor-geometry"></A><H3>gdk_screen_get_monitor_geometry ()</H3>
+<PRE class="programlisting"><SPAN class="returnvalue">void</SPAN>                gdk_screen_get_monitor_geometry     (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> monitor_num,
+                                                         <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Points-Rectangles-and-Regions.html#GdkRectangle" class="link" title="GdkRectangle"><SPAN class="returnvalue">GdkRectangle</SPAN></A> *dest);</PRE>
+<P>
+Retrieves the <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Points-Rectangles-and-Regions.html#GdkRectangle" class="link" title="GdkRectangle"><SPAN class="type">GdkRectangle</SPAN></A> representing the size and position of
+the individual monitor within the entire screen area.
+</P>
+<P>
+Note that the size of the entire screen area can be retrieved via
+<A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-width" class="link" title="gdk_screen_get_width ()"><CODE class="function">gdk_screen_get_width()</CODE></A> and <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-get-height" class="link" title="gdk_screen_get_height ()"><CODE class="function">gdk_screen_get_height()</CODE></A>.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>monitor_num</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> the monitor number, between 0 and gdk_screen_get_n_monitors (screen)
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>dest</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Points-Rectangles-and-Regions.html#GdkRectangle" class="link" title="GdkRectangle"><SPAN class="type">GdkRectangle</SPAN></A> to be filled with the monitor geometry
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_monitor_at_point ()">
+<A name="gdk-screen-get-monitor-at-point"></A><H3>gdk_screen_get_monitor_at_point ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                gdk_screen_get_monitor_at_point     (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> x,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> y);</PRE>
+<P>
+Returns the monitor number in which the point (<EM class="parameter"><CODE>x</CODE></EM>,<EM class="parameter"><CODE>y</CODE></EM>) is located.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>.
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>x</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> the x coordinate in the virtual screen.
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>y</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> the y coordinate in the virtual screen.
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the monitor number in which the point (<EM class="parameter"><CODE>x</CODE></EM>,<EM class="parameter"><CODE>y</CODE></EM>) lies, or
+  a monitor close to (<EM class="parameter"><CODE>x</CODE></EM>,<EM class="parameter"><CODE>y</CODE></EM>) if the point is not in any monitor.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_monitor_at_window ()">
+<A name="gdk-screen-get-monitor-at-window"></A><H3>gdk_screen_get_monitor_at_window ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                gdk_screen_get_monitor_at_window    (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Windows.html#GdkWindow" class="link"><SPAN class="returnvalue">GdkWindow</SPAN></A> *window);</PRE>
+<P>
+Returns the number of the monitor in which the largest area of the 
+bounding rectangle of <EM class="parameter"><CODE>window</CODE></EM> resides.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>.
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>window</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Windows.html#GdkWindow" class="link"><SPAN class="type">GdkWindow</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the monitor number in which most of <EM class="parameter"><CODE>window</CODE></EM> is located,
+          or if <EM class="parameter"><CODE>window</CODE></EM> does not intersect any monitors, a monitor,
+          close to <EM class="parameter"><CODE>window</CODE></EM>.
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_monitor_height_mm ()">
+<A name="gdk-screen-get-monitor-height-mm"></A><H3>gdk_screen_get_monitor_height_mm ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                gdk_screen_get_monitor_height_mm    (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> monitor_num);</PRE>
+<P>
+Gets the height in millimeters of the specified monitor.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>monitor_num</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the height of the monitor, or -1 if not available
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.14</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_monitor_width_mm ()">
+<A name="gdk-screen-get-monitor-width-mm"></A><H3>gdk_screen_get_monitor_width_mm ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A>                gdk_screen_get_monitor_width_mm     (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> monitor_num);</PRE>
+<P>
+Gets the width in millimeters of the specified monitor, if available.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>monitor_num</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the width of the monitor, or -1 if not available
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.14</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_monitor_plug_name ()">
+<A name="gdk-screen-get-monitor-plug-name"></A><H3>gdk_screen_get_monitor_plug_name ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> *             gdk_screen_get_monitor_plug_name    (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> monitor_num);</PRE>
+<P>
+Returns the output name of the specified monitor.
+Usually something like VGA, DVI, or TV, not the actual
+product name of the display device.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>monitor_num</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> a newly-allocated string containing the name of the monitor,
+  or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A> if the name cannot be determined
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.14</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_broadcast_client_message ()">
+<A name="gdk-screen-broadcast-client-message"></A><H3>gdk_screen_broadcast_client_message ()</H3>
+<PRE class="programlisting"><SPAN class="returnvalue">void</SPAN>                gdk_screen_broadcast_client_message (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Event-Structures.html#GdkEvent" class="link" title="union GdkEvent"><SPAN class="returnvalue">GdkEvent</SPAN></A> *event);</PRE>
+<P>
+On X11, sends an X ClientMessage event to all toplevel windows on
+<EM class="parameter"><CODE>screen</CODE></EM>. 
+</P>
+<P>
+Toplevel windows are determined by checking for the WM_STATE property, 
+as described in the Inter-Client Communication Conventions Manual (ICCCM).
+If no windows are found with the WM_STATE property set, the message is 
+sent to all children of the root window.
+</P>
+<P>
+On Windows, broadcasts a message registered with the name
+GDK_WIN32_CLIENT_MESSAGE to all top-level windows. The amount of
+data is limited to one long, i.e. four bytes.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> the <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A> where the event will be broadcasted.
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>event</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> the <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Event-Structures.html#GdkEvent" class="link" title="union GdkEvent"><SPAN class="type">GdkEvent</SPAN></A>.
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_setting ()">
+<A name="gdk-screen-get-setting"></A><H3>gdk_screen_get_setting ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><SPAN class="returnvalue">gboolean</SPAN></A>            gdk_screen_get_setting              (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         const <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> *name,
+                                                         <A href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><SPAN class="returnvalue">GValue</SPAN></A> *value);</PRE>
+<P>
+Retrieves a desktop-wide setting such as double-click time
+for the <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A> <EM class="parameter"><CODE>screen</CODE></EM>. 
+</P>
+<P>
+FIXME needs a list of valid settings here, or a link to 
+more information.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> the <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A> where the setting is located
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>name</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> the name of the setting
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>value</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> location to store the value of the setting
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><CODE class="literal">TRUE</CODE></A> if the setting existed and a value was stored
+  in <EM class="parameter"><CODE>value</CODE></EM>, <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><CODE class="literal">FALSE</CODE></A> otherwise.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_font_options ()">
+<A name="gdk-screen-get-font-options"></A><H3>gdk_screen_get_font_options ()</H3>
+<PRE class="programlisting">const <A href="http://library.gnome.org/usr/share/gtk-doc/html/cairo/cairo-font-options.html#cairo-font-options-t"><SPAN class="returnvalue">cairo_font_options_t</SPAN></A> * gdk_screen_get_font_options
+                                                        (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets any options previously set with <A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-set-font-options" class="link" title="gdk_screen_set_font_options ()"><CODE class="function">gdk_screen_set_font_options()</CODE></A>.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the current font options, or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A> if no default
+ font options have been set.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.10</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_set_font_options ()">
+<A name="gdk-screen-set-font-options"></A><H3>gdk_screen_set_font_options ()</H3>
+<PRE class="programlisting"><SPAN class="returnvalue">void</SPAN>                gdk_screen_set_font_options         (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         const <A href="http://library.gnome.org/usr/share/gtk-doc/html/cairo/cairo-font-options.html#cairo-font-options-t"><SPAN class="returnvalue">cairo_font_options_t</SPAN></A> *options);</PRE>
+<P>
+Sets the default font options for the screen. These
+options will be set on any <A href="http://library.gnome.org/devel/pango/stable/pango-Text-Processing.html#PangoContext"><SPAN class="type">PangoContext</SPAN></A>'s newly created
+with <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Pango-Interaction.html#gdk-pango-context-get-for-screen" class="link" title="gdk_pango_context_get_for_screen ()"><CODE class="function">gdk_pango_context_get_for_screen()</CODE></A>. Changing the
+default set of font options does not affect contexts that
+have already been created.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>options</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD>allow-none. <ACRONYM title="NULL is ok, both for passing and for returning."><SPAN class="acronym">allow-none</SPAN></ACRONYM>. </TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.10</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_resolution ()">
+<A name="gdk-screen-get-resolution"></A><H3>gdk_screen_get_resolution ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><SPAN class="returnvalue">gdouble</SPAN></A>             gdk_screen_get_resolution           (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Gets the resolution for font handling on the screen; see
+<A href="http://library.gnome.org/devel/gdk/unstable/GdkScreen.html#gdk-screen-set-resolution" class="link" title="gdk_screen_set_resolution ()"><CODE class="function">gdk_screen_set_resolution()</CODE></A> for full details.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the current resolution, or -1 if no resolution
+has been set.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.10</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_set_resolution ()">
+<A name="gdk-screen-set-resolution"></A><H3>gdk_screen_set_resolution ()</H3>
+<PRE class="programlisting"><SPAN class="returnvalue">void</SPAN>                gdk_screen_set_resolution           (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><SPAN class="returnvalue">gdouble</SPAN></A> dpi);</PRE>
+<P>
+Sets the resolution for font handling on the screen. This is a
+scale factor between points specified in a <A href="http://library.gnome.org/devel/pango/stable/pango-Fonts.html#PangoFontDescription"><SPAN class="type">PangoFontDescription</SPAN></A>
+and cairo units. The default value is 96, meaning that a 10 point
+font will be 13 units high. (10 * 96. / 72. = 13.3).</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>dpi</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> the resolution in "dots per inch". (Physical inches aren't actually
+  involved; the terminology is conventional.)
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.10</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_active_window ()">
+<A name="gdk-screen-get-active-window"></A><H3>gdk_screen_get_active_window ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/gdk/unstable/gdk-Windows.html#GdkWindow" class="link"><SPAN class="returnvalue">GdkWindow</SPAN></A> *         gdk_screen_get_active_window        (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Returns the screen's currently active window.
+</P>
+<P>
+On X11, this is done by inspecting the _NET_ACTIVE_WINDOW property
+on the root window, as described in the <A href="http://www.freedesktop.org/Standards/wm-spec" target="_top" class="ulink">Extended Window
+Manager Hints</A>. If there is no currently currently active
+window, or the window manager does not support the
+_NET_ACTIVE_WINDOW hint, this function returns <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A>.
+</P>
+<P>
+On other platforms, this function may return <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A>, depending on whether
+it is implementable on that platform.
+</P>
+<P>
+The returned window should be unrefed using <A href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><CODE class="function">g_object_unref()</CODE></A> when
+no longer needed.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> the currently active window, or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A>.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.10</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_screen_get_window_stack ()">
+<A name="gdk-screen-get-window-stack"></A><H3>gdk_screen_get_window_stack ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><SPAN class="returnvalue">GList</SPAN></A> *             gdk_screen_get_window_stack         (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen);</PRE>
+<P>
+Returns a <A href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><SPAN class="type">GList</SPAN></A> of <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Windows.html#GdkWindow" class="link"><SPAN class="type">GdkWindow</SPAN></A>s representing the current
+window stack.
+</P>
+<P>
+On X11, this is done by inspecting the _NET_CLIENT_LIST_STACKING
+property on the root window, as described in the <A href="http://www.freedesktop.org/Standards/wm-spec" target="_top" class="ulink">Extended Window
+Manager Hints</A>. If the window manager does not support the
+_NET_CLIENT_LIST_STACKING hint, this function returns <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A>.
+</P>
+<P>
+On other platforms, this function may return <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A>, depending on whether
+it is implementable on that platform.
+</P>
+<P>
+The returned list is newly allocated and owns references to the
+windows it contains, so it should be freed using <A href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#g-list-free"><CODE class="function">g_list_free()</CODE></A> and
+its windows unrefed using <A href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><CODE class="function">g_object_unref()</CODE></A> when no longer needed.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> a list of <A href="http://library.gnome.org/devel/gdk/unstable/gdk-Windows.html#GdkWindow" class="link"><SPAN class="type">GdkWindow</SPAN></A>s for the current window stack,
+              or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A>.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.10</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_spawn_on_screen ()">
+<A name="gdk-spawn-on-screen"></A><H3>gdk_spawn_on_screen ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><SPAN class="returnvalue">gboolean</SPAN></A>            gdk_spawn_on_screen                 (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         const <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> *working_directory,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> **argv,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> **envp,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Spawning-Processes.html#GSpawnFlags"><SPAN class="returnvalue">GSpawnFlags</SPAN></A> flags,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Spawning-Processes.html#GSpawnChildSetupFunc"><SPAN class="returnvalue">GSpawnChildSetupFunc</SPAN></A> child_setup,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><SPAN class="returnvalue">gpointer</SPAN></A> user_data,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> *child_pid,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><SPAN class="returnvalue">GError</SPAN></A> **error);</PRE>
+<P>
+Like <A href="http://library.gnome.org/devel/glib/unstable/glib-Spawning-Processes.html#g-spawn-async"><CODE class="function">g_spawn_async()</CODE></A>, except the child process is spawned in such
+an environment that on calling <A href="http://library.gnome.org/devel/gdk/unstable/GdkDisplay.html#gdk-display-open" class="link" title="gdk_display_open ()"><CODE class="function">gdk_display_open()</CODE></A> it would be
+returned a <A href="http://library.gnome.org/devel/gdk/unstable/GdkDisplay.html" class="link" title="GdkDisplay"><SPAN class="type">GdkDisplay</SPAN></A> with <EM class="parameter"><CODE>screen</CODE></EM> as the default screen.
+</P>
+<P>
+This is useful for applications which wish to launch an application
+on a specific screen.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>working_directory</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> child's current working directory, or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A> to 
+  inherit parent's
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>argv</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> child's argument vector
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>envp</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> child's environment, or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A> to inherit parent's
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>flags</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> flags from <A href="http://library.gnome.org/devel/glib/unstable/glib-Spawning-Processes.html#GSpawnFlags"><SPAN class="type">GSpawnFlags</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>child_setup</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> function to run in the child just before <CODE class="function">exec()</CODE>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>user_data</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> user data for <EM class="parameter"><CODE>child_setup</CODE></EM>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>child_pid</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> return location for child process ID, or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>error</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> return location for error
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><CODE class="literal">TRUE</CODE></A> on success, <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><CODE class="literal">FALSE</CODE></A> if error is set
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.4</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_spawn_on_screen_with_pipes ()">
+<A name="gdk-spawn-on-screen-with-pipes"></A><H3>gdk_spawn_on_screen_with_pipes ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><SPAN class="returnvalue">gboolean</SPAN></A>            gdk_spawn_on_screen_with_pipes      (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         const <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> *working_directory,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> **argv,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> **envp,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Spawning-Processes.html#GSpawnFlags"><SPAN class="returnvalue">GSpawnFlags</SPAN></A> flags,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Spawning-Processes.html#GSpawnChildSetupFunc"><SPAN class="returnvalue">GSpawnChildSetupFunc</SPAN></A> child_setup,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><SPAN class="returnvalue">gpointer</SPAN></A> user_data,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> *child_pid,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> *standard_input,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> *standard_output,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><SPAN class="returnvalue">gint</SPAN></A> *standard_error,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><SPAN class="returnvalue">GError</SPAN></A> **error);</PRE>
+<P>
+Like <A href="http://library.gnome.org/devel/glib/unstable/glib-Spawning-Processes.html#g-spawn-async-with-pipes"><CODE class="function">g_spawn_async_with_pipes()</CODE></A>, except the child process is
+spawned in such an environment that on calling <A href="http://library.gnome.org/devel/gdk/unstable/GdkDisplay.html#gdk-display-open" class="link" title="gdk_display_open ()"><CODE class="function">gdk_display_open()</CODE></A>
+it would be returned a <A href="http://library.gnome.org/devel/gdk/unstable/GdkDisplay.html" class="link" title="GdkDisplay"><SPAN class="type">GdkDisplay</SPAN></A> with <EM class="parameter"><CODE>screen</CODE></EM> as the default
+screen.
+</P>
+<P>
+This is useful for applications which wish to launch an application
+on a specific screen.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>working_directory</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> child's current working directory, or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A> to 
+  inherit parent's
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>argv</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> child's argument vector
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>envp</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> child's environment, or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A> to inherit parent's
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>flags</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> flags from <A href="http://library.gnome.org/devel/glib/unstable/glib-Spawning-Processes.html#GSpawnFlags"><SPAN class="type">GSpawnFlags</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>child_setup</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> function to run in the child just before <CODE class="function">exec()</CODE>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>user_data</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> user data for <EM class="parameter"><CODE>child_setup</CODE></EM>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>child_pid</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> return location for child process ID, or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>standard_input</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> return location for file descriptor to write to 
+  child's stdin, or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>standard_output</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> return location for file descriptor to read child's 
+  stdout, or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>standard_error</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> return location for file descriptor to read child's 
+  stderr, or <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><CODE class="literal">NULL</CODE></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>error</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> return location for error
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><CODE class="literal">TRUE</CODE></A> on success, <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><CODE class="literal">FALSE</CODE></A> if an error was set
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.4</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="gdk_spawn_command_line_on_screen ()">
+<A name="gdk-spawn-command-line-on-screen"></A><H3>gdk_spawn_command_line_on_screen ()</H3>
+<PRE class="programlisting"><A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><SPAN class="returnvalue">gboolean</SPAN></A>            gdk_spawn_command_line_on_screen    (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="returnvalue">GdkScreen</SPAN></A> *screen,
+                                                         const <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><SPAN class="returnvalue">gchar</SPAN></A> *command_line,
+                                                         <A href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><SPAN class="returnvalue">GError</SPAN></A> **error);</PRE>
+<P>
+Like <A href="http://library.gnome.org/devel/glib/unstable/glib-Spawning-Processes.html#g-spawn-command-line-async"><CODE class="function">g_spawn_command_line_async()</CODE></A>, except the child process is
+spawned in such an environment that on calling <A href="http://library.gnome.org/devel/gdk/unstable/GdkDisplay.html#gdk-display-open" class="link" title="gdk_display_open ()"><CODE class="function">gdk_display_open()</CODE></A>
+it would be returned a <A href="http://library.gnome.org/devel/gdk/unstable/GdkDisplay.html" class="link" title="GdkDisplay"><SPAN class="type">GdkDisplay</SPAN></A> with <EM class="parameter"><CODE>screen</CODE></EM> as the default
+screen.
+</P>
+<P>
+This is useful for applications which wish to launch an application
+on a specific screen.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a <A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A>
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>command_line</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> a command line
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>error</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> return location for errors
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><SPAN class="emphasis"><EM>Returns</EM></SPAN>&nbsp;:</SPAN></P></TD>
+<TD> <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><CODE class="literal">TRUE</CODE></A> on success, <A href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><CODE class="literal">FALSE</CODE></A> if error is set.
+
+</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.4</P>
+</DIV>
+</DIV>
+<DIV class="refsect1" title="Property Details">
+<A name="GdkScreen.property-details"></A><H2>Property Details</H2>
+<DIV class="refsect2" title="The &quot;font-options&quot; property">
+<A name="GdkScreen--font-options"></A><H3>The <CODE class="literal">"font-options"</CODE> property</H3>
+<PRE class="programlisting">  "font-options"             <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><SPAN class="type">gpointer</SPAN></A>              : Read / Write</PRE>
+<P>The default font options for the screen.</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="The &quot;resolution&quot; property">
+<A name="GdkScreen--resolution"></A><H3>The <CODE class="literal">"resolution"</CODE> property</H3>
+<PRE class="programlisting">  "resolution"               <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><SPAN class="type">gdouble</SPAN></A>               : Read / Write</PRE>
+<P>The resolution for fonts on the screen.</P>
+<P>Default value: -1</P>
+</DIV>
+</DIV>
+<DIV class="refsect1" title="Signal Details">
+<A name="GdkScreen.signal-details"></A><H2>Signal Details</H2>
+<DIV class="refsect2" title="The &quot;composited-changed&quot; signal">
+<A name="GdkScreen-composited-changed"></A><H3>The <CODE class="literal">"composited-changed"</CODE> signal</H3>
+<PRE class="programlisting"><SPAN class="returnvalue">void</SPAN>                user_function                      (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A> *screen,
+                                                        <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><SPAN class="type">gpointer</SPAN></A>   user_data)      : Run Last</PRE>
+<P>
+The ::composited-changed signal is emitted when the composited
+status of the screen changes</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> the object on which the signal is emitted
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>user_data</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD>user data set when the signal handler was connected.</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.10</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="The &quot;monitors-changed&quot; signal">
+<A name="GdkScreen-monitors-changed"></A><H3>The <CODE class="literal">"monitors-changed"</CODE> signal</H3>
+<PRE class="programlisting"><SPAN class="returnvalue">void</SPAN>                user_function                      (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A> *screen,
+                                                        <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><SPAN class="type">gpointer</SPAN></A>   user_data)      : Run Last</PRE>
+<P>
+The ::monitors-changed signal is emitted when the number, size
+or position of the monitors attached to the screen change.
+</P>
+<P>
+Only for X11 and OS X for now. A future implementation for Win32
+may be a possibility.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> the object on which the signal is emitted
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>user_data</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD>user data set when the signal handler was connected.</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.14</P>
+</DIV>
+<HR>
+<DIV class="refsect2" title="The &quot;size-changed&quot; signal">
+<A name="GdkScreen-size-changed"></A><H3>The <CODE class="literal">"size-changed"</CODE> signal</H3>
+<PRE class="programlisting"><SPAN class="returnvalue">void</SPAN>                user_function                      (<A href="./GdkScreen_files/GdkScreen.html" class="link" title="GdkScreen"><SPAN class="type">GdkScreen</SPAN></A> *screen,
+                                                        <A href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><SPAN class="type">gpointer</SPAN></A>   user_data)      : Run Last</PRE>
+<P>
+The ::size-changed signal is emitted when the pixel width or 
+height of a screen changes.</P>
+<DIV class="variablelist"><TABLE border="0">
+<COLGROUP><COL align="left" valign="top">
+</COLGROUP><TBODY>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>screen</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD> the object on which the signal is emitted
+</TD>
+</TR>
+<TR>
+<TD><P><SPAN class="term"><EM class="parameter"><CODE>user_data</CODE></EM>&nbsp;:</SPAN></P></TD>
+<TD>user data set when the signal handler was connected.</TD>
+</TR>
+</TBODY>
+</TABLE></DIV>
+<P class="since">Since 2.2</P>
+</DIV>
+</DIV>
+</DIV><DIV class="footer">
+<HR>
+          Generated by GTK-Doc V1.13</DIV></DIV>
+</BODY><STYLE type="text/css">#AdContainer,#AdMiddle,#RadAd_Skyscraper,#ad-frame,#bbccom_leaderboard,#bbccom_mpu,#center_banner,#footer_adcode,#header_adcode,#hbBHeaderSpon,#hiddenHeaderSpon,[id^="konaLayer"],#navbar_adcode,#pagelet_adbox,#rightAds,#rightcolumn_adcode,#top-advertising,#topMPU,#tracker_advertorial,.ad-now,.adbox,.adspot,.dfpad,.prWrap,.sponsored,div[id^="google_ads_div"],embed[flashvars*="AdID"],iframe[name^="AdBrite"],iframe[id="dapIfM0"],iframe[src*="clicksor.com"],img[src*="clicksor.com"],div[id="tooltipbox"][class^="itxt"],[id^="adbrite"],ispan#ab_pointer,#A9AdsMiddleBoxTop,#A9AdsOutOfStockWidgetTop,#A9AdsServicesWidgetTop,#Ad1,#Ad2,#Ad3Left,#Ad3Right,#AdContainerTop,#AdHeader,#AdRectangle,#AdShowcase_F1,#AdSky23,#AdSkyscraper,#AdSponsor_SF,#AdText,#Ad_Block,#Ad_Center1,#Ad_Top,#Adrectangle,#AdsContent,#AdsWrap,#AdvertMPU23b,#Advertorial,#BigBoxAd,#CompanyDetailsNarrowGoogleAdsPresentationControl,#CompanyDetailsWideGoogleAdsPresentationControl,#ContentAd,#ContentAd1,#ContentAd2,#ContentAdPlaceHolder1,#ContentAdPlaceHolder2,#FP_Ad,#FooterAd,#FooterAdContainer,#HEADERAD,#HeaderAdsBlock,#HeroAd,#HouseAd,#Journal_Ad_125,#Journal_Ad_300,#LeftAdF1,#LeftAdF2,#PageLeaderAd,#RightSponsoredAd,#SectionAd300-250,#SidebarAdContainer,#SkyAd,#SponsoredAd,#TOP_ADROW,#TopAdPos,#VM-MPU-adspace,#VM-header-adwrap,#XEadLeaderboard,#XEadSkyscraper,#ad-160x600,#ad-250x300,#ad-300x250,#ad-300x250Div,#ad-728,#ad-banner,#ad-bottom,#ad-footer,#ad-footprint-160x600,#ad-front-footer,#ad-front-sponsoredlinks,#ad-halfpage,#ad-label,#ad-leaderboard,#ad-leaderboard-bottom,#ad-leaderboard-top,#ad-left,#ad-lrec,#ad-medium-rectangle,#ad-middlethree,#ad-middletwo,#ad-module,#ad-mpu,#ad-placard,#ad-rectangle,#ad-righttop,#ad-skyscraper,#ad-space,#ad-splash,#ad-target,#ad-target-Leaderbord,#ad-top,#ad-tower,#ad-typ1,#ad-wrap-right,#ad-wrapper1,#ad-yahoo-simple,#ad125x125,#ad160x600,#ad160x600right,#ad1Sp,#ad2,#ad2Sp,#ad3,#ad300,#ad300-250,#ad300_x_250,#ad300x150,#ad300x250,#ad300x250Module,#ad300x60,#ad336,#ad375x85,#ad526x250,#ad600,#adB,#adBadges,#adBanner,#adBanner120x600,#adBannerTable,#adBar,#adFps,#adFtofrs,#adGroup1,#adHeader,#adL,#adLB,#adMPU,#adMiddle0Frontpage,#adMiniPremiere,#adPlaceHolderRight,#adRight,#adSenseModule,#adServer_marginal,#adSidebarSq,#adSky,#adSlider,#adSpace3,#adSpace300_ifrMain,#adSpace4,#adSpace5,#adSpace6,#adSpace7,#adSpace_footer,#adSpace_top,#adSpecial,#adSpot-Leader,#adSpot-banner,#adSpot-mrec1,#adSpot-sponsoredlinks,#adSpot-textbox1,#adSpot-widestrip,#adSpotAdvertorial,#adSpotIsland,#adSpotSponsoredLinks,#adStaticA,#adStrip,#adSuperPremiere,#adTableCell,#adTag1,#adTag2,#adTop,#adUnit,#ad_160x600,#ad_190x90,#ad_300,#ad_300x250,#ad_468_60,#ad_5,#ad_728_foot,#ad_728x90,#ad_C2,#ad_YieldManager-300x250,#ad_anchor,#ad_banner,#ad_banner_top,#ad_bar,#ad_bottom,#ad_box_colspan,#ad_center_monster,#ad_content_wrap,#ad_feature,#ad_haha_1,#ad_haha_4,#ad_halfpage,#ad_head,#ad_header,#ad_island,#ad_leader,#ad_leaderBoard,#ad_leaderboard,#ad_lwr_square,#ad_medium_rectangle,#ad_middle,#ad_mpu,#ad_play_300,#ad_rect,#ad_rect_body,#ad_rect_bottom,#ad_rectangle,#ad_related_links_div,#ad_related_links_div_program,#ad_report_leaderboard,#ad_report_rectangle,#ad_right,#ad_sidebar1,#ad_sidebar2,#ad_sidebar3,#ad_skyscraper,#ad_slot_livesky,#ad_space,#ad_ss,#ad_top,#ad_top_holder,#adbanner,#adbnr,#adbottom,#adbox2,#adclear,#adcode1,#adcode2,#adcode3,#adcode4,#adcolumnwrapper,#addiv-bottom,#addiv-top,#adframe:not(frameset),#adhead,#adhead_g,#adheader,#adlabel,#adlabelFooter,#adlinks,#adlinkws,#admid,#admiddle3center,#admiddle3left,#adposition,#adposition-C,#adposition4,#adright,#adright2,#ads-468,#ads-block,#ads-bot,#ads-bottom,#ads-dell,#ads-horizontal,#ads-lrec,#ads-rhs,#ads-top,#ads2,#ads300,#ads336x280,#ads7,#adsID,#ads_160,#ads_300,#ads_728,#ads_belowforumlist,#ads_belownav,#ads_bottom_outer,#ads_catDiv,#ads_right,#ads_sidebar_roadblock,#ads_top,#adsbottom,#adsense,#adsense-text,#adsenseWrap,#adsensetopplay,#adsonar,#adspace-300x250,#adspace300x250,#adspaceBox,#adspaceBox300,#adspace_header,#adsright,#adstop,#adtech_takeover,#adtop,#adv_bg,#adv_google_300,#adv_google_728,#advert-boomer,#advert-header,#advert-leaderboard,#advert-top,#advert_250x250,#advert_box,#advert_leaderboard,#advert_lrec_format,#advert_mpu,#advertbox,#advertbox2,#advertbox3,#advertbox4,#adverthome,#advertise-now,#advertisement160x600,#advertisement728x90,#advertisementLigatus,#advertisementPrio2,#advertiserLinks,#advertising,#advertising-skyscraper,#adwin_rec,#adwith,#adwords-4-container,#adwrapper,#adxtop,#adzoneBANNER,#agi-ad300x250,#agi-ad300x250overlay,#agi-sponsored,#annoying_ad,#ap_adframe,#article-box-ad,#articleAdReplacement,#articleSideAd,#article_ad,#article_box_ad,#atlasAdDivGame,#banner-ad,#banner-ads,#banner728x90,#bannerAdTop,#banner_ad,#banner_topad,#bannerad,#bannerad2,#bg_YieldManager-300x250,#bigAd,#bigBoxAd,#bigadbox,#bigadspot,#billboard_ad,#block-ad_cube-1,#block_advert,#blox-big-ad,#blox-halfpage-ad,#blox-tile-ad,#botad,#bottom-ad-container,#bottom-ads,#bottomAd,#bottomAdSenseDiv,#bottomRightAdSpace,#bottom_ad,#bottom_ad_area,#bottom_ads,#bottom_overture,#bottom_player_adv,#bottom_sponsor_ads,#bottom_sponsored_links,#bottom_text_ad,#bottomad,#box-googleadsense-1,#box-googleadsense-r,#boxAdContainer,#boxad1,#boxad2,#boxad3,#boxad4,#boxad5,#bps-header-ad-container,#btr_horiz_ad,#button-ads-horizontal,#button-ads-vertical,#button_ad_wrap,#cellAd,#channel_ad,#channel_ads,#cnnRR336ad,#cnnTopAd,#colRightAd,#column4-google-ads,#commercial_ads,#common_right_lower_player_adspace,#common_right_player_adspace,#common_top_adspace,#containerLocalAds,#containerMrecAd,#content-ad-header,#contentAd,#content_ad_square,#content_ad_top,#content_ads_content,#content_box_300body_sponsoredoffers,#content_box_adright300_google,#contentad,#contentad_imtext,#contentad_right,#contentads,#contentinlineAd,#contextualad,#ctl00_MasterHolder_IBanner_adHolder,#ctl00_VBanner_adHolder,#ctl00_adFooter,#ctrlsponsored,#cubeAd,#cube_ads,#cube_ads_inner,#cubead,#cubead-2,#divAd,#divAdBox,#divWrapper_Ad,#div_video_ads,#dlads,#download_ads,#ds-mpu,#exads,#featuread,#featuredAdContainer2,#featuredAds,#feed_links_ad_container,#first_ad_unit,#fl_hdrAd,#footer-ad,#footer-sponsored,#footerAd,#footerAdDiv,#footerAdverts,#footer_ad,#footer_ad_block,#footer_adspace,#footer_text_ad,#fr_ad_center,#frnContentAd,#front_mpu,#ft-ad,#ft-ad-1,#ft-ad-container,#fusionad,#g_ad,#g_adsense,#ga_300x250,#gad,#gallery-ad-m0,#gallery_ads,#game-info-ad,#global_header_ad_area,#google-ad,#google-ad-art,#google-ad-tower,#google-ads,#google-ads-bottom,#google-ads-left-side,#google-adsense-mpusize,#googleAd,#googleAdsense,#googleAdsenseBanner,#googleAdsenseBannerBlog,#googleAdwordsModule,#googleAfcContainer,#google_ad,#google_ad_test,#google_ads,#google_ads_test,#googlead,#googleads,#googlesponsor,#gsyadrectangleload,#gsyadrightload,#gsyadtop,#gsyadtopload,#gtopadvts,#halfPageAd,#halfe-page-ad-box,#hdtv_ad_ss,#header-ad,#header-ads,#header-advert,#headerAd,#headerAdBackground,#headerAdContainer,#headerAdsWrapper,#headerTopAd,#header_advertisement_top,#header_leaderboard_ad_container,#headerad,#headeradbox,#headline_ad,#hiddenadAC,#homeTopRightAd,#home_ad,#home_spensoredlinks,#homepage-ad,#horizontal-banner-ad,#horizontal_ad,#houseAd,#icePage_SearchLinks_AdRightDiv,#inlinead,#inlinegoogleads,#inner-advert-row,#insider_ad_wrapper,#instoryad,#int-ad,#interstitial_ad_wrapper,#islandAd,#j_ad,#landing-adserver,#lateAd,#leader-board-ad,#leader-sponsor,#leaderad,#leaderboard-ad,#leaderboard-bottom-ad,#leaderboard_ad,#leftSectionAd300-100,#left_ad,#left_adspace,#leftad,#leftads,#lg-banner-ad,#linkAds,#live-ad,#longAdSpace,#main-ad,#main-ad160x600,#main-ad160x600-img,#main-ad728x90,#mainAdvert,#main_ad,#main_rec_ad,#mastAdvert,#mastad,#masthead_ad,#medRecAd,#menuAds,#mid-ad300x250,#mid-table-ad,#mid_mpu,#middlead,#middleads,#midrect_ad,#mini-ad,#module-google_ads,#module_box_ad,#mpu,#mpuAd,#mpuDiv,#mpuWrapperAd,#mpu_banner,#mpu_holder,#mpuad,#mrecAdContainer,#multiLinkAdContainer,#n_sponsor_ads,#natadad300x250,#navi_banner_ad_780,#new_topad,#noresultsads,#northad,#oanda_ads,#onespot-ads,#p-googleadsense,#page-header-ad,#page_content_top_ad,#pcworldAdBottom,#pcworldAdTop,#player_ad,#portlet-advertisement-left,#portlet-advertisement-right,#post5_adbox,#priceGrabberAd,#promo-ad,#promoAds,#ps-vertical-ads,#pub468x60,#r1SoftAd,#rail_ad1,#rail_ad2,#realEstateAds,#rect_ad,#rectangle-ad,#rectangle_ad,#refine-300-ad,#region-top-ad,#rh-ad-container,#rh_tower_ad,#right-ad,#rightAd,#rightAd300x250,#rightAdColumn,#rightColAd,#rightColumnMpuAd,#rightColumnSkyAd,#right_ad_wrapper,#right_advertisement,#right_advertising,#rightad,#rightadvertbar-doubleclickads,#rightbar-ad,#rightside_ad,#rotatingads,#rtMod_ad,#sAdsBox,#search-google-ads,#secondBoxAdContainer,#servfail-ads,#sew-ad1,#shoppingads,#show-ad,#side-ad-container,#sideAd,#sideBarAd,#side_ad_wrapper,#side_ads_by_google,#sidead,#sidebar-125x125-ads,#sidebar-125x125-ads-below-index,#sidebar-ad-boxes,#sidebar-ad-space,#sidebar-ad-wrap,#sidebar-ads,#sidebar_sponsoredresult_body,#sidebarad,#sideline-ad,#site-leaderboard-ads,#site_top_ad,#skyAd,#skyScrapperAd,#sky_ad,#skyscraperAd,#skyscraper_advert,#sliderAdHolder,#sm-banner-ad,#small_ad,#smallerAd,#speeds_ads,#sphereAd,#splinks,#sponLinkDiv_1,#sponlink,#spons_left,#sponseredlinks,#sponsorAd1,#sponsorAd2,#sponsorLinks,#sponsor_banderole,#sponsor_panSponsor,#sponsored,#sponsored-links,#sponsored-resources,#sponsored1,#sponsoredBox1,#sponsoredBox2,#sponsoredLinks,#sponsoredList,#sponsoredResults,#sponsoredSiteMainline,#sponsoredSiteSidebar,#sponsored_game_row_listing,#sponsored_links,#sponsoredlinks,#sponsoredlinks_cntr,#sponsoredresults_top,#sponsorlink,#spotlightAds,#spotlightad,#squareAd,#squareAdSpace,#square_ad,#sticky-ad,#stickyBottomAd,#story-ad-a,#story-ad-b,#story-sponsoredlinks,#storyAdWrap,#subpage-ad-right,#subpage-ad-top,#swads,#synch-ad,#tbl_googlead,#template_ad_leaderboard,#tertiary_advertising,#textAd,#textAds,#text_ad,#text_advert,#themis-ads,#tile-ad,#tmglBannerAd,#top-ad,#top-ad-menu,#top-ads,#top-ads-tabs,#top-advertisement,#top-search-ad-wrapper,#topAd,#topAd728x90,#topAdBanner,#topAdSenseDiv,#topAds,#topBannerAd,#topNavLeaderboardAdHolder,#top_ad,#top_ad_area,#top_ad_wrapper,#top_ads,#top_advertise,#top_advertising,#top_player_adv,#topad_left,#topad_right,#topads,#topcustomad,#towerad,#twogamesAd,#txt_link_ads,#undergameAd,#upperMpu,#upperad,#v_ad,#vert_ad,#vertical_ad,#vertical_ads,#video_overlay_ad,#walltopad,#welcomeAdsContainer,#welcome_ad_mrec,#wgtAd,#wrapAdRight,#wrapAdTop,#yahoo-ads,#yahoo-sponsors,#yahoo_ads,#yan-sponsored,#ybf-ads,#yfi_fp_ad_mort,#yfi_fp_ad_nns,#ygrp-sponsored-links,#ymap_adbanner,#yn-gmy-ad-lrec,#yreSponsoredLinks,#zoneAdserverMrec,#zoneAdserverSuper,.ADBAR,.Ad160x600,.Ad300x250L,.AdBox7,.AdContainerBox308,.AdHere,.AdRingtone,.AdSense,.AdSpace,.AdUnit,.AdUnit300,.Ad_C,.Ad_D_Wrapper,.Ad_E_Wrapper,.Ad_Right,.Ads,.AdvertisementTextTag,.BannerAd,.BlockAd,.CG_adkit_leaderboard,.DeptAd,.FT_Ad,.FlatAds,.LeftTowerAd,.MD_adZone,.MPU,.Post5ad,.RelatedAds,.RightRailTop300x250Ad,.RightSponsoredAdTitle,.RightTowerAd,.SidebarAd,.SponsoredAdTitle,.SponsoredLinksGrayBox,.StandardAdLeft,.StandardAdRight,.TextAd,.TheEagleGoogleAdSense300x250,.TopAd,.UIStandardFrame_SidebarAds,.UIWashFrame_SidebarAds,.VerticalAd,.ad-160x600,.ad-300,.ad-300-block,.ad-300-blog,.ad-300x100,.ad-300x250,.ad-728,.ad-background,.ad-banner,.ad-bigsize,.ad-block,.ad-bottom,.ad-button,.ad-cell,.ad-div,.ad-footer-leaderboard,.ad-google,.ad-gray,.ad-holder,.ad-homeleaderboard,.ad-island,.ad-leaderboard,.ad-links,.ad-medium,.ad-medium-two,.ad-mpu,.ad-other,.ad-poster,.ad-rect,.ad-rectangle,.ad-rectangle-text,.ad-related,.ad-rh,.ad-ri,.ad-right,.ad-right-txt,.ad-section,.ad-sidebar300,.ad-slot,.ad-space,.ad-space-mpu-box,.ad-spot,.ad-text,.ad-tile,.ad-top,.ad-top-left,.ad-wrap,.ad0,.ad1,.ad10,.ad120,.ad160,.ad18,.ad19,.ad2,.ad21,.ad3,.ad300,.ad300x250,.ad300x250Top,.ad300x600,.ad310,.ad336x280,.ad468,.ad6,.ad620x70,.ad7,.ad728,.ad728x90,.ad8,.adAgate,.adBanner,.adBannerTyp1,.adBannerTypSortableList,.adBannerTypW300,.adBgBottom,.adBgMId,.adBgTop,.adBoxSingle,.adCMRight,.adColumn,.adCreative,.adFrame,.adFtr,.adFullWidthMiddle,.adGoogle,.adHeader,.adHeadline,.adHolder,.adHome300x250,.adInNews,.adLabel,.adLeader,.adLeaderForum,.adLeaderboard,.adLeft,.adMkt2Colw,.adNewsChannel,.adNoticeOut,.adObj,.adRight,.adServer,.adSlot,.adSpBelow,.adSpacer,.adSpot,.adSpot-textBox,.adSpotIsland,.adSquare,.adSuperboard,.adTag,.adText,.adTitle,.adTout,.adTxt,.adWithTab,.adWrapper,.ad_1,.ad_160,.ad_160x600,.ad_2,.ad_3,.ad_300,.ad_300_250,.ad_300x250,.ad_336x280,.ad_350x250,.ad_468,.ad_600,.ad_728,.ad_728x90,.ad_amazon,.ad_biz,.ad_block_338,.ad_bottom_leaderboard,.ad_box,.ad_box2,.ad_caption,.ad_contain,.ad_container,.ad_content_wide,.ad_footer,.ad_framed,.ad_hpm,.ad_launchpad,.ad_leader,.ad_leaderboard,.ad_left,.ad_loc,.ad_lrec,.ad_medrect,.ad_mpu,.ad_mrec,.ad_mrec_title_article,.ad_notice,.ad_p360,.ad_partner,.ad_plus,.ad_post,.ad_power,.ad_right,.ad_sidebar,.ad_skyscraper,.ad_slug_table,.ad_space,.ad_sponsor,.ad_spot_b,.ad_spot_c,.ad_square_r,.ad_square_top,.ad_top,.ad_top_leaderboard,.ad_tower,.ad_unit,.ad_wide,.ad_wrap,.ad_wrapper,.ad_wrapper_fixed,.ad_zone,.adarea,.adbanner,.adbannerright,.adbar,.adborder,.adbot,.adbottom,.adbox-outer,.adbox_366x280,.adbox_468X60,.adbox_bottom,.adcode,.adcolumn_wrapper,.adcontainer,.adcopy,.addiv,.adfoot,.adhead,.adheader,.adhere,.adinside,.adjlink,.adkit-advert,.adkit-lb-footer,.adlabel-horz,.adlabel-vert,.adline,.adlist,.adlnklst,.admarker,.admedrec,.admodule,.admpu,.adnotice,.adpadding,.adpic,.adrow,.ads-banner,.ads-categories-bsa,.ads-links-general,.ads-profile,.ads-right,.ads-sidebar,.ads-text,.ads2,.ads3,.adsArea,.adsBox,.adsImages,.adsTextHouse,.adsWithUs,.ads_300,.ads_728x90,.ads_big,.ads_big-half,.ads_container,.ads_disc_anchor,.ads_disc_leader,.ads_disc_lwr_square,.ads_disc_skyscraper,.ads_disc_square,.ads_div,.ads_header,.ads_mpu,.ads_right,.ads_sc_tl_i,.ads_side,.adsborder,.adscreen,.adsection_a2,.adsection_c2,.adsense,.adsense-heading,.adsense-title,.adsenseContainer,.adsingle,.adslogan,.adspace,.adspace-MR,.adspacer,.adstrip,.adtag,.adtop,.advIdentifier,.adverTag,.adver_cont_below,.advert-text,.advertCont,.advertContainer,.advertRight,.advertText,.advert_468x60,.advert_box,.advert_cont,.advert_leaderboard,.advert_note,.advertise,.advertise-homestrip,.advertise-horz,.advertise-leaderboard,.advertise-vert,.advertiseContainer,.advertisement,.advertisement-728x90,.advertisement-block,.advertisement-top,.advertisement468,.advertisementColumnGroup,.advertisementPanel,.advertisement_caption,.advertisement_header,.advertisement_horizontal,.advertiser,.advertising,.advertising-header,.advertisingTable,.advertisment_two,.advertorial,.adverts,.advt,.advt-banner-3,.advt300,.advt720,.adwrapper,.adwrapper-lrec,.affiliate-sidebar,.affiliateAdvertText,.agi-adsaleslinks,.alt_ad,.anchorAd,.aolSponsoredLinks,.aopsadvert,.article-ads,.articleAd,.articleAdsL,.articleEmbeddedAdBox,.article_ad,.article_adbox,.aseadn,.aux-ad-widget-2,.b-astro-sponsored-links_horizontal,.b-astro-sponsored-links_vertical,.banner-ad,.banner-ads,.banner300x100,.banner300x250,.bannerAd,.banner_300x250,.banner_728x90,.banner_ad,.banner_ad_footer,.banner_ad_leaderboard,.bannerad,.barkerAd,.bgnavad,.bigAd,.big_ads,.bigad,.billboard_ad,.block-ad,.block_ad,.blocked-ads,.blog-ads-container,.blogAdvertisement,.blogBigAd,.blog_ad,.body_ad,.body_sponsoredresults_bottom,.body_sponsoredresults_middle,.body_sponsoredresults_top,.bottomAd,.bottomAds,.bottomad,.bottomrightrailAd,.boxAd,.box_ad,.box_advertisment_62_border,.box_content_ad,.box_content_ads,.bps-ad-wrapper,.bps-advertisement,.bps-advertisement-inline-ads,.bullet-sponsored-links,.bullet-sponsored-links-gray,.burstContentAdIndex,.buttonAd,.cA-adStrap,.cb_footer_sponsor,.cb_navigation_ad,.cdAdTitle,.cdmainlineSearchAdParent,.cdsidebarSearchAdParent,.centerAd,.centerad,.clearerad,.cm_ads,.cnn160AdFooter,.cnnAd,.cnnMosaic160Container,.cnnStoreAd,.cnnStoryElementBoxAd,.cnnWCAdBox,.cnnWireAdLtgBox,.cnn_adcntr300x100,.cnn_adspc336cntr,.cnn_adtitle,.column2-ad,.confirm_ad_left,.confirm_ad_right,.confirm_leader_ad,.consoleAd,.container_serendipity_plugin_google_adsense,.content_ad,.content_adsq,.contentad,.contenttextad,.cp_ad,.cpmstarHeadline,.cpmstarText,.ct_ad,.cubeAd,.cube_ads,.darla_ad,.dart_ad,.dartadvert,.dartiframe,.dc-ad,.deckAd,.detailMpu,.dmco_advert_iabrighttitle,.download_ad,.downloadad,.dynamic_ad,.ec-ads,.entryad,.ez-clientAd,.f_Ads,.featuredAds,.featuredadvertising,.flagads,.flash_advert,.flashad,.flexiad,.flipbook_v2_sponsor_ad,.footerAd,.footerAdModule,.footerTextAd,.footer_ad,.footer_ads,.footer_block_ad,.footer_line_ad,.ft-ad,.ftdContentAd,.full_ad_box,.g3rtn-ad-site,.g_ggl_ad,.gads_cb,.gglAds,.google-ad-container,.google-ads,.google-ads-boxout,.google-right-ad,.google-sponsored-ads,.google468_60,.googleAd,.googleAd-content,.googleAd-list,.googleAdBox,.googleAdSense,.googleAd_body,.googleAds,.googleAdsense,.googleProfileAd,.googlead,.googleads,.googleads_300x250,.googleads_title,.gpAds,.gradientAd,.gt_ad_300x250,.gt_ad_728x90,.gutter-ad-left,.gutter-ad-right,.h_Ads,.hd_advert,.headerAdvert,.header_ad,.header_advertisment,.hi5-ad,.highlightsAd,.hm_advertisment,.home-ad-links,.homeAd,.homeMediumAdGroup,.homepage-ad,.homepageFlexAdOuter,.homepageMPU,.hor_ad,.horizontalAd,.hortad,.houseAdsStyle,.hp2-adtag,.hp_ad_cont,.hp_ad_text,.hp_t_ad,.hp_w_ad,.idMultiAd,.image-advertisement,.imageads,.in-page-ad,.in-story-text-ad,.indy_googleads,.inline-mpu-left,.inlineSideAd,.inline_ad_title,.inner-advt-banner-3,.innerAds,.innerad,.inpostad,.islandAd,.js-advert,.kw_advert,.kw_advert_pair,.l_ad_sub,.largeRectangleAd,.leader_ad,.leaderboardAd,.leftAd,.leftad,.linead,.link_advertise,.live-search-list-ad-container,.log_ads,.lowerAds,.m_banner_ads,.macAd,.macad,.main-tabs-ad-block,.main_ad,.main_adbox,.map_media_banner_ad,.marginadsthin,.marketing-ad,.mdl-ad,.medium-rectangle-ad,.messageBoardAd,.micro_ad,.mid_ad,.midad,.min_navi_ad,.miniad,.mod-ad-lrec,.mod-ad-n,.mod_admodule,.module-ad-small,.module-ads,.modulegad,.moduletable-advert,.moduletablesquaread,.mpu-ad,.mpu-title,.mpuAd,.mpuContainer,.mpuTextAd,.mpu_ad,.mpu_gold,.mpu_platinum,.mpuholderportalpage,.msfg-shopping-mpu,.mwaads,.nadvt300,.naviad,.nba300Ad,.nbaT3Ad160,.nbaTwo130Ads,.nbc_ad_carousel_wrp,.newTopAdContainer,.newad,.nf-adbox,.normalAds,.nrAds,.oas-bottom-ads,.oio-banner-zone,.oio-link-sidebar,.oio-zone-position,.onethirdadholder,.openx,.openx-ad,.ov_spns,.pageLeaderAd,.partnersTextLinks,.pencil_ad,.player_ad_box,.player_page_ad_box,.pnp_ad,.podSponsoredLink,.post-ad,.post_ad,.prebodyads,.premium_ad_container,.promoAd,.promoAds,.puff-advertorials,.quigo-ad,.qzvAdDiv,.rad_container,.rectad,.rectangleAd,.rectanglead,.redads_cont,.regularad,.relatedAds,.result_ad,.results_sponsor,.results_sponsor_right,.rght300x250,.rhads,.rhs-ad,.rhs-ads-panel,.right-ad,.right-ad-holder,.right-ad2,.rightAd,.right_ad,.right_ad_text,.right_hand_advert_column,.rightad,.rightad_1,.rightad_2,.rightads,.rightadunit,.rightcol_boxad,.rt_ad1_300x90,.rt_ad_300x250,.rt_ad_call,.savvyad_unit,.sb-ad-sq-bg,.sbAdUnitContainer,.sb_adsN,.sb_adsNv2,.sb_adsW,.sb_adsWv2,.scanAd,.search-sponsor,.search-sponsored,.searchAd,.searchSponsoredResultsBox,.search_column_results_sponsored,.search_results_sponsored_top,.section-sponsor,.section_mpu_wrapper,.selfServeAds,.sidbaread,.side-ad,.side_ad,.sidead,.sideadsbox,.sideadvert,.sidebar-ad,.sidebar-text-ad,.sidebarAdUnit,.sidebarAdvert,.sidebar_ad,.sidebar_box_ad,.sidebarad,.sidebarad_bottom,.sideheadnarrowad,.sideheadsponsorsad,.singleAd,.singleAdsContainer,.singlead,.sitesponsor,.skinAd,.skin_ad_638,.sky-ad,.skyAd,.skyAdd,.sky_ad,.skyscraper-ad,.smallSkyAd1,.smallSkyAd2,.small_ad,.small_ads,.specialAd175x90,.spl_ad,.spl_ad2,.spl_ad_plus,.splitAd,.spons-link,.sponslink,.sponsor-ad,.sponsor-links,.sponsorArea,.sponsor_line,.sponsorbox,.sponsored-chunk,.sponsored-links,.sponsored-post,.sponsored-text,.sponsoredLinks,.sponsored_ads,.sponsored_box,.sponsored_by,.sponsored_links,.sponsored_links_title_container,.sponsored_links_title_container_top,.sponsored_links_top,.sponsoredibbox,.sponsoredlinks,.sponsorlink,.squareAd,.square_ad,.squared_ad,.ss-ad-mpu,.store-ads,.story_AD,.story_right_adv,.subad,.subcontent-ad,.supercommentad_left,.supercommentad_right,.surveyad,.t10ad,.tab_ad,.tadsanzeige,.tadsbanner,.tadselement,.tbl_ad,.teaserAdContainer,.teaser_adtiles,.text-ad-links,.textAd,.textAds,.text_ads,.textad,.textlink-ads,.thisIsAd,.thisIsAnAd,.ticket-ad,.tileAds,.title_adbig,.toolad,.toolbar-ad,.top-ad-space,.topAdvertisement,.topBannerAd,.top_ad,.top_ad_disclaimer,.top_ad_wrapper,.top_advert,.topad,.topadbox,.topadspot,.topcontentadvertisement,.topstoriesad,.towerAds,.tower_ad_disclaimer,.ts-ad_unit_bigbox,.ts-banner_ad,.ttlAdsensel,.twoColumnAd,.twoadcoll,.twoadcolr,.tx_smartadserver_pi1,.txt-ads,.type_promoads,.usenext,.vertad,.videoAd,.view-promo-mpu-right,.wide-ad,.wide-skyscraper-ad,.wideAdTable,.wide_ads,.wikia_ad_placeholder,.withAds,.y7-advertisement,.yahoo-sponsored,.yahoo_ads,.ygrp-ad,.yrail_ad_wrap,.yrail_ads,.ysmsponsor,.ysponsor,a[href^="http://adserving.liveuniversenetwork.com/"],a[href^="http://latestdownloads.net/download.php?"],a[href^="http://www.FriendlyDuck.com/AF_"],a[href^="http://www.adbrite.com/mb/commerce/purchase_form.php?"],a[href^="http://www.liutilities.com/aff"],a[href^="http://www.my-dirty-hobby.com/?sub="],a[href^="http://www.ringtonematcher.com/"],[src*="sixsigmatraffic.com"],#Adbanner,#AdvertiseFrame,#ad-container,#ad-wrap,#ads,#ad1,#ad728x90,#adContainer,.advert,#ad_container,#ad_square,#ad_wrapper,#adbox,#advert,#adposition3,.adElement,#sidebar_ads,.adright,#adspace,#advertisement,#footer_ads,#head-ad,#header_ad,#topad,.AdBox,.AdTitle,.ad-container,.adBox,.adContainer,.adModule,.adSpace,.ad_content,.ad_header,.ad_text,.adframe,.ads:not(body),.adtext,.advert-horizontal,.advertisment,.affiliate,.boxad,.contentAd,.header-ad,.headerAd,.header_ad_center,.horizontal_ad,.mpu,.textads,.topAds,#adt[align="right"][style="border-left: 1px solid rgb(201, 215, 241);"],#mbEnd[width="30%"][style],#mboxEnd[width="30%"][style],div#mclip_container:first-child:last-child,div#tads.c,div.ch[id^="tba"][style],div.ch[id^="tpa"][style],div[style="font-size: small; background-color: rgb(255, 249, 221);"],div[style^="background: rgb(255, 248, 221) none repeat scroll 0% 0%; margin-top: 10px;"],table.ra[align="left"][width="30%"],table.ra[align="right"][width="30%"],table[align="center"][cellpadding="0"][style*="padding: 8px;"][style*="rgb(255, 248, 221);"][width="100%"],table[style^="padding: 8px; background: rgb(255, 248, 221) none repeat scroll 0% 0%; -moz-background-clip:"] { visibility:hidden !important;    display:none !important; }</STYLE></HTML>
