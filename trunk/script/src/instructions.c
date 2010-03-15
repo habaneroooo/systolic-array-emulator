@@ -1,4 +1,3 @@
-#include "../include/instructions.h"
 #include <stdio.h>
 void inst1(void)
 {
@@ -19,5 +18,8 @@ void inst4(void)
 {
 	printf("4\n");
 }
-
+void fvoid(void)
+{
+	
+}
 /* EOF */
