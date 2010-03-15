@@ -8,10 +8,26 @@
 #include "../include/instructions.h"
 
 #define NB_MACRO 2
+#define STRMAXSIZE 100
 
-typedef enum whereami {begin,calculation,register_};
+typedef enum t_whereami {begin,calculation,after_calculation,register_};
 
-void fCalculation(void*, FILE*, char*);
+typedef struct {
+	char * name;
+	int index;
+	int nbinstructions;
+	void (*p_instructions)();
+}t_process;
+
+typedef struct {
+	char * name;
+	int index;
+	int nbprocesses;
+	t_process * lsprocess;
+}t_calculation;
+
+
+void fCalculation(void*, FILE*,int,char*);
 void * gimmegimmegimme(int , int ,int );
 
 #endif /* EOF */

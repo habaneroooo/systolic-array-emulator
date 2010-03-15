@@ -62,9 +62,13 @@ This macro cannot be used after the calculation description has started or it wi
 #calculation	name	number of cycles
 
 A calculation is a series of process. There must be at least one 
+the name can be anything, but it must NOT start with "#" or the program will fail.
 
 #process	X	Y
 X is the series of operation each diagonal will operate each after another.
 Y is the number of times that process is executed before going on to the next process.
+
+Note: the program will only execute "number of cycles" cycles. If you declared more cycles that this number, the reste will be ignored.
+If you declared less cycles, the rest will be filled with void (ø).
 
 #end	calculation: quits calculation mode
