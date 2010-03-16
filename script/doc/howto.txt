@@ -36,6 +36,12 @@ Operations
 		Default is signed long int.
 		
 {}	: groups operations and execute them in order (left to right) in one systolic cycle.
+	  Only one group of brackets will be taken into account.
+	  Ex:
+	{*,*}{*} <- only {*,*} is considered, rest is ignored.
+	{*,*,{*,*},*} <- is considered as {*,*,*,*,*}
+	
+	
 ,	: separates operations when queued with brackets
 
 <x	: Charge data. "x" is either "L" or "U".

@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
 	int vIndex;
 	int vNbcalculations = 0;
 	char script[][STRMAXSIZE]={"#calculation","#process","#register","#end"};
+
 	enum t_whereami fgsfds = begin;
 	p_file = fopen("calculate","r");
 	if(p_file == NULL)
@@ -88,7 +89,7 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 {
 	char * p_string = (char*)malloc(sizeof(char)*STRMAXSIZE);
 	t_calculation sCalculation;
-	int vIndex, vLengthRead;
+	int vIndex, vLengthRead, nbInstructionsDeclared = 0;
 	int vTest = 1;
 	
 	/* Scans the opened file for the calculation name */
@@ -118,12 +119,15 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 	/* Initializes the instructions index */
 	sCalculation.nbprocesses = (int)fscanf(p_file,"%c",p_string);
 	sCalculation.lsprocess = (t_process*)gimmegimmegimme(sizeof(t_process),sCalculation.nbprocesses,1);
+	
+	/* Initializes all processes */
 	for(vIndex=0;vIndex<sCalculation.nbprocesses;vIndex++)
 	{
 		sCalculation.lsprocess->index = vIndex;
 		sCalculation.lsprocess->nbinstructions = 1;
-		sCalculation.lsprocess->p_instructions = fvoid;
+		*(sCalculation.lsprocess->p_instructions) = &fvoid;
 	}
+	
 	/* Scan for instructions */
 	do
 	{
@@ -143,18 +147,89 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 		/* vIndex == 1 is script[1][0] */
 		if((vTest == 0) && (vIndex = 1))	
 		{
+			vLengthRead = fscanf(p_file,"%s",p_string);
 			
+			/* Checks if the next string is a macor (which is erroneous) */
+			if(!strncmp(p_string,"#",1))
+				
+			/* If there is more than one instruction */
+			if((vLengthRead > 1))
+			{
+				t_list vTemp;
+				/* If the user grouped the instructions within brackets, it is taken into account */
+				if(!strncmp(p_string,"{",1))
+				{
+					for(vIndex=0;(vIndex<vLengthRead)&&(strncmp(p_string,"}",1));vIndex++)
+					{
+						if(!fLinkCharToFunc(*p_string+vIndex,&vTemp))
+						{
+							
+							nbInstructionsDeclared++;
+							
+							//~ (*(sCalculation.lsprocess)).p_instructions
+							(*(sCalculation.lsprocess)).p_instructions = (void(**)())realloc((*(sCalculation.lsprocess)).p_instructions,(nbInstructionsDeclared*sizeof(void*)));
+							if(sCalculation.lsprocess->p_instructions == NULL)
+							{
+								printf("Out of memory\n");
+								exit(-1);
+							}
+							
+							*((*(sCalculation.lsprocess)).p_instructions)+nbInstructionsDeclared = vTemp.func;
+						}
+					}
+					sCalculation.lsprocess->nbinstructions = nbInstructionsDeclared;
+				}
+				else
+				{
+					vTest = 1;
+					for(vIndex=0;(vIndex<vLengthRead)&&(vTest == 1);vIndex++)
+					{
+						vTest = fLinkCharToFunc(*(p_string+vIndex),&vTemp);
+					}
+					
+				}
+			}
 		}
+		/* else: other macro -> ignored */
 		
 	//~ vLengthRead = fscanf(p_file,"%s",p_string);
 	printf("%s\n",p_string);
 	}while(!strcmp(p_string,"#end") || !(vLengthRead < 0) );
 			
 	/* Masks unused variables */
-	(t_whereami*) fgsfds;
+	//~ (t_whereami*) fgsfds;
 	
 	/* free reserved memory */
 	free(p_string);
+}
+
+int fLinkCharToFunc(char carac,t_list* sFuncToLink)
+{
+	int vIndex, vTest = 0;
+	const t_list tab_list[NBINSTRUCTIONS] = {
+		{'<',	fvoid},
+		{'>',	fvoid},
+		{'*',		fvoid},
+		{'+',	fvoid}, 
+		{'-',		fvoid},
+		{'/',		fvoid},
+		{'ø',		fvoid},
+		{'%',	fvoid},
+		{'&',	fvoid},
+		{'|',		fvoid}
+	};
+	
+	/* Finds the function linked to the character given */
+	for(vIndex = 0; vIndex < NBINSTRUCTIONS; vIndex++)
+	{
+		if(tab_list[vIndex].carac == carac)
+		{
+			sFuncToLink->func = tab_list[vIndex].func;
+			vTest = 1;
+		}
+	}
+
+	return vTest;
 }
 
 /* EOF */
