@@ -12,12 +12,13 @@
 #define STRMAXSIZE 100
 
 typedef enum t_whereami {begin,calculation,after_calculation,register_};
+typedef void (*t_func)(void);
 
 typedef struct {
 	char * name;
 	int index;
 	int nbinstructions;
-	void (*(*p_instructions))();
+	t_func *p_instructions;
 }t_process;
 
 typedef struct {

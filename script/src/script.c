@@ -125,7 +125,8 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 	{
 		sCalculation.lsprocess->index = vIndex;
 		sCalculation.lsprocess->nbinstructions = 1;
-		*(sCalculation.lsprocess->p_instructions) = &fvoid;
+		*(sCalculation.lsprocess)->p_instructions = (void(**)())malloc(sizeof(t_func*));
+		*(*(sCalculation.lsprocess)).p_instructions = &fvoid;
 	}
 	
 	/* Scan for instructions */
@@ -142,7 +143,6 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 		{
 			vTest = strcmp(p_string,(script+vIndex*STRMAXSIZE+0));
 		}
-		
 		/* Checks if the macro is a process declaration"*/
 		/* vIndex == 1 is script[1][0] */
 		if((vTest == 0) && (vIndex = 1))	
@@ -167,14 +167,14 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 							nbInstructionsDeclared++;
 							
 							//~ (*(sCalculation.lsprocess)).p_instructions
-							(*(sCalculation.lsprocess)).p_instructions = (void(**)())realloc((*(sCalculation.lsprocess)).p_instructions,(nbInstructionsDeclared*sizeof(void*)));
+							(*(sCalculation.lsprocess)).p_instructions = (void(**)())realloc((*(sCalculation.lsprocess)).p_instructions,(nbInstructionsDeclared*sizeof(void(*)())));
 							if(sCalculation.lsprocess->p_instructions == NULL)
 							{
 								printf("Out of memory\n");
 								exit(-1);
 							}
 							
-							*((*(sCalculation.lsprocess)).p_instructions)+nbInstructionsDeclared = vTemp.func;
+							*((*(sCalculation.lsprocess)).p_instructions+nbInstructionsDeclared) = vTemp.func;
 						}
 					}
 					sCalculation.lsprocess->nbinstructions = nbInstructionsDeclared;
