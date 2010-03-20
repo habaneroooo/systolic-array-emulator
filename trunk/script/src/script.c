@@ -2,7 +2,7 @@
 
 int main(int argc, char *argv[])
 {
-	FILE * p_file = NULL;
+	FILE * p_file;
 	char * p_string = NULL;
 	int vMaxStringSize = STRMAXSIZE;
 	int vTest = 1;
@@ -201,6 +201,15 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 					
 				}
 			}
+			
+			vLengthRead = fscanf(p_file,"%d",&vTest);
+			if(vLengthRead > 1)
+			{
+				for(vIndex = 1;(vIndex <vTest)&&(vIndex < sCalculation.nbprocesses);vIndex++)
+				{
+					*(sCalculation.lsprocess+vIndex)= *(sCalculation.lsprocess);
+				}
+			}
 		}
 		/* else: other macro -> ignored */
 		
@@ -209,10 +218,11 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 	}while(!strcmp(p_string,"#end") || !(vLengthRead < 0) );
 			
 	/* Masks unused variables */
-	//~ (t_whereami*) fgsfds;
+	(t_whereami*) fgsfds;
 	
 	/* free reserved memory */
 	free(p_string);
+	free((void*)sCalculation.lsprocess);
 }
 
 int fLinkCharToFunc(char carac,t_list* sFuncToLink)
@@ -255,7 +265,7 @@ int fgetline(FILE* p_file, int* n,char**p_string)
 		if(new_n == *n)
 		{
 			stringlen *= 2;
-			p_string = realloc(p_string,stringlen);
+			p_string = (char**)realloc(p_string,stringlen);
 			if(p_string ==NULL)
 			{
 				printf("Out of memory\n");
@@ -270,7 +280,7 @@ int fgetline(FILE* p_file, int* n,char**p_string)
 	if(new_n > *n)
 	{
 		*n = strlen(*p_string);
-		realloc(p_string,*n);
+		p_string = (char**)realloc(p_string,stringlen);
 	}
 	return 0;
 }
