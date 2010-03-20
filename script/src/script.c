@@ -4,13 +4,14 @@ int main(int argc, char *argv[])
 {
 	FILE * p_file = NULL;
 	char * p_string = NULL;
+	int vMaxStringSize = STRMAXSIZE;
 	int vTest = 1;
 	int vIndex;
 	int vNbcalculations = 0;
 	char script[][STRMAXSIZE]={"#calculation","#process","#register","#end"};
 
 	enum t_whereami fgsfds = begin;
-	p_file = fopen("calculate","r");
+	p_file = fopen("calculate","rb");
 	if(p_file == NULL)
 	{
 		printf("Error opening file\n");
@@ -18,7 +19,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		p_string = (char *)gimmegimmegimme(sizeof(char),STRMAXSIZE,1);
+		p_string = (char *)gimmegimmegimme(sizeof(char),vMaxStringSize,1);
 		if(p_string == NULL)
 		{
 			printf("Out of memory\n");
@@ -26,6 +27,15 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
+			printf("%s\n--\n",p_string);
+			fgetline(p_file,&vMaxStringSize,&p_string);
+			printf("%s\n--\n",p_string);
+
+			free(p_string);
+			exit(0);
+
+			fgets(p_string,STRMAXSIZE,p_file);
+			printf("%s\n",p_string);
 			do
 			{
 				fscanf(p_file,"%s",p_string);
@@ -77,6 +87,8 @@ int main(int argc, char *argv[])
 	/* Masks unused variables */
 	(void)argc;
 	(void)argv;
+
+	return 0;
 }
 
 void * gimmegimmegimme(int taille_data, int taille_x,int taille_y)
@@ -125,7 +137,7 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 	{
 		sCalculation.lsprocess->index = vIndex;
 		sCalculation.lsprocess->nbinstructions = 1;
-		*(sCalculation.lsprocess)->p_instructions = (void(**)())malloc(sizeof(t_func*));
+		(*(sCalculation.lsprocess)).p_instructions = (void(**)())malloc(sizeof(t_func*));
 		*(*(sCalculation.lsprocess)).p_instructions = &fvoid;
 	}
 	
@@ -230,6 +242,37 @@ int fLinkCharToFunc(char carac,t_list* sFuncToLink)
 	}
 
 	return vTest;
+}
+
+int fgetline(FILE* p_file, int* n,char**p_string)
+{
+	int new_n = 0,stringlen;
+	char c = 'o';
+	stringlen = strlen(*p_string);
+	while((c != '\x0A') && !feof(p_file))
+	{
+		printf("%d--%d--%c\x0A",strcmp(&c,"\x0A"),feof(p_file),c);
+		if(new_n == *n)
+		{
+			stringlen *= 2;
+			p_string = realloc(p_string,stringlen);
+			if(p_string ==NULL)
+			{
+				printf("Out of memory\n");
+				exit(-1);
+			}
+		}
+		c = (char)fgetc(p_file);
+		*(*p_string + new_n) = (char)c;
+		new_n++;
+	}
+	printf("\n");
+	if(new_n > *n)
+	{
+		*n = strlen(*p_string);
+		realloc(p_string,*n);
+	}
+	return 0;
 }
 
 /* EOF */
