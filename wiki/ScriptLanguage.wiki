@@ -1,12 +1,13 @@
 #summary Script language description
-#labels Featured,Phase-Requirements,Phase-Implementation
+#labels Featured,Phase-Design,Phase-Implementation
 
 = Introduction =
 
 This page contains the description of the script language used to describe the behaviour of a systolic array.
 
-
 = Details =
+
+Note: The script language translator is packed within the program, it is not intended to be used outside of the SAE (although with some tweaks, it could be).
 
 Syntax:
 All parametres are separated by one tabulation unless indicate otherwise.
