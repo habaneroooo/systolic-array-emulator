@@ -36,15 +36,15 @@ You can also create registers by using the macro #register (see the Macro sectio
 
 Operations
 
-(t,x,y,o)	: indicates the data to process, their format and where to store the result. It is ignored for ø (= void).
-		ex: /(x,y) divide x by y, stores the result in o. Default stores it in the temporary register.
-		"t" indicates the type of data. 
-		Data can be:
-		"ul","sl": unsigned/signed long int
+(t,x,y,o)	: indicates the data to process, their format and where to store the result. It is ignored for ø (= void).<br>
+		ex: /(x,y) divide x by y, stores the result in o. Default stores it in the temporary register.<br>
+		"t" indicates the type of data. <br>
+		Data can be:<br>
+		"ul","sl": unsigned/signed long int<br>
 		"f": floating point
-		"ud","sd": 8bit signed/unsigned int
-		"us","ss": 16bit signed/unsigned int
-		Default is signed long int.
+		"ud","sd": 8bit signed/unsigned int<br>
+		"us","ss": 16bit signed/unsigned int<br>
+		Default is signed long int.<br>
 		
 {}	: groups operations and execute them in order (left to right) in one systolic cycle.
 ,	: separates operations when queued with brackets
