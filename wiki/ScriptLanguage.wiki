@@ -53,15 +53,15 @@ Operations
 >x	: Ouput data. "x" is either "R" or "D"
 	  When queued in brackets, order does not matter, it is always the last operation executed.
 	  If not defined, it returns the result of the last operation
-	  
-*	: multiply
-+	: add
--	: subtract
-/	: divide
-ø	: void  / do nothing.
-%	: comment. Line ignored.
-&	: logic AND
-|	; logic
+<br>	  
+*	: multiply<br>
++	: add<br>
+-	: subtract<br>
+/	: divide<br>
+ø	: void  / do nothing.<br>
+%	: comment. Line ignored.<br>
+&	: logic AND<br>
+|	; logic<br>
 
 Macros
 
