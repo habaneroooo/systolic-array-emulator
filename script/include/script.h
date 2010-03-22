@@ -4,16 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//~ #include <iostream>
-//~ #include <ifstream>
-#include "../include/instructions.h"
-//~ using namespace std;
+#include "../include/link.h"
 
-#define NB_MACRO 2
-#define NBINSTRUCTIONS 11
+#define NB_MACRO 4
 #define STRMAXSIZE 100
 
-typedef enum t_whereami {begin,calculation,after_calculation,register_};
+typedef enum {begin,calculation,after_calculation,register_} t_whereami;
 typedef void (*t_func)(void);
 
 typedef struct {
@@ -31,13 +27,8 @@ typedef struct {
 	t_process * lsprocess;
 }t_calculation;
 
-typedef struct {
-	char carac;
-	void (*func)();
-}t_list;
-
-void fCalculation(void*, FILE*,int,char*);
-void * gimmegimmegimme(int , int ,int );
+void fCalculation(void*, FILE*,int,char*,char*,int*);
+void * gimmegimmegimme(int ,int ,int );
 int fLinkCharToFunc(char,t_list*);
 int fgetline(FILE*, int*,char**);
 
