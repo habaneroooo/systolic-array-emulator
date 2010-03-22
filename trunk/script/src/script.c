@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 	int vNbcalculations = 0;
 	char script[][STRMAXSIZE]={"#calculation","#process","#register","#end"};
 
-	enum t_whereami fgsfds = begin;
+	t_whereami fgsfds = begin;
 	p_file = fopen("calculate","rb");
 	if(p_file == NULL)
 	{
@@ -27,47 +27,36 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			printf("%s\n--\n",p_string);
-			fgetline(p_file,&vMaxStringSize,&p_string);
-			printf("%s\n--\n",p_string);
-
-			free(p_string);
-			exit(0);
-
-			fgets(p_string,STRMAXSIZE,p_file);
-			printf("%s\n",p_string);
+			/* This test always finds the first macro in the script file */
 			do
 			{
-				fscanf(p_file,"%s",p_string);
+				fgetline(p_file,&vMaxStringSize,&p_string);
 			}while(*p_string != '#');
-			
+			printf("%s",p_string);
 			/* Permet de trouver la macro que l'on a lu. */
-			/* Puisqu'apres on se sert de fonctions, ce test trouve toujours la premiere macro du fichier. */ 
-			
-			/* TRADUIRE */
-			
 			for(vIndex = 0;(vIndex < NB_MACRO) &&  (vTest != 0 );vIndex++)
 			{
 				vTest = strcmp(p_string,&script[vIndex][0]);
+				printf("%d\n",vTest);
 			}
 			if(vTest == 0)	
 			{
 				switch(vIndex)
 				{
-					case begin:			break;
+					case begin:				break;
 					
 					case calculation:		fgsfds = calculation;
-										fCalculation(&fgsfds,p_file,vNbcalculations,(char*)script);
-										vNbcalculations++;
-										break;
+											fCalculation(&fgsfds,p_file,vNbcalculations,(char*)script,p_string,&vMaxStringSize);
+											vNbcalculations++;
+											break;
 					
 					case after_calculation:	break;
 					
 					case register_ :		if(fgsfds == begin)
-										{
-											
-										}
-					
+											{
+
+											}
+
 					default:				printf("Macro \"%s\" undefined\nIgnoring\n",p_string);
 				}
 			}
@@ -96,29 +85,44 @@ void * gimmegimmegimme(int taille_data, int taille_x,int taille_y)
 	void* p_data = (void *)malloc(taille_data*taille_x*taille_y);
 	return (void*) p_data;
 }
-
-void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * script)
+/*
+ * fCalculation():
+ * Scans trough the script file for processes and allocates memory according to what's written inside that file
+ *
+ * Arguments:
+ * (void*)	fgsfds:
+ * (FILE*)	p_file: the script file
+ * (int)	vNbcalculations:
+ * (char*)	script: A list of the known macros.
+ * (char*)	p_string: General string used to read through the script file
+ * (int*)	p_vMaxStringSize: the current length of p_string
+ */
+void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * script, char* p_string, int* p_vMaxStringSize)
 {
-	char * p_string = (char*)malloc(sizeof(char)*STRMAXSIZE);
+	/* The calculation we're about to read */
 	t_calculation sCalculation;
-	int vIndex, vLengthRead, nbInstructionsDeclared = 0;
+
+	/* General index variable (useful in for(;;)'s)*/
+	int vIndex;
+
+	/* Used to verify the number of character read in standart string.h functions. */
+	int vLengthRead;
+
+	/* */
+	int nbInstructionsDeclared = 0;
+
+	/* General test variable */
 	int vTest = 1;
 	
 	/* Scans the opened file for the calculation name */
-	vLengthRead = fscanf(p_file,"%s",p_string);
+	vLengthRead = sscanf(p_string,"%*s %s %d",sCalculation.name,&nbInstructionsDeclared);
 	
 	/* Verifies the calculation does have a name... */
-	if(p_string == NULL)
+	if(vLengthRead == 1)
 	{
-		printf("Error: #calculation with no name");
-		exit(-1);
-	}
-	
-	/* Checks the calculation's name's integrity*/
-	if(!(strncmp(p_string,"#",1)))
-	{
-		printf("The name of a #calculation must NOT start with macro declaration caracter \"#\"!\n");
-		exit(-1);
+		sprintf(sCalculation.name,"%c",(char)vNbcalculations+1+'0');
+		printf("Error: #calculation with no name\nRenamed \"%s\"",sCalculation.name);
+		//exit(-1);
 	}
 	
 	/* Gets the name defined in the script file */
@@ -137,7 +141,7 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 	{
 		sCalculation.lsprocess->index = vIndex;
 		sCalculation.lsprocess->nbinstructions = 1;
-		(*(sCalculation.lsprocess)).p_instructions = (void(**)())malloc(sizeof(t_func*));
+		(*(sCalculation.lsprocess)).p_instructions = (void(**)())malloc(sizeof(void(**)()));
 		*(*(sCalculation.lsprocess)).p_instructions = &fvoid;
 	}
 	
@@ -186,7 +190,7 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 								exit(-1);
 							}
 							
-							*((*(sCalculation.lsprocess)).p_instructions+nbInstructionsDeclared) = vTemp.func;
+							*((*(sCalculation.lsprocess)).p_instructions+nbInstructionsDeclared) = vTemp.instructions->func;
 						}
 					}
 					sCalculation.lsprocess->nbinstructions = nbInstructionsDeclared;
@@ -228,25 +232,19 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 int fLinkCharToFunc(char carac,t_list* sFuncToLink)
 {
 	int vIndex, vTest = 0;
-	const t_list tab_list[NBINSTRUCTIONS] = {
-		{'<',	fvoid},
-		{'>',	fvoid},
-		{'*',		fvoid},
-		{'+',	fvoid}, 
-		{'-',		fvoid},
-		{'/',		fvoid},
-		{'ø',		fvoid},
-		{'%',	fvoid},
-		{'&',	fvoid},
-		{'|',		fvoid}
-	};
+
+	/*
+	 * We could reduce the size of this table, however the purpose of having a big table here is
+	 * that we don't have to check the type of the datas when executing the program
+	 */
 	
+
 	/* Finds the function linked to the character given */
 	for(vIndex = 0; vIndex < NBINSTRUCTIONS; vIndex++)
 	{
 		if(tab_list[vIndex].carac == carac)
 		{
-			sFuncToLink->func = tab_list[vIndex].func;
+			sFuncToLink->instructions->func = tab_list[vIndex].instructions->func;
 			vTest = 1;
 		}
 	}
@@ -261,7 +259,6 @@ int fgetline(FILE* p_file, int* n,char**p_string)
 	stringlen = strlen(*p_string);
 	while((c != '\x0A') && !feof(p_file))
 	{
-		printf("%d--%d--%c\x0A",strcmp(&c,"\x0A"),feof(p_file),c);
 		if(new_n == *n)
 		{
 			stringlen *= 2;
@@ -276,7 +273,6 @@ int fgetline(FILE* p_file, int* n,char**p_string)
 		*(*p_string + new_n) = (char)c;
 		new_n++;
 	}
-	printf("\n");
 	if(new_n > *n)
 	{
 		*n = strlen(*p_string);
