@@ -42,7 +42,7 @@ void * gimmegimmegimme(int , int ,int );
 
 int fLinkCharToFunc(char,t_list*);
 int fgetline(FILE*, unsigned int*,char**);
-t_tools * InitMacroTable(void);
+void InitMacroTable(t_tools *);
 
 #endif 
 
