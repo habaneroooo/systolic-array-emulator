@@ -3,14 +3,18 @@
 int main(int argc, char *argv[])
 {
 	FILE * p_file;
-	int vTest = 1;
+	unsigned int vTest = 1;
 	int vIndex;
 	int vLengthRead;
 	int vNbcalculations = 0;
 	char**bidon=NULL;
-	t_tools * Tools;
-
+	t_tools Tools;
 	t_whereami fgsfds = begin;
+
+	char script[NB_MACRO][STRMAXSIZE]={
+	#include "../include/macrotable.h"
+	};
+
 	p_file = fopen("calculate","rb");
 	if(p_file == NULL)
 	{
@@ -19,13 +23,39 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		Tools = InitMacroTable();
-	for(vIndex=0;vIndex<NB_MACRO;vIndex++)
-	{
-		//~ Tools.MacroList[vIndex] = script[vIndex];
-		printf("%s\n",Tools->MacroList[vIndex]);
-	}
-		if(Tools_>String == NULL)
+		Tools.MaxMacroLength = 0;
+		for(vIndex=0;vIndex<NB_MACRO;vIndex++)
+		{
+			vTest = strlen(script[vIndex]);
+			if(vTest > Tools.MaxMacroLength)
+			{
+				Tools.MaxMacroLength = vTest;
+			}
+		}
+		
+		Tools.MaxStringSize = STRMAXSIZE;
+		
+		Tools.Buffer = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxMacroLength);
+		if(Tools.Buffer == NULL)
+		{
+			printf("Out of memory\n");
+			//~ exit(-1);
+		}
+		for(vIndex=0;vIndex<NB_MACRO;vIndex++)
+		{
+			Tools.MacroList[vIndex] = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxMacroLength);
+			if(Tools.MacroList[vIndex] == NULL)
+			{
+				printf("Out of memory\n");
+				//~ exit(-1);
+			}
+		}
+		for(vIndex=0;vIndex<NB_MACRO;vIndex++)
+		{
+			Tools.MacroList[vIndex] = script[vIndex];
+		}
+		Tools.String = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxStringSize);
+		if(Tools.String == NULL)
 		{
 			printf("Out of memory\n");
 			exit(-1);
@@ -42,8 +72,8 @@ int main(int argc, char *argv[])
 			for(vIndex = 0;(vIndex < NB_MACRO) &&  (vTest != 0 );vIndex++)
 			{
 				bidon =Tools.MacroList;
-				vTest = strcmp(Tools.String,Tools.MacroList[vIndex]);
-				printf("%s--%s\n",Tools.String,Tools.MacroList[vIndex]);
+				vTest = strcmp(Tools.Buffer,Tools.MacroList[vIndex]);
+				printf("%s--%s\n",Tools.Buffer,Tools.MacroList[vIndex]);
 			}
 			if(vTest == 0)	
 			{
@@ -329,36 +359,35 @@ int fgetline(FILE* p_file, unsigned int* n,char**p_string)
 	return new_n;
 }
 
-t_tools InitMacroTable(void)
+void InitMacroTable(t_tools * Tools)
 {
 	unsigned int vIndex,vTest;
-	t_tools Tools;
 	char script[NB_MACRO][STRMAXSIZE]={
 	#include "../include/macrotable.h"
 	};
 	
-	Tools.MaxMacroLength = 0;
+	Tools->MaxMacroLength = 0;
 	for(vIndex=0;vIndex<NB_MACRO;vIndex++)
 	{
 		vTest = strlen(script[vIndex]);
-		if(vTest > Tools.MaxMacroLength)
+		if(vTest > Tools->MaxMacroLength)
 		{
-			Tools.MaxMacroLength = vTest;
+			Tools->MaxMacroLength = vTest;
 		}
 	}
 	
-	Tools.MaxStringSize = STRMAXSIZE;
+	Tools->MaxStringSize = STRMAXSIZE;
 	
-	Tools.Buffer = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxMacroLength);
-	if(Tools.Buffer == NULL)
+	Tools->Buffer = (char*)gimmegimmegimme(sizeof(char),1,Tools->MaxMacroLength);
+	if(Tools->Buffer == NULL)
 	{
 		printf("Out of memory\n");
 		//~ exit(-1);
 	}
 	for(vIndex=0;vIndex<NB_MACRO;vIndex++)
 	{
-		Tools.MacroList[vIndex] = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxMacroLength);
-		if(Tools.MacroList[vIndex] == NULL)
+		Tools->MacroList[vIndex] = (char*)gimmegimmegimme(sizeof(char),1,Tools->MaxMacroLength);
+		if(Tools->MacroList[vIndex] == NULL)
 		{
 			printf("Out of memory\n");
 			//~ exit(-1);
@@ -366,16 +395,14 @@ t_tools InitMacroTable(void)
 	}
 	for(vIndex=0;vIndex<NB_MACRO;vIndex++)
 	{
-		Tools.MacroList[vIndex] = script[vIndex];
+		Tools->MacroList[vIndex] = script[vIndex];
 	}
-	
-	Tools.String = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxStringSize);
-	if(Tools.String == NULL)
+	Tools->String = (char*)gimmegimmegimme(sizeof(char),1,Tools->MaxStringSize);
+	if(Tools->String == NULL)
 	{
 		printf("Out of memory\n");
 		//~ exit(-1);
 	}
-	return &Tools;
 }
 
 /* EOF */
