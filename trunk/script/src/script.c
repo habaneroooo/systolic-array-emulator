@@ -3,12 +3,12 @@
 int main(int argc, char *argv[])
 {
 	FILE * p_file;
-	char * p_string = NULL;
-	int vMaxStringSize = STRMAXSIZE;
 	int vTest = 1;
 	int vIndex;
+	int vLengthRead;
 	int vNbcalculations = 0;
-	char script[][STRMAXSIZE]={"#calculation","#process","#register","#end"};
+	char**bidon=NULL;
+	t_tools * Tools;
 
 	t_whereami fgsfds = begin;
 	p_file = fopen("calculate","rb");
@@ -19,8 +19,13 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		p_string = (char *)gimmegimmegimme(sizeof(char),vMaxStringSize,1);
-		if(p_string == NULL)
+		Tools = InitMacroTable();
+	for(vIndex=0;vIndex<NB_MACRO;vIndex++)
+	{
+		//~ Tools.MacroList[vIndex] = script[vIndex];
+		printf("%s\n",Tools->MacroList[vIndex]);
+	}
+		if(Tools_>String == NULL)
 		{
 			printf("Out of memory\n");
 			exit(-1);
@@ -30,34 +35,37 @@ int main(int argc, char *argv[])
 			/* This test always finds the first macro in the script file */
 			do
 			{
-				fgetline(p_file,&vMaxStringSize,&p_string);
-			}while(*p_string != '#');
-			printf("%s",p_string);
+				fgetline(p_file,&Tools.MaxStringSize,&Tools.String);
+			}while(*Tools.String != '#');
+			vLengthRead = sscanf(Tools.String,"%s",Tools.Buffer);
 			/* Permet de trouver la macro que l'on a lu. */
 			for(vIndex = 0;(vIndex < NB_MACRO) &&  (vTest != 0 );vIndex++)
 			{
-				vTest = strcmp(p_string,&script[vIndex][0]);
-				printf("%d\n",vTest);
+				bidon =Tools.MacroList;
+				vTest = strcmp(Tools.String,Tools.MacroList[vIndex]);
+				printf("%s--%s\n",Tools.String,Tools.MacroList[vIndex]);
 			}
 			if(vTest == 0)	
 			{
 				switch(vIndex)
 				{
-					case begin:				break;
+					case begin:			break;
 					
 					case calculation:		fgsfds = calculation;
-											fCalculation(&fgsfds,p_file,vNbcalculations,(char*)script,p_string,&vMaxStringSize);
-											vNbcalculations++;
-											break;
+										fCalculation(&fgsfds,p_file,vNbcalculations,&Tools);
+										vNbcalculations++;
+										break;
 					
 					case after_calculation:	break;
 					
 					case register_ :		if(fgsfds == begin)
-											{
+										{
 
-											}
+										}
 
-					default:				printf("Macro \"%s\" undefined\nIgnoring\n",p_string);
+					default:				/* This can only happen if you have not the same number of */
+										/* macros declared and defined in NB_MACRO (script.h) */
+										printf("Macro \"%s\" undefined\nIgnoring\n",Tools.String);
 				}
 			}
 			else
@@ -67,7 +75,6 @@ int main(int argc, char *argv[])
 		}
 		
 		/* Clear dynamically declared memory space */
-		free(p_string);
 		
 	} /* end check opening file */
 	
@@ -97,12 +104,12 @@ void * gimmegimmegimme(int taille_data, int taille_x,int taille_y)
  * (char*)	p_string: General string used to read through the script file
  * (int*)	p_vMaxStringSize: the current length of p_string
  */
-void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * script, char* p_string, int* p_vMaxStringSize)
+void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_Tools)
 {
 	/* The calculation we're about to read */
 	t_calculation sCalculation;
 
-	/* General index variable (useful in for(;;)'s)*/
+	/* General purpose index variable */
 	int vIndex;
 
 	/* Used to verify the number of character read in standart string.h functions. */
@@ -111,32 +118,56 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 	/* */
 	int nbInstructionsDeclared = 0;
 
-	/* General test variable */
+	/* General purpose test variables */
 	int vTest = 1;
+	int vTest2 = 1;
+	int vEnd = 0;
 	
+	/* Gets the name & number of processes */
+	fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
+	p_Tools->String++;
+	
+	
+	sCalculation.name = (char*)gimmegimmegimme(sizeof(char),p_Tools->MaxStringSize,1);
 	/* Scans the opened file for the calculation name */
-	vLengthRead = sscanf(p_string,"%*s %s %d",sCalculation.name,&nbInstructionsDeclared);
+	vLengthRead = sscanf(p_Tools->String,"%s",sCalculation.name);
 	
 	/* Verifies the calculation does have a name... */
-	if(vLengthRead == 1)
+	if(vLengthRead == 0)
 	{
+		sCalculation.name = (char*)realloc(sCalculation.name,sizeof(char));
 		sprintf(sCalculation.name,"%c",(char)vNbcalculations+1+'0');
-		printf("Error: #calculation with no name\nRenamed \"%s\"",sCalculation.name);
-		//exit(-1);
+		printf("Error: #calculation with no name\nRenamed \"%s\"\n",sCalculation.name);
+		//~ exit(-1);
 	}
 	
-	/* Gets the name defined in the script file */
-	sCalculation.name = (char*)gimmegimmegimme(sizeof(char),vLengthRead,1);
-	*(sCalculation.name) = *p_string;
-	
-	/* Gives the calculation a number */
-	sCalculation.index = vNbcalculations;
-	
 	/* Initializes the instructions index */
-	sCalculation.nbprocesses = (int)fscanf(p_file,"%c",p_string);
-	sCalculation.lsprocess = (t_process*)gimmegimmegimme(sizeof(t_process),sCalculation.nbprocesses,1);
+	vLengthRead = sscanf(p_Tools->String,"%*s %d",&sCalculation.nbprocesses);
+	
+	/* If the number of processes was not specified, the compiler redefined the max number of processes to 42 */
+	if(vLengthRead == 0)
+	{
+		sCalculation.nbprocesses = MAX_NB_PROCESS_IFNDEF;
+	}
+	
+	/* This test always finds the first macro in the calculation */
+	/* Gets the matrix size */
+	do
+	{
+		vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
+		sscanf(p_Tools->String,"%4s",p_Tools->Buffer);
+	}while(strcmp(p_Tools->Buffer,"#row") && (vLengthRead > 0));
+	
+	vLengthRead = sscanf(p_Tools->String,"%*s %d",&sCalculation.rowsize);
+	if(vLengthRead == 0)
+	{
+		printf("Error: the matrix size for calculation %s was not specified\n",sCalculation.name);
+		printf("The matrix wille be resized to fit to the number of processes declared\n");
+	}
 	
 	/* Initializes all processes */
+	/* there is 2*ROWSIZE-1 cycls in a ROWSIZE*ROWSIZE matrix */
+	sCalculation.lsprocess = (t_process*)gimmegimmegimme(sizeof(t_process),2*sCalculation.rowsize-1,1);
 	for(vIndex=0;vIndex<sCalculation.nbprocesses;vIndex++)
 	{
 		sCalculation.lsprocess->index = vIndex;
@@ -148,36 +179,42 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 	/* Scan for instructions */
 	do
 	{
-		/* Searches for macros */
+		vEnd = 0;
+		/* Gets the matrix size */
 		do
 		{
-			vLengthRead = fscanf(p_file,"%s",p_string);
-		}while(!strncmp(p_string,"#",1));
-		
-		/* Checks if it is a known macro */
-		for(vIndex = 0;(vIndex < NB_MACRO) &&  (vTest != 0 );vIndex++)
-		{
-			vTest = strcmp(p_string,(script+vIndex*STRMAXSIZE+0));
-		}
-		/* Checks if the macro is a process declaration"*/
-		/* vIndex == 1 is script[1][0] */
-		if((vTest == 0) && (vIndex = 1))	
-		{
-			vLengthRead = fscanf(p_file,"%s",p_string);
+			vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
 			
-			/* Checks if the next string is a macor (which is erroneous) */
-			if(!strncmp(p_string,"#",1))
-				
+			/* '8' here is the number of characters in "#process" */
+			sscanf(p_Tools->String,"%8s",p_Tools->Buffer);
+			
+			/* If one of the two is a match, vTest will be equal to 0 after the two tests */
+			/* The other macros are ignored */
+			vTest = strcmp(p_Tools->Buffer,"#process");
+			vTest2 = strcmp(p_Tools->Buffer,"#end") ;
+		}while(vTest && (vLengthRead > 0));
+		
+		/* Check if we're at the end of the file */
+		
+		/* Checks if the previous loop found a macro and if it is a process declaration"*/
+		/* vIndex == 1 is script[1][0] */
+		/* might get changed for strcmp to be fully independant of the "#process" position in script[][] */
+		
+		printf("%s\n",p_Tools->String);
+		if((vTest == 0) && !strncmp(p_Tools->String,"#process",8))
+		{
+			printf("salut\n");
+			vLengthRead = sscanf(p_Tools->String,"%10s",p_Tools->Buffer);
 			/* If there is more than one instruction */
-			if((vLengthRead > 1))
+			if((vLengthRead > 0))
 			{
 				t_list vTemp;
 				/* If the user grouped the instructions within brackets, it is taken into account */
-				if(!strncmp(p_string,"{",1))
+				if(!strncmp(p_Tools->String,"{",1))
 				{
-					for(vIndex=0;(vIndex<vLengthRead)&&(strncmp(p_string,"}",1));vIndex++)
+					for(vIndex=0;(vIndex<BUFFERSIZE)&&(strncmp(p_Tools->String,"}",1));vIndex++)
 					{
-						if(!fLinkCharToFunc(*p_string+vIndex,&vTemp))
+						if(!fLinkCharToFunc(*p_Tools->String+vIndex,&vTemp))
 						{
 							
 							nbInstructionsDeclared++;
@@ -200,7 +237,7 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 					vTest = 1;
 					for(vIndex=0;(vIndex<vLengthRead)&&(vTest == 1);vIndex++)
 					{
-						vTest = fLinkCharToFunc(*(p_string+vIndex),&vTemp);
+						vTest = fLinkCharToFunc(*(p_Tools->String+vIndex),&vTemp);
 					}
 					
 				}
@@ -216,16 +253,20 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, char * scrip
 			}
 		}
 		/* else: other macro -> ignored */
-		
 	//~ vLengthRead = fscanf(p_file,"%s",p_string);
-	printf("%s\n",p_string);
-	}while(!strcmp(p_string,"#end") || !(vLengthRead < 0) );
-			
+	//~ printf("%s\n",p_string);
+	
+	/* this tests if the macro found is "#end" or if we're at the end of the file */
+	}while(!(vEnd) && !(vLengthRead < 0));
+	
+	//~ Verifier que l'écriture process a reussi
+	/* Gives the calculation a number */
+	sCalculation.index = vNbcalculations;
+	
 	/* Masks unused variables */
-	(t_whereami*) fgsfds;
+	//~ (t_whereami*) fgsfds;
 	
 	/* free reserved memory */
-	free(p_string);
 	free((void*)sCalculation.lsprocess);
 }
 
@@ -252,9 +293,9 @@ int fLinkCharToFunc(char carac,t_list* sFuncToLink)
 	return vTest;
 }
 
-int fgetline(FILE* p_file, int* n,char**p_string)
+int fgetline(FILE* p_file, unsigned int* n,char**p_string)
 {
-	int new_n = 0,stringlen;
+	unsigned int new_n = 0,stringlen;
 	char c = 'o';
 	stringlen = strlen(*p_string);
 	while((c != '\x0A') && !feof(p_file))
@@ -270,15 +311,71 @@ int fgetline(FILE* p_file, int* n,char**p_string)
 			}
 		}
 		c = (char)fgetc(p_file);
+		//~ printf("%3d--%c\n",c,c);
 		*(*p_string + new_n) = (char)c;
 		new_n++;
 	}
+	*(*p_string+new_n-1) = '\0';
 	if(new_n > *n)
 	{
 		*n = strlen(*p_string);
 		p_string = (char**)realloc(p_string,stringlen);
+		if(p_string ==NULL)
+		{
+			printf("Out of memory\n");
+			exit(-1);
+		}
 	}
-	return 0;
+	return new_n;
+}
+
+t_tools InitMacroTable(void)
+{
+	unsigned int vIndex,vTest;
+	t_tools Tools;
+	char script[NB_MACRO][STRMAXSIZE]={
+	#include "../include/macrotable.h"
+	};
+	
+	Tools.MaxMacroLength = 0;
+	for(vIndex=0;vIndex<NB_MACRO;vIndex++)
+	{
+		vTest = strlen(script[vIndex]);
+		if(vTest > Tools.MaxMacroLength)
+		{
+			Tools.MaxMacroLength = vTest;
+		}
+	}
+	
+	Tools.MaxStringSize = STRMAXSIZE;
+	
+	Tools.Buffer = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxMacroLength);
+	if(Tools.Buffer == NULL)
+	{
+		printf("Out of memory\n");
+		//~ exit(-1);
+	}
+	for(vIndex=0;vIndex<NB_MACRO;vIndex++)
+	{
+		Tools.MacroList[vIndex] = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxMacroLength);
+		if(Tools.MacroList[vIndex] == NULL)
+		{
+			printf("Out of memory\n");
+			//~ exit(-1);
+		}
+	}
+	for(vIndex=0;vIndex<NB_MACRO;vIndex++)
+	{
+		Tools.MacroList[vIndex] = script[vIndex];
+	}
+	
+	Tools.String = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxStringSize);
+	if(Tools.String == NULL)
+	{
+		printf("Out of memory\n");
+		//~ exit(-1);
+	}
+	return &Tools;
 }
 
 /* EOF */

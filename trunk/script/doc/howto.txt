@@ -74,6 +74,8 @@ This macro cannot be used after the calculation description has started or it wi
 
 A calculation is a series of process. There must be at least one.
 If you do not specify "number of cycles", it will execute every process declared. This is the most flexible mode if you do not have any restrictions on the number of cycles the system should be running.
+The first macro that you MUST specify in a #calculation is the processor matrix size.
+If you do not specify that parameter, the compilation will fail.
 
 #process	X	Y
 X is the series of operation each diagonal will operate each after another.
