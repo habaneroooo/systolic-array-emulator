@@ -182,19 +182,22 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 	
 	/* This test always finds the first macro in the calculation */
 	/* Gets the matrix size */
+	vTest=1;
 	do
 	{
 		vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
 		sscanf(p_Tools->String,"%4s",p_Tools->Buffer);
-	}while(strcmp(p_Tools->Buffer,"#row") && (vLengthRead > 0));
+		vTest = strncmp(p_Tools->Buffer,"#row",1);
+	}while(vTest && (vLengthRead > 0));
 	
 	vLengthRead = sscanf(p_Tools->String,"%*s %d",&sCalculation.rowsize);
-	if(vLengthRead == 0)
+	printf("%d--%s",strcmp(p_Tools->Buffer,"#row"),p_Tools->Buffer);
+	if(!vTest && strcmp(p_Tools->Buffer,"#row"))
 	{
 		printf("Error: the matrix size for calculation %s was not specified\n",sCalculation.name);
 		printf("The matrix wille be resized to fit to the number of processes declared\n");
 	}
-	
+	while(1);
 	/* Initializes all processes */
 	/* there is 2*ROWSIZE-1 cycls in a ROWSIZE*ROWSIZE matrix */
 	sCalculation.lsprocess = (t_process*)gimmegimmegimme(sizeof(t_process),2*sCalculation.rowsize-1,1);
