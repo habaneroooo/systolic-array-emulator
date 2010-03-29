@@ -11,9 +11,7 @@ int main(int argc, char *argv[])
 	t_tools Tools;
 	t_whereami fgsfds = begin;
 
-	char script[NB_MACRO][STRMAXSIZE]={
-	#include "../include/macrotable.h"
-	};
+	char script[NB_MACRO][STRMAXSIZE]={"#calculation","#process","#row","#register","#end"};
 
 	p_file = fopen("calculate","rb");
 	if(p_file == NULL)
@@ -23,19 +21,9 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		Tools.MaxMacroLength = 0;
-		for(vIndex=0;vIndex<NB_MACRO;vIndex++)
-		{
-			vTest = strlen(script[vIndex]);
-			if(vTest > Tools.MaxMacroLength)
-			{
-				Tools.MaxMacroLength = vTest;
-			}
-		}
-		
+		Tools.MaxMacroLength = MAXMACROLENGTH;
 		Tools.MaxStringSize = STRMAXSIZE;
-		
-		Tools.Buffer = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxMacroLength);
+		Tools.Buffer = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxMacroLength+1);
 		if(Tools.Buffer == NULL)
 		{
 			printf("Out of memory\n");
@@ -73,7 +61,7 @@ int main(int argc, char *argv[])
 			{
 				bidon =Tools.MacroList;
 				vTest = strcmp(Tools.Buffer,Tools.MacroList[vIndex]);
-				printf("%s--%s\n",Tools.Buffer,Tools.MacroList[vIndex]);
+				//~ printf("1--%s--%s\n",Tools.Buffer,Tools.MacroList[vIndex]);
 			}
 			if(vTest == 0)	
 			{
@@ -154,7 +142,7 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 	int vEnd = 0;
 	
 	/* Gets the name & number of processes */
-	fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
+	//fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
 	p_Tools->String++;
 	
 	
@@ -189,15 +177,13 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 		sscanf(p_Tools->String,"%4s",p_Tools->Buffer);
 		vTest = strncmp(p_Tools->Buffer,"#row",1);
 	}while(vTest && (vLengthRead > 0));
-	
 	vLengthRead = sscanf(p_Tools->String,"%*s %d",&sCalculation.rowsize);
-	printf("%d--%s",strcmp(p_Tools->Buffer,"#row"),p_Tools->Buffer);
 	if(!vTest && strcmp(p_Tools->Buffer,"#row"))
 	{
 		printf("Error: the matrix size for calculation %s was not specified\n",sCalculation.name);
-		printf("The matrix wille be resized to fit to the number of processes declared\n");
+		printf("The matrix will be resized to fit to the number of processes declared\n");
 	}
-	while(1);
+	//while(1);
 	/* Initializes all processes */
 	/* there is 2*ROWSIZE-1 cycls in a ROWSIZE*ROWSIZE matrix */
 	sCalculation.lsprocess = (t_process*)gimmegimmegimme(sizeof(t_process),2*sCalculation.rowsize-1,1);
@@ -220,7 +206,7 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 			
 			/* '8' here is the number of characters in "#process" */
 			sscanf(p_Tools->String,"%8s",p_Tools->Buffer);
-			
+			printf("%s",p_Tools->Buffer);
 			/* If one of the two is a match, vTest will be equal to 0 after the two tests */
 			/* The other macros are ignored */
 			vTest = strcmp(p_Tools->Buffer,"#process");
