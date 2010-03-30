@@ -128,23 +128,21 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 	t_calculation sCalculation;
 
 	/* General purpose index variable */
-	int vIndex;
+	unsigned int vIndex;
 
 	/* Used to verify the number of character read in standart string.h functions. */
-	int vLengthRead;
+	unsigned int vLengthRead;
 
 	/* */
-	int nbInstructionsDeclared = 0;
+	unsigned int nbInstructionsDeclared = 0;
 
 	/* General purpose test variables */
-	int vTest = 1;
-	int vTest2 = 1;
-	int vEnd = 0;
+	unsigned int vTest = 1;
+	unsigned int vEnd = 1;
 	
 	/* Gets the name & number of processes */
 	//fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
 	p_Tools->String++;
-	
 	
 	sCalculation.name = (char*)gimmegimmegimme(sizeof(char),p_Tools->MaxStringSize,1);
 	/* Scans the opened file for the calculation name */
@@ -160,7 +158,7 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 	}
 	
 	/* Initializes the instructions index */
-	vLengthRead = sscanf(p_Tools->String,"%*s %d",&sCalculation.nbprocesses);
+	vLengthRead = sscanf(p_Tools->String,"%*s %u",&sCalculation.nbprocesses);
 	
 	/* If the number of processes was not specified, the compiler redefined the max number of processes to 42 */
 	if(vLengthRead == 0)
@@ -177,7 +175,8 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 		sscanf(p_Tools->String,"%4s",p_Tools->Buffer);
 		vTest = strncmp(p_Tools->Buffer,"#row",1);
 	}while(vTest && (vLengthRead > 0));
-	vLengthRead = sscanf(p_Tools->String,"%*s %d",&sCalculation.rowsize);
+	
+	vLengthRead = sscanf(p_Tools->String,"%*s %u",&sCalculation.rowsize);
 	if(!vTest && strcmp(p_Tools->Buffer,"#row"))
 	{
 		printf("Error: the matrix size for calculation %s was not specified\n",sCalculation.name);
@@ -198,7 +197,8 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 	/* Scan for instructions */
 	do
 	{
-		vEnd = 0;
+		vEnd=1;
+		vTest=1;
 		/* Gets the matrix size */
 		do
 		{
@@ -206,12 +206,12 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 			
 			/* '8' here is the number of characters in "#process" */
 			sscanf(p_Tools->String,"%8s",p_Tools->Buffer);
-			printf("%s",p_Tools->Buffer);
+			printf("%s\n",p_Tools->String);
 			/* If one of the two is a match, vTest will be equal to 0 after the two tests */
 			/* The other macros are ignored */
 			vTest = strcmp(p_Tools->Buffer,"#process");
-			vTest2 = strcmp(p_Tools->Buffer,"#end") ;
-		}while(vTest && (vLengthRead > 0));
+			vEnd = strcmp(p_Tools->Buffer,"#end") ;
+		}while(vTest && vEnd && (vLengthRead > 0));
 		
 		/* Check if we're at the end of the file */
 		
@@ -219,37 +219,35 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 		/* vIndex == 1 is script[1][0] */
 		/* might get changed for strcmp to be fully independant of the "#process" position in script[][] */
 		
-		printf("%s\n",p_Tools->String);
 		if((vTest == 0) && !strncmp(p_Tools->String,"#process",8))
 		{
-			printf("salut\n");
-			vLengthRead = sscanf(p_Tools->String,"%10s",p_Tools->Buffer);
+			vLengthRead = sscanf(p_Tools->String,"%*s %s",p_Tools->Buffer);
+			printf("%d\n",vLengthRead);
 			/* If there is more than one instruction */
 			if((vLengthRead > 0))
 			{
 				t_list vTemp;
+				nbInstructionsDeclared =  0;
 				/* If the user grouped the instructions within brackets, it is taken into account */
-				if(!strncmp(p_Tools->String,"{",1))
+				if(!strncmp(p_Tools->Buffer,"{",1))
 				{
-					for(vIndex=0;(vIndex<BUFFERSIZE)&&(strncmp(p_Tools->String,"}",1));vIndex++)
+					for(vIndex=0;(vIndex < p_Tools->MaxStringSize)&&(strncmp(p_Tools->Buffer+vIndex,"}",1))&&(strncmp(p_Tools->Buffer+vIndex,"\0",1));vIndex++)
 					{
-						if(!fLinkCharToFunc(*p_Tools->String+vIndex,&vTemp))
+						if(!fLinkCharToFunc(*(p_Tools->Buffer+vIndex),&vTemp))
 						{
-							
 							nbInstructionsDeclared++;
 							
 							//~ (*(sCalculation.lsprocess)).p_instructions
-							(*(sCalculation.lsprocess)).p_instructions = (void(**)())realloc((*(sCalculation.lsprocess)).p_instructions,(nbInstructionsDeclared*sizeof(void(*)())));
-							if(sCalculation.lsprocess->p_instructions == NULL)
+							(*(sCalculation.lsprocess)).p_instructions = ( void(**)() )realloc( ((*(sCalculation.lsprocess)).p_instructions),(nbInstructionsDeclared+1)* sizeof(void(**)()));
+							//~ printf("%d\n",nbInstructionsDeclared * sizeof(void(**)()));
+							if((*(sCalculation.lsprocess)).p_instructions == NULL)
 							{
 								printf("Out of memory\n");
 								exit(-1);
 							}
-							
 							*((*(sCalculation.lsprocess)).p_instructions+nbInstructionsDeclared) = vTemp.instructions->func;
 						}
 					}
-					sCalculation.lsprocess->nbinstructions = nbInstructionsDeclared;
 				}
 				else
 				{
@@ -258,11 +256,13 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 					{
 						vTest = fLinkCharToFunc(*(p_Tools->String+vIndex),&vTemp);
 					}
-					
+					nbInstructionsDeclared++;
 				}
+				sCalculation.lsprocess->nbinstructions = nbInstructionsDeclared;
+				printf("--%d\n",nbInstructionsDeclared);
 			}
 			
-			vLengthRead = fscanf(p_file,"%d",&vTest);
+			vLengthRead = fscanf(p_file,"%u",&vTest);
 			if(vLengthRead > 1)
 			{
 				for(vIndex = 1;(vIndex <vTest)&&(vIndex < sCalculation.nbprocesses);vIndex++)
@@ -276,7 +276,7 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 	//~ printf("%s\n",p_string);
 	
 	/* this tests if the macro found is "#end" or if we're at the end of the file */
-	}while(!(vEnd) && !(vLengthRead < 0));
+	}while(vEnd && (vLengthRead > 0));
 	
 	//~ Verifier que l'écriture process a reussi
 	/* Gives the calculation a number */
@@ -292,12 +292,10 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 int fLinkCharToFunc(char carac,t_list* sFuncToLink)
 {
 	int vIndex, vTest = 0;
-
 	/*
 	 * We could reduce the size of this table, however the purpose of having a big table here is
 	 * that we don't have to check the type of the datas when executing the program
 	 */
-	
 
 	/* Finds the function linked to the character given */
 	for(vIndex = 0; vIndex < NBINSTRUCTIONS; vIndex++)

@@ -9,7 +9,9 @@
 #define NB_MACRO 5
 #define STRMAXSIZE 100
 #define MAX_NB_PROCESS_IFNDEF 42
-#define BUFFERSIZE 10
+#define MAX_NB_INSTRUCTIONS 42
+#define BUFFERSIZE 12
+#define MAXMACROLENGTH 12
 
 typedef enum {begin,calculation,after_calculation,register_} t_whereami;
 typedef void (*t_func)(void);
@@ -23,9 +25,9 @@ typedef struct {
 
 typedef struct {
 	char * name;
-	int index;
-	int rowsize;
-	int nbprocesses;
+	unsigned int index;
+	unsigned int rowsize;
+	unsigned int nbprocesses;
 	t_process * lsprocess;
 }t_calculation;
 
