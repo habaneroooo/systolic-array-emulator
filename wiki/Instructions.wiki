@@ -17,9 +17,10 @@
 ||- ||subtract<br>||
 ||/ || divide<br>||
 ||ø ||void  / do nothing.<br>||
-||% ||comment. Line ignored.<br>||
 ||& ||logic AND<br>||
 || | || logic OR<br>||
+
+Any other character is ignored. You could write fgsfds*42€lolbbq, it would end up being counted as a multiply operation only.
 
 = Syntax =
 
