@@ -10,17 +10,16 @@
 || { || groups operations and execute them in order (left to right) in one systolic cycle. ||
 || , || separates operations when queued with brackets ||
 || <x ||Charge data. "x" is either "L" or "U". ||
-|| >x ||Ouput data. "x" is either "R" or "D"<br>When queued in brackets, order does not matter, it is always the last operation executed. ||
-	  If not defined, it returns the result of the last operation
+|| >x ||Ouput data. "x" is either "R" or "D"<br>When queued in brackets, order does not matter, it is always the last operation executed. <br>If not defined, the data on the output is the result of the last operation performed ||
 <br>	  
-*	: multiply<br>
-+	: add<br>
--	: subtract<br>
-/	: divide<br>
-ø	: void  / do nothing.<br>
-%	: comment. Line ignored.<br>
-&	: logic AND<br>
-|	; logic<br>
+||* || multiply<br>||
+||+ ||add<br>||
+||- ||subtract<br>||
+||/ || divide<br>||
+||ø ||void  / do nothing.<br>||
+||% ||comment. Line ignored.<br>||
+||& ||logic AND<br>||
+|| | || logic OR<br>||
 
 = Syntax =
 
