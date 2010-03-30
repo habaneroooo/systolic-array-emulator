@@ -34,35 +34,6 @@ All registers are 32bits wide.
 
 You can also create registers by using the macro #register (see the Macro section)
 
-Operations
-
-(t,x,y,o)	: indicates the data to process, their format and where to store the result. It is ignored for ø (= void).<br>
-		ex: /(x,y) divide x by y, stores the result in o. Default stores it in the temporary register.<br>
-		"t" indicates the type of data. <br>
-		Data can be:<br>
-		"ul","sl": unsigned/signed long int<br>
-		"f": floating point
-		"ud","sd": 8bit signed/unsigned int<br>
-		"us","ss": 16bit signed/unsigned int<br>
-		Default is signed long int.<br>
-		
-{}	: groups operations and execute them in order (left to right) in one systolic cycle.
-,	: separates operations when queued with brackets
-
-<x	: Charge data. "x" is either "L" or "U".
->x	: Ouput data. "x" is either "R" or "D"
-	  When queued in brackets, order does not matter, it is always the last operation executed.
-	  If not defined, it returns the result of the last operation
-<br>	  
-*	: multiply<br>
-+	: add<br>
--	: subtract<br>
-/	: divide<br>
-ø	: void  / do nothing.<br>
-%	: comment. Line ignored.<br>
-&	: logic AND<br>
-|	; logic<br>
-
 Macros
 
 #register	name
