@@ -125,28 +125,31 @@ void * gimmegimmegimme(int taille_data, int taille_x,int taille_y)
 void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_Tools)
 {
 	/* The calculation we're about to read */
+	//~ MAKE THIS A POINTER AND HAVE IT RETURN AN ERROR CODE
 	t_calculation sCalculation;
-
-	/* General purpose index variable */
-	unsigned int vIndex;
-
-	/* Used to verify the number of character read in standart string.h functions. */
-	unsigned int vLengthRead;
-
+	
 	/* */
-	unsigned int nbInstructionsDeclared = 0;
-
+	unsigned int nbProcessDeclared = 0;
+	unsigned int nbCorrectProcess = 0;
+	
+	/* General purpose index variable */
+	//~ unsigned int vIndex;
+	
+	/* Used to verify the number of character read in standard string.h functions. */
+	unsigned int vLengthRead;
+	
 	/* General purpose test variables */
 	unsigned int vTest = 1;
+	unsigned int vTest2 = 1;
 	unsigned int vEnd = 1;
 	
 	/* Gets the name & number of processes */
-	//fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
 	p_Tools->String++;
 	
-	sCalculation.name = (char*)gimmegimmegimme(sizeof(char),p_Tools->MaxStringSize,1);
 	/* Scans the opened file for the calculation name */
-	vLengthRead = sscanf(p_Tools->String,"%s",sCalculation.name);
+	//~ POSSIBILITE DE BUG SUR LA LONGUEUR
+	sCalculation.name = (char*)gimmegimmegimme(sizeof(char),p_Tools->MaxStringSize,1);
+	vLengthRead = sscanf(p_Tools->String,"%*s %s",sCalculation.name);
 	
 	/* Verifies the calculation does have a name... */
 	if(vLengthRead == 0)
@@ -158,14 +161,8 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 	}
 	
 	/* Initializes the instructions index */
-	vLengthRead = sscanf(p_Tools->String,"%*s %u",&sCalculation.nbprocesses);
-	
-	/* If the number of processes was not specified, the compiler redefined the max number of processes to 42 */
-	if(vLengthRead == 0)
-	{
-		sCalculation.nbprocesses = MAX_NB_PROCESS_IFNDEF;
-	}
-	
+	vTest2 = sscanf(p_Tools->String,"%*s %u",&sCalculation.nbprocesses);
+		
 	/* This test always finds the first macro in the calculation */
 	/* Gets the matrix size */
 	vTest=1;
@@ -175,110 +172,107 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 		sscanf(p_Tools->String,"%4s",p_Tools->Buffer);
 		vTest = strncmp(p_Tools->Buffer,"#row",1);
 	}while(vTest && (vLengthRead > 0));
+	//~ TESTER ICI SI ON A FINI LE FICHIER
 	
-	vLengthRead = sscanf(p_Tools->String,"%*s %u",&sCalculation.rowsize);
-	if(!vTest && strcmp(p_Tools->Buffer,"#row"))
+	/* If we found a macro */
+	if(!vTest)
 	{
-		printf("Error: the matrix size for calculation %s was not specified\n",sCalculation.name);
-		printf("The matrix will be resized to fit to the number of processes declared\n");
+		if(!strcmp(p_Tools->Buffer,"#row"))
+		{
+			vLengthRead = sscanf(p_Tools->String,"%*s %u",&sCalculation.rowsize);
+			
+			/* "#row" was specified, but the size was not */
+			if(!vLengthRead)
+			{
+				printf("Error: the matrix size for calculation %s was not specified\n",sCalculation.name);
+				printf("Ignoring calculation.\n");
+				//~ exit(-1);
+			}
+			else
+			{
+				
+				/* Gets the number of process declared */
+				/* WARNING: meaning of vTest switched to "reading errors" */
+				fGetNBProcess(p_file,p_Tools,&nbProcessDeclared);
+				
+				/* Tests*/
+				if(!nbProcessDeclared)
+				{
+					printf("Error: Empty calculation \"%s\"\nIgnoring calculation.\n",sCalculation.name);
+					//~ exit(-1);
+				}
+				else
+				{
+					sCalculation.lsprocess = (t_process*)malloc(sizeof(t_process*));
+				}
+			}
+		}
+		else
+		{
+			printf("Error: the matrix size for calculation %s was not specified.\n",sCalculation.name);
+			printf("Ignoring calculation.\n");
+			//~ exit(-1);
+		}
+
 	}
-	//while(1);
+	/* If no macro were found = empty calculation */
+	else
+	{
+		printf("Error: Empty calculation \"%s\".\nIgnoring calculation.",sCalculation.name);
+		//~ exit(-1);
+	}
 	/* Initializes all processes */
-	/* there is 2*ROWSIZE-1 cycls in a ROWSIZE*ROWSIZE matrix */
-	sCalculation.lsprocess = (t_process*)gimmegimmegimme(sizeof(t_process),2*sCalculation.rowsize-1,1);
-	for(vIndex=0;vIndex<sCalculation.nbprocesses;vIndex++)
-	{
-		sCalculation.lsprocess->index = vIndex;
-		sCalculation.lsprocess->nbinstructions = 1;
-		(*(sCalculation.lsprocess)).p_instructions = (void(**)())malloc(sizeof(void(**)()));
-		*(*(sCalculation.lsprocess)).p_instructions = &fvoid;
-	}
+	/* there is 2*ROWSIZE-1+(NBINSTRUC-1) cycls in a ROWSIZE*ROWSIZE matrix for NBINSTRUC to be executed in diagonale */
+
+	//~ SI on a lu une macro, ne pas relire
 	
 	/* Scan for instructions */
 	do
 	{
+		/* re/initializes test variables */
 		vEnd=1;
 		vTest=1;
-		/* Gets the matrix size */
+		
+		/* Finds the first macro in the calculation */
 		do
 		{
 			vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
-			
-			/* '8' here is the number of characters in "#process" */
-			sscanf(p_Tools->String,"%8s",p_Tools->Buffer);
-			printf("%s\n",p_Tools->String);
-			/* If one of the two is a match, vTest will be equal to 0 after the two tests */
-			/* The other macros are ignored */
-			vTest = strcmp(p_Tools->Buffer,"#process");
-			vEnd = strcmp(p_Tools->Buffer,"#end") ;
+			if(vLengthRead > 0)
+			{
+				/* '8' here is the number of characters in "#process" */
+				sscanf(p_Tools->String,"%8s",p_Tools->Buffer);
+				printf("%s\n",p_Tools->String);
+				
+				/* The other macros are ignored */
+				vTest = strcmp(p_Tools->Buffer,"#process");
+				vEnd = strcmp(p_Tools->Buffer,"#end") ;
+			}
 		}while(vTest && vEnd && (vLengthRead > 0));
 		
 		/* Check if we're at the end of the file */
 		
-		/* Checks if the previous loop found a macro and if it is a process declaration"*/
-		/* vIndex == 1 is script[1][0] */
-		/* might get changed for strcmp to be fully independant of the "#process" position in script[][] */
-		
+		/* Checks if the previous loop found a macro and if it is a process declaration"*/		
 		if((vTest == 0) && !strncmp(p_Tools->String,"#process",8))
 		{
-			vLengthRead = sscanf(p_Tools->String,"%*s %s",p_Tools->Buffer);
-			printf("%d\n",vLengthRead);
-			/* If there is more than one instruction */
-			if((vLengthRead > 0))
-			{
-				t_list vTemp;
-				nbInstructionsDeclared =  0;
-				/* If the user grouped the instructions within brackets, it is taken into account */
-				if(!strncmp(p_Tools->Buffer,"{",1))
-				{
-					for(vIndex=0;(vIndex < p_Tools->MaxStringSize)&&(strncmp(p_Tools->Buffer+vIndex,"}",1))&&(strncmp(p_Tools->Buffer+vIndex,"\0",1));vIndex++)
-					{
-						if(!fLinkCharToFunc(*(p_Tools->Buffer+vIndex),&vTemp))
-						{
-							nbInstructionsDeclared++;
-							
-							//~ (*(sCalculation.lsprocess)).p_instructions
-							(*(sCalculation.lsprocess)).p_instructions = ( void(**)() )realloc( ((*(sCalculation.lsprocess)).p_instructions),(nbInstructionsDeclared+1)* sizeof(void(**)()));
-							//~ printf("%d\n",nbInstructionsDeclared * sizeof(void(**)()));
-							if((*(sCalculation.lsprocess)).p_instructions == NULL)
-							{
-								printf("Out of memory\n");
-								exit(-1);
-							}
-							*((*(sCalculation.lsprocess)).p_instructions+nbInstructionsDeclared) = vTemp.instructions->func;
-						}
-					}
-				}
-				else
-				{
-					vTest = 1;
-					for(vIndex=0;(vIndex<vLengthRead)&&(vTest == 1);vIndex++)
-					{
-						vTest = fLinkCharToFunc(*(p_Tools->String+vIndex),&vTemp);
-					}
-					nbInstructionsDeclared++;
-				}
-				sCalculation.lsprocess->nbinstructions = nbInstructionsDeclared;
-				printf("--%d\n",nbInstructionsDeclared);
-			}
-			
-			vLengthRead = fscanf(p_file,"%u",&vTest);
-			if(vLengthRead > 1)
-			{
-				for(vIndex = 1;(vIndex <vTest)&&(vIndex < sCalculation.nbprocesses);vIndex++)
-				{
-					*(sCalculation.lsprocess+vIndex)= *(sCalculation.lsprocess);
-				}
-			}
+			nbCorrectProcess++;
+			sCalculation.lsprocess = (t_process*)realloc(sCalculation.lsprocess,sizeof(t_process*)*nbCorrectProcess);
+			(sCalculation.lsprocess+nbCorrectProcess-1)->index = nbCorrectProcess;
+			(sCalculation.lsprocess+nbCorrectProcess-1)->nbinstructions = 1;
+			(*(sCalculation.lsprocess)).p_instructions = (void(**)())malloc(sizeof(void(**)()));
+			*(*(sCalculation.lsprocess)).p_instructions = &fvoid;
+			/* */
+			fProcess(p_file,p_Tools,&sCalculation,&nbCorrectProcess);
 		}
 		/* else: other macro -> ignored */
-	//~ vLengthRead = fscanf(p_file,"%s",p_string);
-	//~ printf("%s\n",p_string);
-	
-	/* this tests if the macro found is "#end" or if we're at the end of the file */
+	/* Tests if the macro found is "#end" or if we're at the end of the file */
 	}while(vEnd && (vLengthRead > 0));
 	
-	//~ Verifier que l'écriture process a reussi
+	if(vEnd)
+	{
+		printf("Warning: calculation \"%s\" was not ended by \"#end\" \n",sCalculation.name);
+	}
+	
+	//~ TESTER SI Y'A DES PROCESS SINON LUI DIRE QU'IL EST VIDE
 	/* Gives the calculation a number */
 	sCalculation.index = vNbcalculations;
 	
@@ -388,6 +382,134 @@ void InitMacroTable(t_tools * Tools)
 	if(Tools->String == NULL)
 	{
 		printf("Out of memory\n");
+		//~ exit(-1);
+	}
+}
+
+void fProcess(FILE * p_file, t_tools * p_Tools,  t_calculation * sCalculation, unsigned int * ProcessIndex)
+{
+	/* Used to verify the number of character read in standart string.h functions. */
+	unsigned int vLengthRead;
+
+	/* */
+	unsigned int nbInstructionsDeclared = 0;
+	
+	/* General purpose index variable */
+	unsigned int vIndex;
+	
+	/* General purpose test variable */
+	unsigned int vTest;
+	
+	t_process * sProcess = sCalculation->lsprocess+(*ProcessIndex)-1;
+	
+	/* Gets the instruction list */
+	vLengthRead = sscanf(p_Tools->String,"%*s %s",p_Tools->Buffer);
+	
+	/* If there is more than one instruction */
+	if((vLengthRead > 0))
+	{
+		/* Temporary storage */
+		t_list vTemp;
+		
+		vTest = 1;
+		nbInstructionsDeclared =  0;
+		/* If the user grouped the instructions within brackets, it is taken into account */
+		if(!strncmp(p_Tools->Buffer,"{",1))
+		{
+			for(vIndex=0;(vIndex < p_Tools->MaxStringSize)&&(vTest)&&(strncmp(p_Tools->Buffer+vIndex,"\0",1));vIndex++)
+			{
+				if(!fLinkCharToFunc(*(p_Tools->Buffer+vIndex),&vTemp))
+				{
+					/* Keeps track of the number of instructions declared */
+					nbInstructionsDeclared++;
+					/* Gets enough memory to store the new function pointer */
+					printf("%d\n",sizeof(sProcess->p_instructions ));
+					sProcess->p_instructions = ( void(**)() )realloc( sProcess->p_instructions,(nbInstructionsDeclared+1)* sizeof(void(**)()));
+					if(sProcess->p_instructions == NULL)
+					{
+						printf("Out of memory\n");
+						exit(-1);
+					}
+					*(sProcess->p_instructions+nbInstructionsDeclared) = vTemp.instructions->func;
+				}
+				vTest = strncmp(p_Tools->Buffer+vIndex,"}",1);
+			}
+			
+			//~ TESTER SI LA LECTURE PROCESS EST BONNE?
+			sProcess->index = *ProcessIndex;
+			if(vTest)
+			{
+				printf("Warning: instruction list in process #%d was not terminated by \"}\" \n",sCalculation->lsprocess->index);
+			}
+		}
+		else
+		{
+			for(vIndex=0;(vIndex<vLengthRead)&&(vTest == 1);vIndex++)
+			{
+				vTest = fLinkCharToFunc(*(p_Tools->String+vIndex),&vTemp);
+			}
+			nbInstructionsDeclared++;
+		}
+		sProcess->nbinstructions = nbInstructionsDeclared;
+		
+		/* Shows the number of instructions found per process */
+		//~ printf("--%d\n",nbInstructionsDeclared);
+	}
+	
+	vLengthRead = fscanf(p_file,"%u",&vTest);
+	if(vLengthRead > 1)
+	{
+		for(vIndex = 1;(vIndex <vTest)&&(vIndex < sCalculation->nbprocesses);vIndex++)
+		{
+			*(sCalculation->lsprocess+vIndex)= *(sCalculation->lsprocess);
+		}
+	}
+}
+
+void fGetNBProcess(FILE * p_file,t_tools * p_Tools, unsigned int * nbProcessDeclared)
+{
+	unsigned int vEnd = 0;
+	unsigned int vTest = 0;
+	unsigned int vLengthRead = 0;
+	fpos_t stream_pos;
+	
+	/* Save the position of the stream indicator */
+	vTest= fgetpos(p_file,&stream_pos);
+	if(vTest)
+	{
+		printf("Error reading file\n");
+		//~ exit(-1);
+	}
+	else
+	{
+		*nbProcessDeclared = 0;
+		do
+		{
+			vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
+			if(vLengthRead > 0)
+			{
+				/* '8' here is the number of characters in "#process" */
+				sscanf(p_Tools->String,"%8s",p_Tools->Buffer);
+				/* The other macros are ignored */
+				if(!strncmp(p_Tools->Buffer,"#process",1))
+				{
+					if(!strncmp(p_Tools->Buffer,"#process",8))
+					{
+						*nbProcessDeclared+=1;
+					}
+					else
+					{
+						vEnd = 1;
+					}
+				}
+			}
+		}while(!vEnd && (vLengthRead > 0));
+	}
+	/* Restores the position of the stream indicator */
+	vTest= fsetpos(p_file,&stream_pos);
+	if(vTest)
+	{
+		perror("The following error occured: ");
 		//~ exit(-1);
 	}
 }

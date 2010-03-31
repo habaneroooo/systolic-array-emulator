@@ -17,7 +17,6 @@ typedef enum {begin,calculation,after_calculation,register_} t_whereami;
 typedef void (*t_func)(void);
 
 typedef struct {
-	char * name;
 	int index;
 	int nbinstructions;
 	t_func *p_instructions;
@@ -40,11 +39,13 @@ typedef struct {
 }t_tools;
 
 void fCalculation(void*, FILE *, int , t_tools*);
+void fProcess(FILE *, t_tools *, t_calculation *,unsigned int *);
 void * gimmegimmegimme(int , int ,int );
 
 int fLinkCharToFunc(char,t_list*);
 int fgetline(FILE*, unsigned int*,char**);
 void InitMacroTable(t_tools *);
+void fGetNBProcess(FILE *,t_tools *, unsigned int *);
 
 #endif 
 
