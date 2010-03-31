@@ -1,10 +1,6 @@
 #calculation	salut	1
 #row 4
-#process	{*,+,%,%,&,*}	1
-#process	+	1
-#end	calculatio
-
-#calculation	salut	1
-#process	*	1
+#process	{*,+,%,%,&,*,|	1
+#process	{*,+,%,%,&,*,|}	1
 #process	+	1
 #end	calculatio
