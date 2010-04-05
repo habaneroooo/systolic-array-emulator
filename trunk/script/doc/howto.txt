@@ -26,7 +26,7 @@ You can also create registers by using the macro #register (see the Macro sectio
 Operations
 
 (t,x,y,o)	: indicates the data to process, their format and where to store the result. It is ignored for ø (= void).
-		ex: /(x,y) divide x by y, stores the result in o. Default stores it in the temporary register.
+		ex: /(x,y) divide x by y, outputs the result on o. Default stores it in the temporary register.
 		"t" indicates the type of data. 
 		Data can be:
 		"ul","sl": unsigned/signed long int

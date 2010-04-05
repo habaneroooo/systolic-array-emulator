@@ -213,7 +213,6 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 			printf("Ignoring calculation.\n");
 			//~ exit(-1);
 		}
-
 	}
 	/* If no macro were found = empty calculation */
 	else
@@ -223,8 +222,10 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 	}
 	/* Initializes all processes */
 	/* there is 2*ROWSIZE-1+(NBINSTRUC-1) cycls in a ROWSIZE*ROWSIZE matrix for NBINSTRUC to be executed in diagonale */
-
+	
+	//~ *************************
 	//~ SI on a lu une macro, ne pas relire
+	//~ *************************
 	
 	/* Scan for instructions */
 	do
@@ -249,21 +250,26 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 			}
 		}while(vTest && vEnd && (vLengthRead > 0));
 		
+		//~ *************************
 		/* Check if we're at the end of the file */
+		//~ *************************
 		
-		/* Checks if the previous loop found a macro and if it is a process declaration"*/		
+		/* Checks if the previous loop found a macro and if it is a process declaration"*/
 		if((vTest == 0) && !strncmp(p_Tools->String,"#process",8))
 		{
+			t_process * sProcess;
 			nbCorrectProcess++;
-			sCalculation.lsprocess = (t_process*)realloc(sCalculation.lsprocess,sizeof(t_process*)*nbCorrectProcess);
-			(sCalculation.lsprocess+nbCorrectProcess-1)->index = nbCorrectProcess;
-			(sCalculation.lsprocess+nbCorrectProcess-1)->nbinstructions = 1;
-			(*(sCalculation.lsprocess)).p_instructions = (void(**)())malloc(sizeof(void(**)()));
-			*(*(sCalculation.lsprocess)).p_instructions = &fvoid;
+			sCalculation.lsprocess = (t_process*)realloc(sCalculation.lsprocess,sizeof(t_process)*(nbCorrectProcess+1));
+			sProcess  = sCalculation.lsprocess+nbCorrectProcess-1;
+			sProcess->index = nbCorrectProcess;
+			sProcess->nbinstructions = 1;
+			sProcess->p_instructions = (void(**)())malloc(sizeof(void
+			*(sProcess->p_instructions) = &fvoid;
 			/* */
 			fProcess(p_file,p_Tools,&sCalculation,&nbCorrectProcess);
 		}
 		/* else: other macro -> ignored */
+		
 	/* Tests if the macro found is "#end" or if we're at the end of the file */
 	}while(vEnd && (vLengthRead > 0));
 	
@@ -272,7 +278,10 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 		printf("Warning: calculation \"%s\" was not ended by \"#end\" \n",sCalculation.name);
 	}
 	
+	//~ *************************
 	//~ TESTER SI Y'A DES PROCESS SINON LUI DIRE QU'IL EST VIDE
+	//~ *************************
+	
 	/* Gives the calculation a number */
 	sCalculation.index = vNbcalculations;
 	
@@ -283,19 +292,19 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 	free((void*)sCalculation.lsprocess);
 }
 
-int fLinkCharToFunc(char carac,t_list* sFuncToLink)
+int fLinkCharToFunc(int  carac,t_list* sFuncToLink, t_tools * p_Tools)
 {
 	int vIndex, vTest = 0;
-	/*
-	 * We could reduce the size of this table, however the purpose of having a big table here is
-	 * that we don't have to check the type of the datas when executing the program
-	 */
 
+	if(!strncomp(p_Tools->Buffer,"(",1);
+	{
+		
+	}
 	/* Finds the function linked to the character given */
 	for(vIndex = 0; vIndex < NBINSTRUCTIONS; vIndex++)
 	{
 		if(tab_list[vIndex].carac == carac)
-		{
+		{	
 			sFuncToLink->instructions->func = tab_list[vIndex].instructions->func;
 			vTest = 1;
 		}
@@ -418,18 +427,20 @@ void fProcess(FILE * p_file, t_tools * p_Tools,  t_calculation * sCalculation, u
 		{
 			for(vIndex=0;(vIndex < p_Tools->MaxStringSize)&&(vTest)&&(strncmp(p_Tools->Buffer+vIndex,"\0",1));vIndex++)
 			{
-				if(!fLinkCharToFunc(*(p_Tools->Buffer+vIndex),&vTemp))
+					
+				if(fLinkCharToFunc(*(p_Tools->Buffer+vIndex),&vTemp))
 				{
 					/* Keeps track of the number of instructions declared */
 					nbInstructionsDeclared++;
 					/* Gets enough memory to store the new function pointer */
-					printf("%d\n",sizeof(sProcess->p_instructions ));
 					sProcess->p_instructions = ( void(**)() )realloc( sProcess->p_instructions,(nbInstructionsDeclared+1)* sizeof(void(**)()));
 					if(sProcess->p_instructions == NULL)
 					{
 						printf("Out of memory\n");
 						exit(-1);
 					}
+					
+					/* Links the character to the correct function using the link table */
 					*(sProcess->p_instructions+nbInstructionsDeclared) = vTemp.instructions->func;
 				}
 				vTest = strncmp(p_Tools->Buffer+vIndex,"}",1);
