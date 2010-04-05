@@ -42,7 +42,7 @@ void fCalculation(void*, FILE *, int , t_tools*);
 void fProcess(FILE *, t_tools *, t_calculation *,unsigned int *);
 void * gimmegimmegimme(int , int ,int );
 
-int fLinkCharToFunc(char,t_list*);
+int fLinkCharToFunc(char,t_list*,t_tools*);
 int fgetline(FILE*, unsigned int*,char**);
 void InitMacroTable(t_tools *);
 void fGetNBProcess(FILE *,t_tools *, unsigned int *);
