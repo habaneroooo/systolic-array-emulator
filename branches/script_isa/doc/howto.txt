@@ -1,0 +1,87 @@
+Syntax:
+All parametres are separated by one tabulation unless indicate otherwise.
+
+Data :
+
+Each processor has 4 I/O registers, disposed as such:
+	U
+L processor R
+	D
+	
+Exemple: 2x2 array
+
+	U1		U2
+L1 proc1 R1 proc2 R2
+	D1		D2
+L2 proc3 R3 proc4 R4
+	D3		D4
+
+In addition, a temporary register stores the results of operations. 
+The final result is copied to both output registers (R&D);
+
+All registers are 32bits wide.
+
+You can also create registers by using the macro #register (see the Macro section)
+
+Operations
+
+(t,x,y,o)	: indicates the data to process, their format and where to store the result. It is ignored for ø (= void).
+		ex: /(x,y) divide x by y, outputs the result on o. Default stores it in the temporary register.
+		"t" indicates the type of data. 
+		Data can be:
+		"ul","sl": unsigned/signed long int
+		"f": floating point
+		"ud","sd": 8bit signed/unsigned int
+		"us","ss": 16bit signed/unsigned int
+		Default is signed long int.
+		
+{}	: groups operations and execute them in order (left to right) in one systolic cycle.
+	  Only one group of brackets will be taken into account.
+	  Ex:
+	{*,*}{*} <- only {*,*} is considered, rest is ignored.
+	{*,*,{*,*},*} <- is considered as {*,*,*,*,*}
+	
+	
+,	: separates operations when queued with brackets
+
+<x	: Charge data. "x" is either "L" or "U".
+>x	: Ouput data. "x" is either "R" or "D"
+	  When queued in brackets, order does not matter, it is always the last operation executed.
+	  If not defined, it returns the result of the last operation
+	  
+*	: multiply
++	: add
+-	: subtract
+/	: divide
+ø	: void  / do nothing.
+%	: comment. Line ignored.
+&	: logic AND
+|	; logic
+
+Macros
+
+#row X
+Creates a X*X processor matrix
+Only square matrices are supported at the moment.
+IMPORTANT NOTE: in the case of a levenstein distance calculation, this program will resize the matrix to fit to the number of character contained in the biggest string
+
+#register	name
+Creates a 32bits register so you can store data inbetween calculations.
+This macro cannot be used after the calculation description has started or it will be ignored.
+
+
+#calculation	name	number of cycles
+
+A calculation is a series of process. There must be at least one.
+If you do not specify "number of cycles", it will execute every process declared. This is the most flexible mode if you do not have any restrictions on the number of cycles the system should be running.
+The first macro that you MUST specify in a #calculation is the processor matrix size.
+If you do not specify that parameter, the compilation will fail.
+
+#process	X	Y
+X is the series of operation each diagonal will operate each after another.
+Y is the number of times that process is executed before going on to the next process.
+
+Note: the program will only execute "number of cycles" cycles. If you declared more cycles that this number, the reste will be ignored.
+If you declared less cycles, the rest will be filled with void (ø).
+
+#end	calculation: quits calculation mode
