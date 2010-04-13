@@ -263,7 +263,7 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 			sProcess  = sCalculation.lsprocess+nbCorrectProcess-1;
 			sProcess->index = nbCorrectProcess;
 			sProcess->nbinstructions = 1;
-			sProcess->p_instructions = (void(**)())malloc(sizeof(void
+			sProcess->p_instructions = (void(**)())malloc(sizeof(t_func));
 			*(sProcess->p_instructions) = &fvoid;
 			/* */
 			fProcess(p_file,p_Tools,&sCalculation,&nbCorrectProcess);
@@ -296,7 +296,7 @@ int fLinkCharToFunc(int  carac,t_list* sFuncToLink, t_tools * p_Tools)
 {
 	int vIndex, vTest = 0;
 
-	if(!strncomp(p_Tools->Buffer,"(",1);
+	if(!strncmp(p_Tools->Buffer,"(",1);
 	{
 		
 	}
