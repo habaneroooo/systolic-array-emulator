@@ -25,11 +25,16 @@ void cb_input_file_button (GtkWidget * p_widget, gpointer user_data)
 {
 	int bytesread=1;
 	int i;
+	GtkWidget* p_p_textview = (GtkWidget*)user_=data;
 	FILE * p_file = fopen(gtk_file_chooser_get_filename((GtkFileChooser *)p_widget), "r");
 	if (p_file == NULL)
 	{
-		printf("Error opening file\nPlease check if your read rights are correctly set.\n");
-		exit(-1);
+		gtk_text_buffer_set_text(gtk_text_view_get_buffer(GTK_TEXT_VIEW(p_p_textview)),
+			"Error opening file.\nPlease check if you have proper reading access to the file/directory.\n",
+			-1);
+		//~ g_printf("%s",(char*)user_data);
+		//~ g_print("%s","salut");
+		//~ exit(-1);
 	}
 	else 
 	{

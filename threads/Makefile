@@ -1,5 +1,5 @@
-EXE = systolic
-SRC = $(wildcard *.c)
+EXE = script
+SRC = $(wildcard ./src/*.c)
 OBJ = $(SRC:.c=.o)
 CC = g++
 
