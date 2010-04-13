@@ -6,7 +6,7 @@
 int main(int argc, char *argv[])
 {
 	/* Initialisation de GTK+ */
-	gtk_init (&argc, &argv);
+	gtk_init(&argc, &argv);
 	
 	GdkScreen* screen = gdk_screen_get_default ();
 	/* Création des sous-fenetres */
