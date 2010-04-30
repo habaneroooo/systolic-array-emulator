@@ -10,8 +10,7 @@ int main(int argc, char *argv[])
 	char**bidon=NULL;
 	t_tools Tools;
 	t_whereami fgsfds = begin;
-
-	char script[NB_MACRO][STRMAXSIZE]={"#calculation","#process","#row","#register","#end"};
+	char script[NB_MACRO][MAXMACROLENGTH+1]={"#calculation","#row","#end"};
 
 	p_file = fopen("calculate","rb");
 	if(p_file == NULL)
@@ -23,45 +22,48 @@ int main(int argc, char *argv[])
 	{
 		Tools.MaxMacroLength = MAXMACROLENGTH;
 		Tools.MaxStringSize = STRMAXSIZE;
-		Tools.Buffer = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxMacroLength+1);
+		Tools.line = 0;
+		Tools.Buffer = (char*)malloc(sizeof(char)*Tools.MaxMacroLength+1);
 		if(Tools.Buffer == NULL)
 		{
 			printf("Out of memory\n");
-			//~ exit(-1);
+			exit(-1);
 		}
 		for(vIndex=0;vIndex<NB_MACRO;vIndex++)
 		{
-			Tools.MacroList[vIndex] = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxMacroLength);
+			Tools.MacroList[vIndex] = (char*)malloc(sizeof(char)*Tools.MaxMacroLength);
 			if(Tools.MacroList[vIndex] == NULL)
 			{
 				printf("Out of memory\n");
-				//~ exit(-1);
+				exit(-1);
 			}
 		}
 		for(vIndex=0;vIndex<NB_MACRO;vIndex++)
 		{
 			Tools.MacroList[vIndex] = script[vIndex];
 		}
-		Tools.String = (char*)gimmegimmegimme(sizeof(char),1,Tools.MaxStringSize);
+		Tools.CurrentStringSize = Tools.MaxStringSize;
+		Tools.String = (char*)malloc(sizeof(char)*Tools.MaxStringSize);
 		if(Tools.String == NULL)
 		{
 			printf("Out of memory\n");
 			exit(-1);
 		}
+		/* Remplacer par "si pas d'erreurs" */
 		else
 		{
 			/* This test always finds the first macro in the script file */
 			do
 			{
-				fgetline(p_file,&Tools.MaxStringSize,&Tools.String);
+				Tools.CurrentStringSize = fgetline(p_file,&Tools.MaxStringSize,&Tools.String,&Tools.line);
 			}while(*Tools.String != '#');
 			vLengthRead = sscanf(Tools.String,"%s",Tools.Buffer);
+			
 			/* Permet de trouver la macro que l'on a lu. */
 			for(vIndex = 0;(vIndex < NB_MACRO) &&  (vTest != 0 );vIndex++)
 			{
 				bidon =Tools.MacroList;
 				vTest = strcmp(Tools.Buffer,Tools.MacroList[vIndex]);
-				//~ printf("1--%s--%s\n",Tools.Buffer,Tools.MacroList[vIndex]);
 			}
 			if(vTest == 0)	
 			{
@@ -73,22 +75,16 @@ int main(int argc, char *argv[])
 										fCalculation(&fgsfds,p_file,vNbcalculations,&Tools);
 										vNbcalculations++;
 										break;
-					
-					case after_calculation:	break;
-					
-					case register_ :		if(fgsfds == begin)
-										{
-
-										}
 
 					default:				/* This can only happen if you have not the same number of */
 										/* macros declared and defined in NB_MACRO (script.h) */
-										printf("Macro \"%s\" undefined\nIgnoring\n",Tools.String);
+										printf("Macro \"%s\" undefined: the parser is bugged.\nIgnoring\n",Tools.String);
+										exit(-1);
 				}
 			}
 			else
 			{
-				printf("Not found\n");
+				printf("Nothing was found in the file\n");
 			}
 		}
 		
@@ -105,32 +101,25 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-void * gimmegimmegimme(int taille_data, int taille_x,int taille_y)
-{
-	void* p_data = (void *)malloc(taille_data*taille_x*taille_y);
-	return (void*) p_data;
-}
 /*
  * fCalculation():
  * Scans trough the script file for processes and allocates memory according to what's written inside that file
+ * Returns:
+ * int	vIsProperlyDeclared: whether there were errors during parsing the file
  *
  * Arguments:
- * (void*)	fgsfds:
+ * (void*)	fgsfds: the context variable
  * (FILE*)	p_file: the script file
  * (int)	vNbcalculations:
  * (char*)	script: A list of the known macros.
  * (char*)	p_string: General string used to read through the script file
  * (int*)	p_vMaxStringSize: the current length of p_string
  */
-void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_Tools)
+int fCalculation(t_whereami * fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_Tools)
 {
 	/* The calculation we're about to read */
-	//~ MAKE THIS A POINTER AND HAVE IT RETURN AN ERROR CODE
+	//~ MAKE THIS A POINTER AND HAVE IT RETURN AN ERROR CODE IF NEEDED
 	t_calculation sCalculation;
-	
-	/* */
-	unsigned int nbProcessDeclared = 0;
-	unsigned int nbCorrectProcess = 0;
 	
 	/* General purpose index variable */
 	//~ unsigned int vIndex;
@@ -142,13 +131,14 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 	unsigned int vTest = 1;
 	unsigned int vTest2 = 1;
 	unsigned int vEnd = 1;
+	int vIsProperlyDeclared = 1;
 	
 	/* Gets the name & number of processes */
+	/* VERIFY */
 	p_Tools->String++;
-	
 	/* Scans the opened file for the calculation name */
 	//~ POSSIBILITE DE BUG SUR LA LONGUEUR
-	sCalculation.name = (char*)gimmegimmegimme(sizeof(char),p_Tools->MaxStringSize,1);
+	sCalculation.name = (char*)malloc(sizeof(char)*p_Tools->MaxStringSize);
 	vLengthRead = sscanf(p_Tools->String,"%*s %s",sCalculation.name);
 	
 	/* Verifies the calculation does have a name... */
@@ -159,19 +149,17 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 		printf("Error: #calculation with no name\nRenamed \"%s\"\n",sCalculation.name);
 		//~ exit(-1);
 	}
-	
-	/* Initializes the instructions index */
-	vTest2 = sscanf(p_Tools->String,"%*s %u",&sCalculation.nbprocesses);
-		
 	/* This test always finds the first macro in the calculation */
 	/* Gets the matrix size */
-	vTest=1;
+	vTest = 1;
+	vTest2 = 1;
 	do
 	{
-		vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
+		vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String,&p_Tools->line);
 		sscanf(p_Tools->String,"%4s",p_Tools->Buffer);
 		vTest = strncmp(p_Tools->Buffer,"#row",1);
-	}while(vTest && (vLengthRead > 0));
+		vTest2 = strncmp(p_Tools->Buffer,"#end",1);
+	}while(vTest && (vLengthRead > 0) && !vTest2 && !feof(p_file));
 	//~ TESTER ICI SI ON A FINI LE FICHIER
 	
 	/* If we found a macro */
@@ -186,24 +174,31 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 			{
 				printf("Error: the matrix size for calculation %s was not specified\n",sCalculation.name);
 				printf("Ignoring calculation.\n");
-				//~ exit(-1);
+				*fgsfds = begin;
 			}
 			else
 			{
+				sCalculation.nbprocesses=0;
+				sCalculation.lsprocess = (t_process*)malloc(sizeof(t_process));
+				if(sCalculation.lsprocess == NULL)
+				{
+					printf("Out of memory.\n");
+					exit(-1);
+				}
 				
 				/* Gets the number of process declared */
 				/* WARNING: meaning of vTest switched to "reading errors" */
-				fGetNBProcess(p_file,p_Tools,&nbProcessDeclared);
+				/* RETOURNER UNE ERREUR */
+				fParseCalculation(p_file,p_Tools,&sCalculation);
+				
+				while(1);
 				
 				/* Tests*/
-				if(!nbProcessDeclared)
+				if(!sCalculation.nbprocesses)
 				{
-					printf("Error: Empty calculation \"%s\"\nIgnoring calculation.\n",sCalculation.name);
-					//~ exit(-1);
-				}
-				else
-				{
-					sCalculation.lsprocess = (t_process*)malloc(sizeof(t_process*));
+					printf("Error: Empty calculation \"%s\"\n",sCalculation.name);
+					printf("Ignoring calculation.\n");
+					*fgsfds = begin;
 				}
 			}
 		}
@@ -211,71 +206,24 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 		{
 			printf("Error: the matrix size for calculation %s was not specified.\n",sCalculation.name);
 			printf("Ignoring calculation.\n");
-			//~ exit(-1);
+			*fgsfds = begin;
 		}
 	}
-	/* If no macro were found = empty calculation */
+	/* Currently, the parser will ignore a calculation if the rowsize was not specified */
 	else
 	{
-		printf("Error: Empty calculation \"%s\".\nIgnoring calculation.",sCalculation.name);
-		//~ exit(-1);
+		printf("Error: the matrix size for calculation %s was not specified.\n",sCalculation.name);
+		printf("Ignoring calculation.\n");
+		*fgsfds = begin;
 	}
-	/* Initializes all processes */
-	/* there is 2*ROWSIZE-1+(NBINSTRUC-1) cycls in a ROWSIZE*ROWSIZE matrix for NBINSTRUC to be executed in diagonale */
-	
-	//~ *************************
-	//~ SI on a lu une macro, ne pas relire
-	//~ *************************
-	
-	/* Scan for instructions */
-	do
-	{
-		/* re/initializes test variables */
-		vEnd=1;
-		vTest=1;
 		
-		/* Finds the first macro in the calculation */
-		do
-		{
-			vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
-			if(vLengthRead > 0)
-			{
-				/* '8' here is the number of characters in "#process" */
-				sscanf(p_Tools->String,"%8s",p_Tools->Buffer);
-				printf("%s\n",p_Tools->String);
-				
-				/* The other macros are ignored */
-				vTest = strcmp(p_Tools->Buffer,"#process");
-				vEnd = strcmp(p_Tools->Buffer,"#end") ;
-			}
-		}while(vTest && vEnd && (vLengthRead > 0));
-		
-		//~ *************************
-		/* Check if we're at the end of the file */
-		//~ *************************
-		
-		/* Checks if the previous loop found a macro and if it is a process declaration"*/
-		if((vTest == 0) && !strncmp(p_Tools->String,"#process",8))
-		{
-			t_process * sProcess;
-			nbCorrectProcess++;
-			sCalculation.lsprocess = (t_process*)realloc(sCalculation.lsprocess,sizeof(t_process)*(nbCorrectProcess+1));
-			sProcess  = sCalculation.lsprocess+nbCorrectProcess-1;
-			sProcess->index = nbCorrectProcess;
-			sProcess->nbinstructions = 1;
-			sProcess->p_instructions = (void(**)())malloc(sizeof(void
-			*(sProcess->p_instructions) = &fvoid;
-			/* */
-			fProcess(p_file,p_Tools,&sCalculation,&nbCorrectProcess);
-		}
-		/* else: other macro -> ignored */
-		
-	/* Tests if the macro found is "#end" or if we're at the end of the file */
-	}while(vEnd && (vLengthRead > 0));
-	
 	if(vEnd)
 	{
-		printf("Warning: calculation \"%s\" was not ended by \"#end\" \n",sCalculation.name);
+		printf("Error: calculation \"%s\" was not ended by \"#end\" \n",sCalculation.name);
+		*fgsfds = begin;
+		
+		vIsProperlyDeclared = 0;
+		return vIsProperlyDeclared;
 	}
 	
 	//~ *************************
@@ -289,200 +237,21 @@ void fCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_
 	//~ (t_whereami*) fgsfds;
 	
 	/* free reserved memory */
-	free((void*)sCalculation.lsprocess);
+	//~ free((void*)sCalculation.lsprocess);
+	return vIsProperlyDeclared;
 }
 
-int fLinkCharToFunc(int  carac,t_list* sFuncToLink, t_tools * p_Tools)
+int fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalculation)
 {
-	int vIndex, vTest = 0;
-
-	if(!strncomp(p_Tools->Buffer,"(",1);
-	{
-		
-	}
-	/* Finds the function linked to the character given */
-	for(vIndex = 0; vIndex < NBINSTRUCTIONS; vIndex++)
-	{
-		if(tab_list[vIndex].carac == carac)
-		{	
-			sFuncToLink->instructions->func = tab_list[vIndex].instructions->func;
-			vTest = 1;
-		}
-	}
-
-	return vTest;
-}
-
-int fgetline(FILE* p_file, unsigned int* n,char**p_string)
-{
-	unsigned int new_n = 0,stringlen;
-	char c = 'o';
-	stringlen = strlen(*p_string);
-	while((c != '\x0A') && !feof(p_file))
-	{
-		if(new_n == *n)
-		{
-			stringlen *= 2;
-			p_string = (char**)realloc(p_string,stringlen);
-			if(p_string ==NULL)
-			{
-				printf("Out of memory\n");
-				exit(-1);
-			}
-		}
-		c = (char)fgetc(p_file);
-		//~ printf("%3d--%c\n",c,c);
-		*(*p_string + new_n) = (char)c;
-		new_n++;
-	}
-	*(*p_string+new_n-1) = '\0';
-	if(new_n > *n)
-	{
-		*n = strlen(*p_string);
-		p_string = (char**)realloc(p_string,stringlen);
-		if(p_string ==NULL)
-		{
-			printf("Out of memory\n");
-			exit(-1);
-		}
-	}
-	return new_n;
-}
-
-void InitMacroTable(t_tools * Tools)
-{
-	unsigned int vIndex,vTest;
-	char script[NB_MACRO][STRMAXSIZE]={
-	#include "../include/macrotable.h"
-	};
-	
-	Tools->MaxMacroLength = 0;
-	for(vIndex=0;vIndex<NB_MACRO;vIndex++)
-	{
-		vTest = strlen(script[vIndex]);
-		if(vTest > Tools->MaxMacroLength)
-		{
-			Tools->MaxMacroLength = vTest;
-		}
-	}
-	
-	Tools->MaxStringSize = STRMAXSIZE;
-	
-	Tools->Buffer = (char*)gimmegimmegimme(sizeof(char),1,Tools->MaxMacroLength);
-	if(Tools->Buffer == NULL)
-	{
-		printf("Out of memory\n");
-		//~ exit(-1);
-	}
-	for(vIndex=0;vIndex<NB_MACRO;vIndex++)
-	{
-		Tools->MacroList[vIndex] = (char*)gimmegimmegimme(sizeof(char),1,Tools->MaxMacroLength);
-		if(Tools->MacroList[vIndex] == NULL)
-		{
-			printf("Out of memory\n");
-			//~ exit(-1);
-		}
-	}
-	for(vIndex=0;vIndex<NB_MACRO;vIndex++)
-	{
-		Tools->MacroList[vIndex] = script[vIndex];
-	}
-	Tools->String = (char*)gimmegimmegimme(sizeof(char),1,Tools->MaxStringSize);
-	if(Tools->String == NULL)
-	{
-		printf("Out of memory\n");
-		//~ exit(-1);
-	}
-}
-
-void fProcess(FILE * p_file, t_tools * p_Tools,  t_calculation * sCalculation, unsigned int * ProcessIndex)
-{
-	/* Used to verify the number of character read in standart string.h functions. */
-	unsigned int vLengthRead;
-
-	/* */
-	unsigned int nbInstructionsDeclared = 0;
-	
-	/* General purpose index variable */
-	unsigned int vIndex;
-	
-	/* General purpose test variable */
-	unsigned int vTest;
-	
-	t_process * sProcess = sCalculation->lsprocess+(*ProcessIndex)-1;
-	
-	/* Gets the instruction list */
-	vLengthRead = sscanf(p_Tools->String,"%*s %s",p_Tools->Buffer);
-	
-	/* If there is more than one instruction */
-	if((vLengthRead > 0))
-	{
-		/* Temporary storage */
-		t_list vTemp;
-		
-		vTest = 1;
-		nbInstructionsDeclared =  0;
-		/* If the user grouped the instructions within brackets, it is taken into account */
-		if(!strncmp(p_Tools->Buffer,"{",1))
-		{
-			for(vIndex=0;(vIndex < p_Tools->MaxStringSize)&&(vTest)&&(strncmp(p_Tools->Buffer+vIndex,"\0",1));vIndex++)
-			{
-					
-				if(fLinkCharToFunc(*(p_Tools->Buffer+vIndex),&vTemp))
-				{
-					/* Keeps track of the number of instructions declared */
-					nbInstructionsDeclared++;
-					/* Gets enough memory to store the new function pointer */
-					sProcess->p_instructions = ( void(**)() )realloc( sProcess->p_instructions,(nbInstructionsDeclared+1)* sizeof(void(**)()));
-					if(sProcess->p_instructions == NULL)
-					{
-						printf("Out of memory\n");
-						exit(-1);
-					}
-					
-					/* Links the character to the correct function using the link table */
-					*(sProcess->p_instructions+nbInstructionsDeclared) = vTemp.instructions->func;
-				}
-				vTest = strncmp(p_Tools->Buffer+vIndex,"}",1);
-			}
-			
-			//~ TESTER SI LA LECTURE PROCESS EST BONNE?
-			sProcess->index = *ProcessIndex;
-			if(vTest)
-			{
-				printf("Warning: instruction list in process #%d was not terminated by \"}\" \n",sCalculation->lsprocess->index);
-			}
-		}
-		else
-		{
-			for(vIndex=0;(vIndex<vLengthRead)&&(vTest == 1);vIndex++)
-			{
-				vTest = fLinkCharToFunc(*(p_Tools->String+vIndex),&vTemp);
-			}
-			nbInstructionsDeclared++;
-		}
-		sProcess->nbinstructions = nbInstructionsDeclared;
-		
-		/* Shows the number of instructions found per process */
-		//~ printf("--%d\n",nbInstructionsDeclared);
-	}
-	
-	vLengthRead = fscanf(p_file,"%u",&vTest);
-	if(vLengthRead > 1)
-	{
-		for(vIndex = 1;(vIndex <vTest)&&(vIndex < sCalculation->nbprocesses);vIndex++)
-		{
-			*(sCalculation->lsprocess+vIndex)= *(sCalculation->lsprocess);
-		}
-	}
-}
-
-void fGetNBProcess(FILE * p_file,t_tools * p_Tools, unsigned int * nbProcessDeclared)
-{
-	unsigned int vEnd = 0;
+	unsigned int vEndParse = 0;
 	unsigned int vTest = 0;
-	unsigned int vLengthRead = 0;
+	unsigned int vIndex = 0;
+	unsigned int vShift = 0;
+	unsigned int vShiftSuperString = 0;
+	int vIsProperlyDeclared = 1;
+	int vLengthRead = 0;
 	fpos_t stream_pos;
+	char * SuperString = (char*)malloc(300*sizeof(char));
 	
 	/* Save the position of the stream indicator */
 	vTest= fgetpos(p_file,&stream_pos);
@@ -492,29 +261,129 @@ void fGetNBProcess(FILE * p_file,t_tools * p_Tools, unsigned int * nbProcessDecl
 		//~ exit(-1);
 	}
 	else
-	{
-		*nbProcessDeclared = 0;
+	{	
+		p_Tools->context = calculation;
+		p_Tools->Buffer = (char*)realloc(p_Tools->Buffer,p_Tools->MaxStringSize);
+		if(p_Tools->Buffer == NULL)
+		{
+			printf("Out of memory\n");
+			exit(-1);
+		}
 		do
 		{
-			vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
+			/* Gets a new line to parse */
+			vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String,&p_Tools->line);
+			/* Removes the '\0' character */
+			vLengthRead -=1;
+			
 			if(vLengthRead > 0)
 			{
-				/* '8' here is the number of characters in "#process" */
-				sscanf(p_Tools->String,"%8s",p_Tools->Buffer);
-				/* The other macros are ignored */
-				if(!strncmp(p_Tools->Buffer,"#process",1))
+				vIndex = 0;
+				vShift = 0;
+				
+				/* Parse one line */
+				do
 				{
-					if(!strncmp(p_Tools->Buffer,"#process",8))
+					/* gets one character */
+					sscanf(p_Tools->String+vIndex,"%c",p_Tools->Buffer);
+										
+					if(!strncmp(p_Tools->Buffer,TOKEN_BEGIN_PROCESS,1))
 					{
-						*nbProcessDeclared+=1;
+						if(p_Tools->context == calculation)
+						{
+							p_Tools->context = process;
+							
+							vShift=1;
+						}
+						else
+						{
+							printf("Syntax error at line %ld\n",p_Tools->line);
+							vEndParse = 1;
+							vIsProperlyDeclared = 0;
+						}
+					}
+					else if(!strncmp(p_Tools->Buffer,TOKEN_END_PROCESS,1))
+					{
+						sscanf(p_Tools->String+vIndex,"%2s",p_Tools->Buffer);
+						if(p_Tools->context == process)
+						{
+							p_Tools->context = calculation;
+							
+							/* Prints out the result of the scanning - for test purpose */
+							//~ {
+								//~ unsigned int i;
+								//~ for(i=0;i<vShiftSuperString;i++)
+									//~ putchar(*(SuperString+i));
+								//~ putchar('\n');
+							//~ }
+							
+							if(fVerifyProcessDeclaration(p_Tools,SuperString,vShiftSuperString,sCalculation) == TRUE)
+							{
+								sCalculation->nbprocesses++;
+								sCalculation->lsprocess = (t_process*)realloc(sCalculation->lsprocess,sCalculation->nbprocesses+1);
+								if(sCalculation->lsprocess == NULL)
+								{
+									printf("Out of memory.\n");
+									exit(-1);
+								}
+							}
+							else
+							{
+								vIsProperlyDeclared = 0;
+								/* RETOURNER UNE ERREUR PLUTOT */
+								//~ printf("Error at line %ld\n",p_Tools->line);
+							}
+							vShiftSuperString = 0;
+							vShift = 2;
+						}
+						else
+						{
+							printf("Syntax error at line %ld\n",p_Tools->line);
+							vShift = 2;
+							vEndParse = 1;
+							vIsProperlyDeclared = 0;
+						}
+					}
+					else if(!strncmp(p_Tools->Buffer,TOKEN_END_CALCULATION,1))
+					{
+						sscanf(p_Tools->String+vIndex,"%3s",p_Tools->Buffer);
+						if(!(p_Tools->context == calculation) && !strncmp(p_Tools->Buffer,TOKEN_END_CALCULATION,sizeof(TOKEN_END_CALCULATION)))
+						{
+							printf("Syntax error at line %ld\n",p_Tools->line);
+							vShift = sizeof(TOKEN_END_CALCULATION);
+							vEndParse = 1;
+							vIsProperlyDeclared = 0;
+						}
+						else
+						{
+							*(SuperString+vShiftSuperString) = *p_Tools->Buffer;
+							vShiftSuperString++;
+							
+							vShift = 1;
+						}
 					}
 					else
 					{
-						vEnd = 1;
+						vShift = 1;
+						if(*p_Tools->Buffer == '\x0A')
+						{
+							p_Tools->line++;
+						}
+						else if(p_Tools->context == process)
+						{
+							*(SuperString+vShiftSuperString) = *p_Tools->Buffer;
+							vShiftSuperString++;
+						}
 					}
-				}
+					vIndex += vShift;
+					vLengthRead -= vShift;
+				}while((vLengthRead > 0) && (vEndParse == 0));
+			} /* end if vLengthRead == 0 */
+			else
+			{
+				vEndParse = 1;
 			}
-		}while(!vEnd && (vLengthRead > 0));
+		}while(!vEndParse);
 	}
 	/* Restores the position of the stream indicator */
 	vTest= fsetpos(p_file,&stream_pos);
@@ -523,6 +392,13 @@ void fGetNBProcess(FILE * p_file,t_tools * p_Tools, unsigned int * nbProcessDecl
 		perror("The following error occured: ");
 		//~ exit(-1);
 	}
+	
+	/*Leave this here for testing purposes */
+	//~ printf("Found %d process\n",sCalculation->nbprocesses,SuperString);
+	
+	
+	free(p_Tools->Buffer);
+	return vIsProperlyDeclared;
 }
 
 /* EOF */
