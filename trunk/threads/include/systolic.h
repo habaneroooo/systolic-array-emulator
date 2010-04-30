@@ -13,15 +13,18 @@
 
 #define NB_PROCS ROW_SIZE*ROW_SIZE
 
+#define NB_REG 32
+#define NB_STATIC_REG 6
+
 void * CoProcessor_n(void *);
-void * gimmegimmegimme(int , int ,int );
 
 typedef struct
 {
 	int threadID;
-	int* reg_in;
-	int* reg_out;
-	
+	int reg[NB_REG+NB_STATIC_REG];
+	int reg_out;
+	int *reg_in;
+	int nb_reg_in;	
 	pthread_barrier_t * barrier;
 }__attribute__((aligned(sizeof (int)))) t_Args;
 

@@ -85,9 +85,3 @@ int main(int argc, char *argv[])
 		//~ Execute(*Array,Index_exec, In
 	//~ }
 //~ }
-
-//~ void * gimmegimmegimme(int taille_data, int taille_x,int taille_y)
-//~ {
-	//~ void* p_data = (void *)malloc(taille_data*taille_x*taille_y);
-	//~ return (void*) p_data;
-//~ }
