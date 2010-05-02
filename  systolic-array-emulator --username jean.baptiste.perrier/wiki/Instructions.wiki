@@ -1,0 +1,37 @@
+#summary One-sentence summary of this page.
+#labels Phase-Requirements,Featured
+
+= Introduction =
+
+
+
+= Listing =
+	
+|| { || groups operations and execute them in order (left to right) in one systolic cycle. ||
+|| , || separates operations when queued with brackets ||
+|| <x ||Charge data. "x" is either "L" or "U". ||
+|| >x ||Ouput data. "x" is either "R" or "D"<br>When queued in brackets, order does not matter, it is always the last operation executed. <br>If not defined, the data on the output is the result of the last operation performed ||
+<br>	  
+||* || multiply<br>||
+||+ ||add<br>||
+||- ||subtract<br>||
+||/ || divide<br>||
+||ø ||void  / do nothing.<br>||
+||& ||logic AND<br>||
+|| | || logic OR<br>||
+
+Any other character is ignored. You could write fgsfds*42€lolbbq, it would end up being counted as a multiply operation only.
+
+= Syntax =
+
+(t,x,y,o)	: indicates the data to process, their format and where to store the result. It is ignored for ø (= void).<br>
+		
+Ex: 
+/(x,y) divide x by y, stores the result in o. Default stores it in the temporary register.<br>
+		"t" indicates the type of data. <br>
+		Data can be:<br>
+		"ul","sl": unsigned/signed long int<br>
+		"f": floating point
+		"ud","sd": 8bit signed/unsigned int<br>
+		"us","ss": 16bit signed/unsigned int<br>
+		Default is signed long int.<br>
