@@ -35,6 +35,7 @@ typedef struct{
 	//~ GtkWidget * frame_button_file_chooser;
 	GtkWidget * button_file_chooser;
 	GtkWidget * file_chooser;
+	GtkWidget * button_start_parse;
 	GtkWidget * button_clear_message_window;
 	GtkWidget * button_save_log;
 	GtkWidget * button_show_result_window;

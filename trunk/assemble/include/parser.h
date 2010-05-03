@@ -12,8 +12,8 @@
  /*
   *
   */
-#define TRUE 1
-#define FALSE 0
+#define TTRUE 1
+#define FFALSE 0
 
 #define NB_MACRO 3
 #define STRMAXSIZE 100

@@ -21,8 +21,8 @@ void * Handler(void * p_Systolic)
 	/* Lecture de fichier */
 	t_Handler * Systolic = (t_Handler*) p_Systolic;
 	char * salut = (char*)malloc(sizeof(long));
-	int error;
-	int i=0;
+	//~ int error;
+	//~ int i=0;
 	
 	pthread_mutex_lock(&(Systolic->mutex_depart_handler));
 	pthread_cond_wait(&(Systolic->depart_handler), &(Systolic->mutex_depart_handler));

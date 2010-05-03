@@ -100,7 +100,7 @@ int fgetline(FILE*, unsigned int*,char**,long*);
  */
 const t_list tab_list[NBINSTRUCTIONS] = 
 {
-		{"add",fvoid,2,0xFF},
+		{"add",fvoid,3,0xFF},
 		{"*",fvoid,2,0xFF},
 		{"-",fvoid,2,100},
 		{"div",fvoid,2,0xFF},

@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
 	g_signal_connect (G_OBJECT(s_WindowList.result.button_close), "clicked", G_CALLBACK (cb_hide_result_window), (gpointer)&s_WindowList);
 	g_signal_connect (G_OBJECT(s_WindowList.result.window), "destroy",G_CALLBACK (cb_hide_result_window), (gpointer)&s_WindowList);
 	g_signal_connect (G_OBJECT(s_WindowList.main.button_save_log), "clicked", G_CALLBACK (cb_save_window), (gpointer)&s_WindowList);
+	//~ g_signal_connect (G_OBJECT(s_WindowList.main.button_start_parse), "clicked", G_CALLBACK (cb_start_parsing), (gpointer)&s_WindowList);
 	
 	/* Lancement de la boucle principale */
 	gtk_main ();
