@@ -5,7 +5,7 @@
 #include "parser.h"
 
 int fParseFile(FILE *);
-void fGetCalculation(void*, FILE *, int , t_tools*);
+int fGetCalculation(t_whereami*, FILE *, int , t_tools*);
 void fProcess(FILE *, t_tools *, t_calculation *,unsigned int *);
 void fParseCalculation(FILE *,t_tools *, t_calculation*);
 

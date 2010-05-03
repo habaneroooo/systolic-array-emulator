@@ -71,7 +71,10 @@ int fParseFile(FILE * p_file)
 					
 					case calculation:		fgsfds = calculation;
 										if(fGetCalculation(&fgsfds,p_file,vNbcalculations,&Tools))
+										{
 											vNbcalculations++;
+											/* retenir qu'il y a eu des erreurs et free la memoire réservée */
+										}
 										break;
 					
 					default:				/* This can only happen if you have not the same number of */
@@ -89,12 +92,6 @@ int fParseFile(FILE * p_file)
 		
 	} /* end check opening file */
 	
-	
-	
-	/* Masks unused variables */
-	(void)argc;
-	(void)argv;
-
 	return 0;
 }
 
@@ -110,7 +107,7 @@ int fParseFile(FILE * p_file)
  * (char*)	p_string: General string used to read through the script file
  * (int*)	p_vMaxStringSize: the current length of p_string
  */
-int fGetCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_Tools)
+int fGetCalculation(t_whereami* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_Tools)
 {
 	/* The calculation we're about to read */
 	//~ MAKE THIS A POINTER AND HAVE IT RETURN AN ERROR CODE IF NEEDED
@@ -122,12 +119,12 @@ int fGetCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * 
 	/* General purpose test variables */
 	unsigned int vTest = 1;
 	unsigned int vTest2 = 1;
-	unsigned int vEnd = 1;
+	//~ unsigned int vEnd = 1;
 	int vIsProperlyDeclared = 1;
 	
 	/* Gets the name & number of processes */
-	/* VERIFY */
 	p_Tools->String++;
+	
 	/* Scans the opened file for the calculation name */
 	//~ POSSIBILITE DE BUG SUR LA LONGUEUR
 	sCalculation.name = (char*)malloc(sizeof(char)*p_Tools->MaxStringSize);
@@ -229,11 +226,8 @@ int fGetCalculation(void* fgsfds, FILE * p_file, int vNbcalculations, t_tools * 
 	/* Gives the calculation a number */
 	sCalculation.index = vNbcalculations;
 	
-	/* Masks unused variables */
-	//~ (t_whereami*) fgsfds;
-	
 	/* free reserved memory */
-	//~ free((void*)sCalculation.lsprocess);
+	return vIsProperlyDeclared;
 }
 
 void fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalculation)
@@ -311,7 +305,7 @@ void fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalcula
 								//~ putchar('\n');
 							//~ }
 							
-							if(fVerifyProcessDeclaration(p_Tools,SuperString,vShiftSuperString,sCalculation) == TRUE)
+							if(fVerifyProcessDeclaration(p_Tools,SuperString,vShiftSuperString,sCalculation) == TTRUE)
 							{
 								sCalculation->nbprocesses++;
 								sCalculation->lsprocess = (t_process*)realloc(sCalculation->lsprocess,sCalculation->nbprocesses+1);

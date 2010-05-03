@@ -3,7 +3,8 @@
 
 #include "systolic.h"
 
-void *Matrix_Multiply(t_Args*);
-void *Do_Nothing(t_Args*);
+//~ void *Matrix_Multiply(t_Args*);
+//~ void *Do_Nothing(t_Args*);
+void fvoid(void);
 
 #endif /* EOF */

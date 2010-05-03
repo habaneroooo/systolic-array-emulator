@@ -2,7 +2,7 @@
 
 int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned int vLength, t_calculation * sCalculation)
 {
-	char vIsProperlyDeclared = TRUE;
+	char vIsProperlyDeclared = TTRUE;
 	unsigned int vLengthRead = 0;
 	unsigned int vNBArgsFound = 0;
 	int vShift = 0;

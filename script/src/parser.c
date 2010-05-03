@@ -2,7 +2,7 @@
 
 int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned int vLength, t_calculation * sCalculation)
 {
-	char vIsProperlyDeclared = TRUE;
+	char vIsProperlyDeclared = 1;
 	unsigned int vLengthRead = 0;
 	unsigned int vNBArgsFound = 0;
 	int vShift = 0;
@@ -144,7 +144,7 @@ int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned 
 				{
 					vIsProperlyDeclared = 0;
 					printf("Error: Invalid register \"%s\"\n",Buffer3);
-					
+					printf("return:%d\n",vIsProperlyDeclared);
 					FREE_AND_EXIT_VERIFY_PROCESS
 				}
 			}
@@ -218,18 +218,18 @@ int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned 
 		//~ if(vIsProperlyDeclared)
 			//~ printf("Found %d arguments for function \"%s\"\n",vNBArgsFound,Instruction);
 	}
-	FREE_AND_EXIT_VERIFY_PROCESS
+	return vIsProperlyDeclared;	
 }
 
 int fTestRegisterValidity(char **p_Buffer, t_process* p_process,int vLength,unsigned int * vNBArgsFound)
 {
-	int vIsValid = 1;
+	int vIsNOTValid = 1;
 	int vIndex;
-	for(vIndex=0;(vIndex < NBINSTRUCTIONS) && (vIsValid != 0);vIndex++)
+	for(vIndex=0;(vIndex < NBINSTRUCTIONS) && (vIsNOTValid  != 0);vIndex++)
 	{
 		vLength = strcspn(*p_Buffer," 	");
-		vIsValid = strncmp(*p_Buffer,Registers[vIndex].reg,vLength);
-		if(!vIsValid)
+		vIsNOTValid  = strncmp(*p_Buffer,Registers[vIndex].reg,vLength);
+		if(!vIsNOTValid )
 		{
 			if(*vNBArgsFound == 0)
 			{
@@ -252,7 +252,7 @@ int fTestRegisterValidity(char **p_Buffer, t_process* p_process,int vLength,unsi
 			}
 		}
 	}
-	return vIsValid;
+	return vIsNOTValid;
 }
 
 /* this function receives the text in between two semicolumns (or a semicolumn and the end of the process declaration) */

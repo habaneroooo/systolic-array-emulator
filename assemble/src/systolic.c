@@ -1,9 +1,9 @@
 #include "../include/systolic.h"
 
-int main(int argc, char *argv[])
+int fCreateThreads(void)
 {
 	int vIndex_x, vIndex_y;
-	int vTestCreateNOK,vTestCreatNOK2;	
+	int vTestCreateNOK,vTestCreateNOK2;	
 	t_Args * MyArgs;
 	t_Handler Systolic;
 	Systolic.ThreadArray = (pthread_t*)malloc(sizeof(pthread_t)*ROW_SIZE*ROW_SIZE);
@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	
 	/* Synchronization mutex */
 	vTestCreateNOK = pthread_cond_init(&Systolic.depart_handler, NULL);
-	vTestCreatNOK2 = pthread_mutex_init(&Systolic.mutex_depart_handler,NULL);
+	vTestCreateNOK2 = pthread_mutex_init(&Systolic.mutex_depart_handler,NULL);
 	if(vTestCreateNOK)
 	{
 		printf("Error initialiazing mutexes: %d\n", vTestCreateNOK);
@@ -34,16 +34,16 @@ int main(int argc, char *argv[])
 	if(vTestCreateNOK)
 	{
 		printf("ERROR; return code from pthread_barrier_init() is %d\n",vTestCreateNOK);
-		return(-1);
+		exit(-1);
 	}
 	
-	vTestCreateNOK = pthread_create(Systolic.Handler, NULL, Handler, (void *) &Systolic);
+	vTestCreateNOK2 = pthread_create(Systolic.Handler, NULL, Handler, (void *) &Systolic);
 	
 	/*Tests if the thread was correctly created */
-	if(vTestCreateNOK)
+	if(vTestCreateNOK2)
 	{
-		printf("ERROR; return code from pthread_create() is %d\n",vTestCreateNOK);
-		return(-1);
+		printf("ERROR; return code from pthread_create() is %d\n",vTestCreateNOK2);
+		exit(-1);
 	}
 
 	/* Threads creation */
@@ -72,8 +72,6 @@ int main(int argc, char *argv[])
 	
 	pthread_exit(NULL);
 	free((void*)&Systolic);
-	(void)argc;
-	(void)argv;
 }
 
 
