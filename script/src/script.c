@@ -1,12 +1,13 @@
 #include "../include/script.h"
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	FILE * p_file;
 	unsigned int vTest = 1;
 	int vIndex;
 	int vLengthRead;
 	int vNbcalculations = 0;
+	int vParsingOK = 1;
 	char**bidon=NULL;
 	t_tools Tools;
 	t_whereami fgsfds = begin;
@@ -65,7 +66,7 @@ int main(int argc, char *argv[])
 				bidon =Tools.MacroList;
 				vTest = strcmp(Tools.Buffer,Tools.MacroList[vIndex]);
 			}
-			if(vTest == 0)	
+			if(!vTest)	
 			{
 				switch(vIndex)
 				{
@@ -74,17 +75,21 @@ int main(int argc, char *argv[])
 					case calculation:		fgsfds = calculation;
 										if(fCalculation(&fgsfds,p_file,vNbcalculations,&Tools))
 											vNbcalculations++;
+										else
+											vParsingOK = 0;
 										break;
 
 					default:				/* This can only happen if you have not the same number of */
 										/* macros declared and defined in NB_MACRO (script.h) */
 										printf("Macro \"%s\" undefined: the parser is bugged.\nIgnoring\n",Tools.String);
+										vParsingOK = 0;
 										exit(-1);
 				}
 			}
 			else
 			{
 				printf("Nothing was found in the file\n");
+				vParsingOK = 0;
 			}
 		}
 		
@@ -94,9 +99,8 @@ int main(int argc, char *argv[])
 	
 	fclose(p_file);
 	
-				//~ while(1);
 	/* Masks unused variables */
-	return EXIT_SUCCESS;
+	return vParsingOK;
 }
 
 /*
@@ -126,7 +130,6 @@ int fCalculation(t_whereami * fgsfds, FILE * p_file, int vNbcalculations, t_tool
 	/* General purpose test variables */
 	unsigned int vTest = 1;
 	unsigned int vTest2 = 1;
-	unsigned int vEnd = 1;
 	int vIsProperlyDeclared = 1;
 	
 	/* Gets the name & number of processes */
@@ -216,10 +219,6 @@ int fCalculation(t_whereami * fgsfds, FILE * p_file, int vNbcalculations, t_tool
 		return vIsProperlyDeclared;
 	}
 	
-	//~ *************************
-	//~ TESTER SI Y'A DES PROCESS SINON LUI DIRE QU'IL EST VIDE
-	//~ *************************
-	
 	/* Gives the calculation a number */
 	sCalculation.index = vNbcalculations;
 	
@@ -255,7 +254,7 @@ int fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalculat
 	{	
 		p_Tools->context = calculation;
 		
-		sCalculation->lsprocess = (t_process*)malloc(sizeof(t_process)*200);
+		sCalculation->lsprocess = (t_process*)malloc(sizeof(t_process));
 		if(sCalculation->lsprocess == NULL)
 		{
 			printf("Out of memory.\n");
@@ -318,19 +317,15 @@ int fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalculat
 								//~ putchar('\n');
 							//~ }
 							
-		//~ printf("yesss;%d;%d;%d;%s;\n",sizeof(t_process),sizeof(t_process)*(sCalculation->nbprocesses+1),sCalculation->nbprocesses+1,SuperString);
-								//~ sCalculation->lsprocess = (t_process*)realloc(sCalculation->lsprocess,sizeof(t_process)*(sCalculation->nbprocesses+2));
-		//~ printf("yess;%d;%d;%s;\n",sizeof(t_process)*(sCalculation->nbprocesses+1),sCalculation->nbprocesses+1,SuperString);
-								//~ if(sCalculation->lsprocess == NULL)
-								//~ {
-									//~ printf("Out of memory.\n");
-									//~ exit(-1);
-								//~ }
-							
 							if(fVerifyProcessDeclaration(p_Tools,SuperString,vShiftSuperString,sCalculation))
 							{
 								sCalculation->nbprocesses++;
-								
+								sCalculation->lsprocess = (t_process*)realloc(sCalculation->lsprocess,sizeof(t_process)*(sCalculation->nbprocesses+1));
+								if(sCalculation->lsprocess == NULL)
+								{
+									printf("Out of memory.\n");
+									exit(-1);
+								}
 		
 							}
 							else
@@ -406,3 +401,4 @@ int fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalculat
 }
 
 /* EOF */
+

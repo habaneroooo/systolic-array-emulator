@@ -1,8 +1,17 @@
-#include "../include/parser.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned int vLength, t_calculation * sCalculation)
+#include "../include/types.h"
+
+#include "../include/parser.h"
+#include "../include/interface.h"
+#include "../include/instructions.h"
+#include "../include/gettext.h"
+
+int fVerifyProcessDeclaration(t_MainWindow* p_MainWindow, t_tools * p_Tools,char * ProcessToParse, unsigned int vLength, t_calculation * sCalculation)
 {
-	char vIsProperlyDeclared = TTRUE;
+	char vIsProperlyDeclared = 1;
 	unsigned int vLengthRead = 0;
 	unsigned int vNBArgsFound = 0;
 	int vShift = 0;
@@ -33,7 +42,7 @@ int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned 
 	if(vLengthRead <= 0)
 	{
 		vIsProperlyDeclared = 0;
-		printf("Error: No instruction specified\n");
+		fprinttextview(p_MainWindow,_("Warning: No instruction specified\n"));
 		
 		FREE_AND_EXIT_VERIFY_PROCESS
 	}
@@ -58,7 +67,7 @@ int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned 
 		if(vLengthRead <= 0)
 		{
 			vIsProperlyDeclared = 0;
-			printf("Error: No instruction specified\n");
+			fprinttextview(p_MainWindow,_("Error: No instruction specified\n"));
 			
 			FREE_AND_EXIT_VERIFY_PROCESS
 		}
@@ -67,7 +76,7 @@ int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned 
 			Instruction = (char*)realloc(Instruction,vLengthRead+1);
 			if(Instruction == NULL)
 			{
-				printf("Out of memory\n");
+				g_printf(_("Out of memory\n"));
 				exit(-1);
 			}
 			memset(Instruction,'\0',vLengthRead+1);
@@ -79,10 +88,11 @@ int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned 
 			}
 			i--;
 		}
+		
 		if(vEnd == 0)
 		{
 			vIsProperlyDeclared = 0;
-			printf("Error: Instruction \"%s\" unknown\n",Instruction);
+			fprinttextview(p_MainWindow,g_strdup_printf(_("Error: Instruction \"%s\" unknown\n"),Instruction));
 			
 			FREE_AND_EXIT_VERIFY_PROCESS
 		}
@@ -126,14 +136,14 @@ int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned 
 				if(vShift2 == 0)
 				{
 					vIsProperlyDeclared = 0;
-					printf("Error: Missing argument %d for instruction \"%s\"\n",vLengthRead+1,Instruction);
+					fprinttextview(p_MainWindow,g_strdup_printf(_("Error: Missing argument %d for instruction \"%s\"\n"),vLengthRead+1,Instruction));
 					
 					FREE_AND_EXIT_VERIFY_PROCESS
 				}
 				Buffer3 = (char*)realloc(Buffer3,vShift2+1);
 				if(Buffer3 == NULL)
 				{
-					printf("Out of memory\n");
+					g_printf(_("Out of memory\n"));
 					exit(-1);
 				}
 				memset(Buffer3,'\0',vShift2+1);
@@ -143,8 +153,7 @@ int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned 
 				if(fTestRegisterValidity(&Buffer3,*p_process,vShift2,&vNBArgsFound))
 				{
 					vIsProperlyDeclared = 0;
-					printf("Error: Invalid register \"%s\"\n",Buffer3);
-					
+					fprinttextview(p_MainWindow,g_strdup_printf(_("Error: Invalid register \"%s\"\n"),Buffer3));
 					FREE_AND_EXIT_VERIFY_PROCESS
 				}
 			}
@@ -153,14 +162,14 @@ int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned 
 		if(vNBArgsFound < tab_list[i].NbMinDataIn)
 		{
 			vIsProperlyDeclared = 0;
-			printf("Error: Too few arguments for function \"%s\" (Min:%d)\n",Instruction,tab_list[i].NbMinDataIn);
+			fprinttextview(p_MainWindow,g_strdup_printf(_("Error: Too few arguments for function \"%s\" (Min:%d)\n"),Instruction,tab_list[i].NbMinDataIn));
 			
 			FREE_AND_EXIT_VERIFY_PROCESS
 		}
 		else if(vNBArgsFound > tab_list[i].NbMaxDataIn)
 		{
 			vIsProperlyDeclared = 0;
-			printf("Too many arguments for function \"%s\" (Max:%d)\nIgnoring the exceeding parameters\n",Instruction,tab_list[i].NbMaxDataIn);
+			fprinttextview(p_MainWindow,g_strdup_printf(_("Too many arguments for function \"%s\" (Max:%d)\nIgnoring the exceeding parameters\n"),Instruction,tab_list[i].NbMaxDataIn));
 			
 			FREE_AND_EXIT_VERIFY_PROCESS
 		}
@@ -186,7 +195,7 @@ int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned 
 				p_Tools->Buffer = (char*)realloc(p_Tools->Buffer,vLength+1);
 				if(p_Tools->Buffer == NULL)
 				{
-					printf("Out of memory\n");
+					g_printf(_("Out of memory\n"));
 					exit(-1);
 				}
 				memset(p_Tools->Buffer,'\0',vLength+1);
@@ -196,7 +205,7 @@ int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned 
 					strcat(p_Tools->Buffer,"\0");
 					(*p_process)->hmask = (bool*)malloc(sizeof(bool)*sCalculation->rowsize);
 					memset((*p_process)->hmask,0,sCalculation->rowsize);
-					vEnd = fVerifyProcessSelector(sCalculation,&(p_Tools->Buffer),vLength,&((*p_process)->hmask));
+					vEnd = fVerifyProcessSelector(p_MainWindow,sCalculation,&(p_Tools->Buffer),vLength,&((*p_process)->hmask));
 				}
 				else
 				{	
@@ -204,7 +213,7 @@ int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned 
 					strcat(p_Tools->Buffer,"\0");
 					(*p_process)->vmask = (bool*)malloc(sizeof(bool)*sCalculation->rowsize);
 					memset((*p_process)->vmask,0,sCalculation->rowsize);
-					vEnd = fVerifyProcessSelector(sCalculation,&(p_Tools->Buffer),vLength,&((*p_process)->vmask));
+					vEnd = fVerifyProcessSelector(p_MainWindow,sCalculation,&(p_Tools->Buffer),vLength,&((*p_process)->vmask));
 				}
 			}
 			if(vEnd == 0)
@@ -218,17 +227,18 @@ int fVerifyProcessDeclaration(t_tools * p_Tools,char * ProcessToParse, unsigned 
 		//~ if(vIsProperlyDeclared)
 			//~ printf("Found %d arguments for function \"%s\"\n",vNBArgsFound,Instruction);
 	}
-	FREE_AND_EXIT_VERIFY_PROCESS
+	return vIsProperlyDeclared;	
 }
 
 int fTestRegisterValidity(char **p_Buffer, t_process* p_process,int vLength,unsigned int * vNBArgsFound)
 {
-	int vIsValid = 1;
+	int vIsNOTValid = 1;
 	int vIndex;
-	for(vIndex=0;(vIndex < NBINSTRUCTIONS) && (vIsValid != 0);vIndex++)
+	for(vIndex=0;(vIndex < NBINSTRUCTIONS) && (vIsNOTValid  != 0);vIndex++)
 	{
-		vIsValid = strncmp(*p_Buffer,Registers[vIndex].reg,vLength);
-		if(!vIsValid)
+		vLength = strcspn(*p_Buffer," 	");
+		vIsNOTValid  = strncmp(*p_Buffer,Registers[vIndex].reg,vLength);
+		if(!vIsNOTValid )
 		{
 			if(*vNBArgsFound == 0)
 			{
@@ -242,7 +252,7 @@ int fTestRegisterValidity(char **p_Buffer, t_process* p_process,int vLength,unsi
 				p_process->reg_in = (int*)malloc(sizeof(int)*((*vNBArgsFound)+1));
 				if(p_process->reg_in == NULL)
 				{
-					printf("Out of memory.\n");
+					g_printf(_("Out of memory.\n"));
 					exit(-1);
 				}
 								
@@ -251,11 +261,11 @@ int fTestRegisterValidity(char **p_Buffer, t_process* p_process,int vLength,unsi
 			}
 		}
 	}
-	return vIsValid;
+	return vIsNOTValid;
 }
 
 /* this function receives the text in between two semicolumns (or a semicolumn and the end of the process declaration) */
-unsigned int fVerifyProcessSelector(t_calculation * sCalculation,char ** Buffer,unsigned int vLength,bool** mask)
+unsigned int fVerifyProcessSelector(t_MainWindow* p_MainWindow, t_calculation * sCalculation,char ** Buffer,unsigned int vLength,bool** mask)
 {
 	unsigned int vShift2 = 0;
 	unsigned int vShift = 0;
@@ -282,7 +292,7 @@ unsigned int fVerifyProcessSelector(t_calculation * sCalculation,char ** Buffer,
 	if(vLength == 0)
 	{
 		vOK = 0;
-		printf("Error: Instruction selector missing\n");
+		fprinttextview(p_MainWindow,(gchar*)_("Error: Instruction selector missing\n"));
 		return vOK;
 	}
 	else if(isalnum(*(*Buffer+vShift)))
@@ -291,11 +301,11 @@ unsigned int fVerifyProcessSelector(t_calculation * sCalculation,char ** Buffer,
 		char carac;
 		if(vLength < sCalculation->rowsize)
 		{
-			printf("Warning: selector too small. The remaining parameters are set to '0'.\n");
+			fprinttextview(p_MainWindow,(gchar*)_("Warning: selector too small. The remaining parameters are set to '0'.\n"));
 		}
 		else if(vLength > sCalculation->rowsize)
 		{
-			printf("Warning: selector too big. The exceeding parameters are ignored.\n");
+			fprinttextview(p_MainWindow,(gchar*)_("Warning: selector too big. The exceeding parameters are ignored.\n"));
 		}
 		
 		/* Quelle variable contient le nombre de process déclarés jusqu'à présent? */
@@ -307,7 +317,8 @@ unsigned int fVerifyProcessSelector(t_calculation * sCalculation,char ** Buffer,
 			else
 			{
 				vOK = 0;
-				printf("Error: character \"%c\" is forbidden in numeric selector.\nUse ONLY 1's and 0's\n",(int)carac);
+				/* Translators: leave %c, \", \n as they are formatting characters */
+				fprinttextview(p_MainWindow,g_strdup_printf("Error: character \"%c\" is forbidden in numeric selector.\nUse ONLY 1's and 0's\n",(int)carac));
 				return vOK;
 			}
 			i++;
@@ -322,7 +333,7 @@ unsigned int fVerifyProcessSelector(t_calculation * sCalculation,char ** Buffer,
 	return vOK;
 }
 
-int fgetline(FILE* p_file, unsigned int* n,char**p_string, long* line)
+int fgetline(FILE* p_file, unsigned int* n,char**p_string)
 {
 	unsigned int new_n = 0,stringlen;
 	char c = 'o';
@@ -335,7 +346,7 @@ int fgetline(FILE* p_file, unsigned int* n,char**p_string, long* line)
 			p_string = (char**)realloc(p_string,stringlen);
 			if(p_string ==NULL)
 			{
-				printf("Out of memory\n");
+				g_printf(_("Out of memory\n"));
 				exit(-1);
 			}
 		}
@@ -347,14 +358,13 @@ int fgetline(FILE* p_file, unsigned int* n,char**p_string, long* line)
 	*(*p_string+new_n-1) = '\0';
 	
 	/* So we know where we are */
-	*line++;
 	if(new_n > *n)
 	{
 		*n = strlen(*p_string);
 		p_string = (char**)realloc(p_string,stringlen);
 		if(p_string ==NULL)
 		{
-			printf("Out of memory\n");
+			g_printf(_("Out of memory\n"));
 			exit(-1);
 		}
 	}

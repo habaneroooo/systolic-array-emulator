@@ -38,4 +38,7 @@ typedef struct
 	pthread_mutex_t mutex_depart_handler;
 }t_Handler;
 
-#endif /* EOF */
+#endif 
+
+/* EOF */
+

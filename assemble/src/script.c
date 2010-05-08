@@ -1,40 +1,56 @@
-#include "../include/script.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+ 
+#include "../include/types.h"
 
-int fParseFile(FILE * p_file)
+#include "../include/parser.h"
+#include "../include/interface.h"
+#include "../include/script.h"
+#include "../include/gettext.h"
+
+int fParseFile(t_MainWindow* p_MainWindow,t_toolbox * Toolbox)
 {
 	unsigned int vTest = 1;
 	int vIndex;
 	int vLengthRead;
 	int vNbcalculations = 0;
+	int vParsingOK = 1;
 	
 	t_tools Tools;
 	t_whereami fgsfds = begin;
 	char script[NB_MACRO][MAXMACROLENGTH+1]={"#calculation","#row","#end"};
 
-	p_file = fopen("calculate","rb");
-	if(p_file == NULL)
+	Toolbox->file = fopen(gtk_file_chooser_get_filename((GtkFileChooser *)p_MainWindow->file_chooser),"rb");
+	if(Toolbox->file == NULL)
 	{
-		printf("Error opening file\n");
-		exit(-1);
+		vParsingOK = 0;
+		fprinttextview(p_MainWindow,(gchar*)_("Error opening file.\nPlease check if you have proper reading access to the file/directory.\n"));
+		return vParsingOK;
 	}
 	else
 	{
+		/* Initialisez tools */
 		Tools.MaxMacroLength = MAXMACROLENGTH;
 		Tools.MaxStringSize = STRMAXSIZE;
-		Tools.line = 0;
 		Tools.Buffer = (char*)malloc(sizeof(char)*Tools.MaxMacroLength+1);
 		if(Tools.Buffer == NULL)
 		{
-			printf("Out of memory\n");
-			//~ exit(-1);
+			g_printf(_("Out of memory\n"));
+			exit(-1);
 		}
+		
+		/* Initializes parsing results */
+		Toolbox->NBCalculations = 0;
+		Toolbox->CalculationList = (t_calculation*)malloc(sizeof(t_calculation));
+		
 		for(vIndex=0;vIndex<NB_MACRO;vIndex++)
 		{
 			Tools.MacroList[vIndex] = (char*)malloc(sizeof(char)*Tools.MaxMacroLength);
 			if(Tools.MacroList[vIndex] == NULL)
 			{
-				printf("Out of memory\n");
-				//~ exit(-1);
+				g_printf(_("Out of memory\n"));
+				exit(-1);
 			}
 		}
 		for(vIndex=0;vIndex<NB_MACRO;vIndex++)
@@ -45,8 +61,8 @@ int fParseFile(FILE * p_file)
 		Tools.String = (char*)malloc(sizeof(char)*Tools.MaxStringSize);
 		if(Tools.String == NULL)
 		{
-			printf("Out of memory\n");
-			//~ exit(-1);
+			g_printf(_("Out of memory\n"));
+			exit(-1);
 		}
 		/* Remplacer par "si pas d'erreurs" */
 		else
@@ -54,7 +70,7 @@ int fParseFile(FILE * p_file)
 			/* This test always finds the first macro in the script file */
 			do
 			{
-				Tools.CurrentStringSize = fgetline(p_file,&Tools.MaxStringSize,&Tools.String,&Tools.line);
+				Tools.CurrentStringSize = fgetline(Toolbox->file,&Tools.MaxStringSize,&Tools.String);
 			}while(*Tools.String != '#');
 			vLengthRead = sscanf(Tools.String,"%s",Tools.Buffer);
 			
@@ -63,28 +79,38 @@ int fParseFile(FILE * p_file)
 			{
 				vTest = strcmp(Tools.Buffer,Tools.MacroList[vIndex]);
 			}
-			if(vTest == 0)	
+			if(!vTest)	
 			{
 				switch(vIndex)
 				{
 					case begin:			break;
 					
 					case calculation:		fgsfds = calculation;
-										if(fGetCalculation(&fgsfds,p_file,vNbcalculations,&Tools))
+										if(fCalculation(p_MainWindow,&fgsfds,Toolbox->file,vNbcalculations,&Tools,Toolbox->CalculationList+Toolbox->NBCalculations))
 										{
-											vNbcalculations++;
-											/* retenir qu'il y a eu des erreurs et free la memoire réservée */
+											Toolbox->NBCalculations++;
+											Toolbox->CalculationList = (t_calculation*)realloc(Toolbox->CalculationList,sizeof(t_calculation)*Toolbox->NBCalculations+1);
+											if(Toolbox->CalculationList == NULL)
+											{
+												g_printf(_("Out of memory\n"));
+												exit(-1);
+											}
 										}
+										else
+											vParsingOK = 0;
 										break;
-					
+
 					default:				/* This can only happen if you have not the same number of */
 										/* macros declared and defined in NB_MACRO (script.h) */
-										printf("Macro \"%s\" undefined: the parser is bugged.\nIgnoring\n",Tools.String);
+										fprinttextview(p_MainWindow,(gchar*)g_strdup_printf(_("Macro \"%s\" undefined: the parser is bugged.\n"),Tools.String));
+										vParsingOK = 0;
+										return vParsingOK;
 				}
 			}
 			else
 			{
-				printf("Not found\n");
+				fprinttextview(p_MainWindow,(gchar*)_("Nothing was found in the file\n"));
+				vParsingOK = 0;
 			}
 		}
 		
@@ -92,12 +118,17 @@ int fParseFile(FILE * p_file)
 		
 	} /* end check opening file */
 	
-	return 0;
+	fclose(Toolbox->file);
+	
+	/* Masks unused variables */
+	return vParsingOK;
 }
 
 /*
  * fCalculation():
  * Scans trough the script file for processes and allocates memory according to what's written inside that file
+ * Returns:
+ * int	vIsProperlyDeclared: whether there were errors during parsing the file
  *
  * Arguments:
  * (void*)	fgsfds: the context variable
@@ -107,160 +138,172 @@ int fParseFile(FILE * p_file)
  * (char*)	p_string: General string used to read through the script file
  * (int*)	p_vMaxStringSize: the current length of p_string
  */
-int fGetCalculation(t_whereami* fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_Tools)
+int fCalculation(t_MainWindow* p_MainWindow,t_whereami * fgsfds, FILE * p_file, int vNbcalculations, t_tools * p_Tools,t_calculation * sCalculation)
 {
 	/* The calculation we're about to read */
-	//~ MAKE THIS A POINTER AND HAVE IT RETURN AN ERROR CODE IF NEEDED
-	t_calculation sCalculation;
+	//~ t_calculation sCalculation;
 	
 	/* Used to verify the number of character read in standard string.h functions. */
 	unsigned int vLengthRead;
+	unsigned int vLengthRead2;
 	
 	/* General purpose test variables */
 	unsigned int vTest = 1;
 	unsigned int vTest2 = 1;
-	//~ unsigned int vEnd = 1;
 	int vIsProperlyDeclared = 1;
 	
 	/* Gets the name & number of processes */
+	/* VERIFY */
 	p_Tools->String++;
-	
 	/* Scans the opened file for the calculation name */
 	//~ POSSIBILITE DE BUG SUR LA LONGUEUR
-	sCalculation.name = (char*)malloc(sizeof(char)*p_Tools->MaxStringSize);
-	vLengthRead = sscanf(p_Tools->String,"%*s %s",sCalculation.name);
+	sCalculation->name = (char*)malloc(sizeof(char)*p_Tools->MaxStringSize);
+	//~ vLengthRead = sscanf(p_Tools->String,"%*s %s",sCalculation.name);
+	vLengthRead = strcspn(p_Tools->String," 	")+1;
+	vLengthRead2 = strcspn(p_Tools->String+vLengthRead," 	");
+	strncpy(sCalculation->name,p_Tools->String+vLengthRead,vLengthRead2);
+	
 	
 	/* Verifies the calculation does have a name... */
-	if(vLengthRead == 0)
+	if(vLengthRead2 == 0)
 	{
-		sCalculation.name = (char*)realloc(sCalculation.name,sizeof(char));
-		sprintf(sCalculation.name,"%c",(char)vNbcalculations+1+'0');
-		printf("Warning: #calculation with no name\nRenamed \"%s\"\n",sCalculation.name);
+		sCalculation->name = (char*)realloc(sCalculation->name,sizeof(char));
+		sprintf(sCalculation->name,"%c",(char)vNbcalculations+1+'0');
+		fprinttextview(p_MainWindow,(gchar*)_("Error: #calculation with no name. Renamed \""));
+		fprinttextview(p_MainWindow,(gchar*)sCalculation->name);
+		fprinttextview(p_MainWindow,(gchar*)_("\".\n"));
 	}
-	
 	/* This test always finds the first macro in the calculation */
 	/* Gets the matrix size */
 	vTest = 1;
-	//~ vTest2 = 1;
+	vTest2 = 1;
 	do
 	{
-		vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String,&p_Tools->line);
+		vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
 		sscanf(p_Tools->String,"%4s",p_Tools->Buffer);
 		vTest = strncmp(p_Tools->Buffer,"#row",1);
-	}while(vTest && (vLengthRead > 0) && !vTest2);
+		vTest2 = strncmp(p_Tools->Buffer,"end",1);
+	}while(vTest && (vLengthRead > 0) && vTest2);
 	
 	/* If we found a macro */
 	if(!vTest)
 	{
 		if(!strcmp(p_Tools->Buffer,"#row"))
 		{
-			vLengthRead = sscanf(p_Tools->String,"%*s %u",&sCalculation.rowsize);
+			vLengthRead = sscanf(p_Tools->String,"%*s %u",&sCalculation->rowsize);
 			
 			/* "#row" was specified, but the size was not */
 			if(!vLengthRead)
 			{
-				printf("Error: the matrix size for calculation %s was not specified\n",sCalculation.name);
-				printf("Ignoring calculation.\n");
+				fprinttextview(p_MainWindow,(gchar*)_("Error: the matrix size for calculation \""));
+				fprinttextview(p_MainWindow,(gchar*)sCalculation->name);
+				fprinttextview(p_MainWindow,(gchar*)_("\" was not specified.\n"));
+				fprinttextview(p_MainWindow,(gchar*)_("Ignoring calculation.\n"));
 				*fgsfds = begin;
-				vIsProperlyDeclared = 0;
-				return vIsProperlyDeclared;
 			}
 			else
 			{
-				sCalculation.nbprocesses=0;
-				sCalculation.lsprocess = (t_process*)malloc(sizeof(t_process));
-				if(sCalculation.lsprocess == NULL)
-				{
-					printf("Out of memory.\n");
-					exit(-1);
-				}
+				sCalculation->nbprocesses=0;
 				
 				/* Gets the number of process declared */
 				/* WARNING: meaning of vTest switched to "reading errors" */
 				/* RETOURNER UNE ERREUR */
-				fParseCalculation(p_file,p_Tools,&sCalculation);
-				
-				while(1);
+				fParseCalculation(p_MainWindow,p_file,p_Tools,sCalculation);
 				
 				/* Tests*/
-				if(!sCalculation.nbprocesses)
+				if(!sCalculation->nbprocesses)
 				{
-					printf("Error: Empty calculation \"%s\"\nIgnoring calculation.\n",sCalculation.name);
+					fprinttextview(p_MainWindow,(gchar*)_("Empty calculation \""));
+					fprinttextview(p_MainWindow,(gchar*)sCalculation->name);
+					fprinttextview(p_MainWindow,(gchar*)_("\".\nIgnoring it.\n"));
 					*fgsfds = begin;
-					vIsProperlyDeclared = 0;
-					return vIsProperlyDeclared;
 				}
 			}
 		}
-		else if(!strcmp(p_Tools->Buffer,"#cal"))
+		else
 		{
-			sscanf(p_Tools->String,"%12s",p_Tools->Buffer);
-			if(!strcmp(p_Tools->Buffer,"#calculation"))
-			{
-				printf("Warning: calculation \"%s\" was not ended by \"#end\" \n",sCalculation.name);
-				
-				/* /!\ Recursive call here /!\ */
-				vIsProperlyDeclared = fGetCalculation(fgsfds,p_file,vNbcalculations,p_Tools);
-				*fgsfds = begin;
-				return vIsProperlyDeclared;
-			}
-			else
-			{
-				printf("Error: Unknown macro \"%s\"",p_Tools->Buffer);
-				*fgsfds = begin;
-				vIsProperlyDeclared = 0;
-				return vIsProperlyDeclared;
-			}
+			fprinttextview(p_MainWindow,(gchar*)_("Error: the matrix size for calculation \""));
+			fprinttextview(p_MainWindow,(gchar*)sCalculation->name);
+			fprinttextview(p_MainWindow,(gchar*)_("\" was not specified.\n"));
+			fprinttextview(p_MainWindow,(gchar*)_("Ignoring calculation.\n"));
+			*fgsfds = begin;
 		}
 	}
 	/* Currently, the parser will ignore a calculation if the rowsize was not specified */
-	else
+	else if(!vTest2)
 	{
-		printf("Error: the matrix size for calculation %s was not specified.\n",sCalculation.name);
-		printf("Ignoring calculation.\n");
+		fprinttextview(p_MainWindow,(gchar*)_("Error: the matrix size for calculation \""));
+		fprinttextview(p_MainWindow,(gchar*)sCalculation->name);
+		fprinttextview(p_MainWindow,(gchar*)_("\" was not specified.\n"));
+		fprinttextview(p_MainWindow,(gchar*)_("Ignoring calculation.\n"));
 		*fgsfds = begin;
+	}
+	else if(!vLengthRead)
+	{
+		fprinttextview(p_MainWindow,(gchar*)_("Error: calculation \""));
+		fprinttextview(p_MainWindow,(gchar*)sCalculation->name);
+		fprinttextview(p_MainWindow,(gchar*)_("\" was not ended by \"end\".\n"));
+		fprinttextview(p_MainWindow,(gchar*)_("Ignoring calculation.\n"));
+		*fgsfds = begin;
+		
 		vIsProperlyDeclared = 0;
 		return vIsProperlyDeclared;
 	}
 	
 	/* Gives the calculation a number */
-	sCalculation.index = vNbcalculations;
+	sCalculation->index = vNbcalculations;
+	
+	/* Masks unused variables */
+	//~ (t_whereami*) fgsfds;
 	
 	/* free reserved memory */
+	//~ free((void*)sCalculation->lsprocess);
+	
 	return vIsProperlyDeclared;
 }
 
-void fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalculation)
+int fParseCalculation(t_MainWindow* p_MainWindow,FILE * p_file,t_tools * p_Tools, t_calculation * sCalculation)
 {
 	unsigned int vEndParse = 0;
 	unsigned int vTest = 0;
 	unsigned int vIndex = 0;
 	unsigned int vShift = 0;
 	unsigned int vShiftSuperString = 0;
+	int vIsProperlyDeclared = 1;
 	int vLengthRead = 0;
 	fpos_t stream_pos;
-	char * SuperString = (char*)malloc(300*sizeof(char));
+	char * SuperString = (char*)malloc(STRMAXSIZE*sizeof(char));
 	
 	/* Save the position of the stream indicator */
 	vTest= fgetpos(p_file,&stream_pos);
 	if(vTest)
 	{
-		printf("Error reading file\n");
+		fprinttextview(p_MainWindow,(gchar*)_("Error reading file\n"));
 		//~ exit(-1);
 	}
 	else
 	{	
 		p_Tools->context = calculation;
-		p_Tools->Buffer = (char*)realloc(p_Tools->Buffer,p_Tools->MaxStringSize);
+		
+		sCalculation->lsprocess = (t_process*)malloc(sizeof(t_process)*3);
+		if(sCalculation->lsprocess == NULL)
+		{
+			g_printf(_("Out of memory.\n"));
+			exit(-1);
+		}
+		
+		p_Tools->Buffer = (char*)realloc(p_Tools->Buffer,sizeof(char)*p_Tools->MaxStringSize);
 		if(p_Tools->Buffer == NULL)
 		{
-			printf("Out of memory\n");
-			//~ exit(-1);
+			g_printf(_("Out of memory\n"));
+			exit(-1);
 		}
 		do
 		{
+			memset(SuperString,'\0',STRMAXSIZE*sizeof(char));
+			
 			/* Gets a new line to parse */
-			vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String,&p_Tools->line);
+			vLengthRead = fgetline(p_file,&p_Tools->MaxStringSize,&p_Tools->String);
 			/* Removes the '\0' character */
 			vLengthRead -=1;
 			
@@ -285,9 +328,9 @@ void fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalcula
 						}
 						else
 						{
-							printf("Syntax error at line %ld\n",p_Tools->line);
+							fprinttextview(p_MainWindow,(gchar*)_("Syntax error\n"));
 							vEndParse = 1;
-							//~ exit(-1);
+							vIsProperlyDeclared = 0;
 						}
 					}
 					else if(!strncmp(p_Tools->Buffer,TOKEN_END_PROCESS,1))
@@ -298,37 +341,40 @@ void fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalcula
 							p_Tools->context = calculation;
 							
 							/* Prints out the result of the scanning - for test purpose */
+							/* Leave it there */
 							//~ {
 								//~ unsigned int i;
 								//~ for(i=0;i<vShiftSuperString;i++)
 									//~ putchar(*(SuperString+i));
 								//~ putchar('\n');
 							//~ }
-							
-							if(fVerifyProcessDeclaration(p_Tools,SuperString,vShiftSuperString,sCalculation) == TTRUE)
+							printf("ssss--%lx\n",&(sCalculation->lsprocess));
+							if(fVerifyProcessDeclaration(p_MainWindow,p_Tools,SuperString,vShiftSuperString,sCalculation))
 							{
+								t_process ** p_test = &(sCalculation->lsprocess);
 								sCalculation->nbprocesses++;
-								sCalculation->lsprocess = (t_process*)realloc(sCalculation->lsprocess,sCalculation->nbprocesses+1);
+								g_printf("sss-%lx--%lx\n",sCalculation,&(sCalculation->lsprocess+1));
+								sCalculation->lsprocess = (t_process*)realloc(sCalculation->lsprocess,sizeof(t_process)*((sCalculation->nbprocesses)+1));
+								g_printf("ss\n");
 								if(sCalculation->lsprocess == NULL)
 								{
-									printf("Out of memory.\n");
+									g_printf(_("Out of memory.\n"));
 									exit(-1);
 								}
 							}
 							else
 							{
-								/* RETOURNER UNE ERREUR PLUTOT */
-								//~ printf("Error at line %ld\n",p_Tools->line);
+								vIsProperlyDeclared = 0;
 							}
 							vShiftSuperString = 0;
 							vShift = 2;
 						}
 						else
 						{
-							printf("Syntax error at line %ld\n",p_Tools->line);
+							fprinttextview(p_MainWindow,(gchar*)_("Syntax error.\n"));
 							vShift = 2;
 							vEndParse = 1;
-							//~ exit(-1);
+							vIsProperlyDeclared = 0;
 						}
 					}
 					else if(!strncmp(p_Tools->Buffer,TOKEN_END_CALCULATION,1))
@@ -336,10 +382,10 @@ void fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalcula
 						sscanf(p_Tools->String+vIndex,"%3s",p_Tools->Buffer);
 						if(!(p_Tools->context == calculation) && !strncmp(p_Tools->Buffer,TOKEN_END_CALCULATION,sizeof(TOKEN_END_CALCULATION)))
 						{
-							printf("Syntax error at line %ld\n",p_Tools->line);
+							fprinttextview(p_MainWindow,(gchar*)_("Syntax error.\n"));
 							vShift = sizeof(TOKEN_END_CALCULATION);
 							vEndParse = 1;
-							//~ exit(-1);
+							vIsProperlyDeclared = 0;
 						}
 						else
 						{
@@ -352,11 +398,7 @@ void fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalcula
 					else
 					{
 						vShift = 1;
-						if(*p_Tools->Buffer == '\x0A')
-						{
-							p_Tools->line++;
-						}
-						else if(p_Tools->context == process)
+						if((p_Tools->context == process) && !(*p_Tools->Buffer == '\x0A'))
 						{
 							*(SuperString+vShiftSuperString) = *p_Tools->Buffer;
 							vShiftSuperString++;
@@ -364,7 +406,7 @@ void fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalcula
 					}
 					vIndex += vShift;
 					vLengthRead -= vShift;
-				}while((vLengthRead > 0) && (vEndParse == 0));
+				}while((vLengthRead > 0) && (vEndParse == 0));;
 			} /* end if vLengthRead == 0 */
 			else
 			{
@@ -376,12 +418,16 @@ void fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalcula
 	vTest= fsetpos(p_file,&stream_pos);
 	if(vTest)
 	{
-		perror("The following error occured: ");
-		//~ exit(-1);
+		perror(_("The following error occured: "));
 	}
 	
 	/*Leave this here for testing purposes */
 	//~ printf("Found %d process\n",sCalculation->nbprocesses,SuperString);
+	
+	
+	free(p_Tools->Buffer);
+	return vIsProperlyDeclared;
 }
 
 /* EOF */
+
