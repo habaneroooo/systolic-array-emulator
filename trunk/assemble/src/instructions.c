@@ -1,23 +1,26 @@
-#include "../include/instructions.h"
-#include <stdio.h>
+#include "../include/types.h"
+
+#include "../include/interface.h"
+#include "../include/parser.h"
+
 void inst1(void)
 {
-	printf("1");
+	g_printf("1");
 }
 
 void inst2(void)
 {
-	printf("2");
+	g_printf("2");
 }
 
 void inst3(void)
 {
-	printf("3");
+	g_printf("3");
 }
 
 void inst4(void)
 {
-	printf("4\n");
+	g_printf("4\n");
 }
 
 void fvoid(void)

@@ -6,4 +6,5 @@
 void * Handler(void*);
 
 extern pthread_cond_t synchro, depart_handler;
+
 #endif /* EOF */
