@@ -317,9 +317,24 @@ int fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalculat
 								//~ putchar('\n');
 							//~ }
 							
+<<<<<<< .mine
+
+							
+=======
+>>>>>>> .r37
 							if(fVerifyProcessDeclaration(p_Tools,SuperString,vShiftSuperString,sCalculation))
 							{
 								sCalculation->nbprocesses++;
+<<<<<<< .mine
+		//~ printf("yesss;%d;%d;%d;\n%s;\n",sizeof(t_process),sizeof(t_process)*(sCalculation->nbprocesses+1),sCalculation->nbprocesses+1,SuperString);
+								sCalculation->lsprocess = (t_process*)realloc(sCalculation->lsprocess,sizeof(t_process)*(sCalculation->nbprocesses+2));
+		//~ printf("yess;%d;%d;\n",sizeof(t_process)*(sCalculation->nbprocesses+1),sCalculation->nbprocesses+1);
+								if(sCalculation->lsprocess == NULL)
+								{
+									printf("Out of memory.\n");
+									exit(-1);
+								}		
+=======
 								sCalculation->lsprocess = (t_process*)realloc(sCalculation->lsprocess,sizeof(t_process)*(sCalculation->nbprocesses+1));
 								if(sCalculation->lsprocess == NULL)
 								{
@@ -327,6 +342,7 @@ int fParseCalculation(FILE * p_file,t_tools * p_Tools, t_calculation * sCalculat
 									exit(-1);
 								}
 		
+>>>>>>> .r37
 							}
 							else
 							{
