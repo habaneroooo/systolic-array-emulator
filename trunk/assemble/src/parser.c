@@ -22,11 +22,12 @@ int fVerifyProcessDeclaration(t_MainWindow* p_MainWindow, t_tools * p_Tools,char
 	char * Instruction = (char*)malloc(sizeof(char)*vLength+1);
 	char * Buffer3 = (char*)malloc(sizeof(char)*vLength+1);
 	char * Process = (char*)malloc(sizeof(char)*vLength+1);
+	t_process ** p_process = sCalculation->lsprocess;
+	
+								g_printf("s\n");
 	strncpy(Process,ProcessToParse,vLength);
 	strcat(Process,"\0");
-	
 	/* I need this because of lvalue assignments errors */
-	t_process ** p_process = &(sCalculation->lsprocess);
 	*p_process += sCalculation->nbprocesses;
 	
 	p_Tools->Buffer = (char*)realloc(p_Tools->Buffer,sizeof(char)*vLength+1);
@@ -43,7 +44,6 @@ int fVerifyProcessDeclaration(t_MainWindow* p_MainWindow, t_tools * p_Tools,char
 	{
 		vIsProperlyDeclared = 0;
 		fprinttextview(p_MainWindow,_("Warning: No instruction specified\n"));
-		
 		FREE_AND_EXIT_VERIFY_PROCESS
 	}
 	else
