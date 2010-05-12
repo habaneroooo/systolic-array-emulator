@@ -30,7 +30,7 @@ typedef struct {
 	unsigned int index;
 	unsigned int rowsize;
 	unsigned int nbprocesses;
-	t_process ** lsprocess;
+	t_process * lsprocess;
 }t_calculation;
 
 typedef struct {
