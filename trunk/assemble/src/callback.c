@@ -10,13 +10,9 @@
 #include "../include/callback.h"
 
 
-void cb_quit (GtkWidget *p_widget, gpointer user_data)
+void cb_quit (GtkWidget*, gpointer)
 {
 	gtk_main_quit();
-	
-	/* Parametres inutilises */
-	(void)p_widget;
-	(void)user_data;
 }
 
 void cb_input_file_button (GtkWidget *, gpointer user_data)
@@ -97,4 +93,5 @@ void cb_start_parsing(GtkWidget *, gpointer user_data)
 	else
 		fprinttextview(&((static_cast<t_toolbox*>(user_data))->WindowList.main),(gchar*)"No file selected.\n");
 }
+
 /* EOF */
