@@ -2,5 +2,6 @@
 #row 4
 	< *		C,	CW, CN, CE	; 1101	; 1111	>; 
 	<  add	C,		 C	; 1011	; 1111	>;
+	<  add	C,		 C	; 1011	; 1111	>;
 	<;;>;
 end calculation

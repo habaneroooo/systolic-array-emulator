@@ -23,6 +23,8 @@
 #define NB_REG 32
 #define NB_STATIC_REG 6
 
+#define NB_MAX_PROCESS 10
+
 /*
  * Function prototypes
  */

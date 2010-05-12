@@ -41,16 +41,10 @@ int fParseFile(t_MainWindow* p_MainWindow,t_toolbox * Toolbox)
 		}
 		
 		/* Initializes parsing results */
-		/* VERIFY ASSIGNMENT */
 		Toolbox->NBCalculations = 0;
 		Toolbox->CalculationList = (t_calculation*)malloc(sizeof(t_calculation));
 		Toolbox->CalculationList->lsprocess = (t_process*)malloc(sizeof(t_process)*NB_MAX_PROCESS);
-		if(Toolbox->CalculationList->lsprocess == NULL)
-		{
-			printf("Out of memory\n");
-			exit(-1);
-		}
-
+		/* VERIFY ASSIGNMENT */
 		for(vIndex=0;vIndex<NB_MACRO;vIndex++)
 		{
 			Tools.MacroList[vIndex] = (char*)malloc(sizeof(char)*Tools.MaxMacroLength);
@@ -99,12 +93,12 @@ int fParseFile(t_MainWindow* p_MainWindow,t_toolbox * Toolbox)
 											g_printf(_("Out of memory\n"));
 											exit(-1);
 										}
-//										(Toolbox->CalculationList+Toolbox->NBCalculations)->lsprocess = (t_process*)malloc(sizeof(t_process)*NB_MAX_PROCESS);
-//										if((Toolbox->CalculationList+Toolbox->NBCalculations)->lsprocess == NULL)
-//										{
-//											printf("Out of memory\n");
-//											exit(-1);
-//										}
+										(Toolbox->CalculationList+Toolbox->NBCalculations)->lsprocess = (t_process*)malloc(sizeof(t_process)*NB_MAX_PROCESS);
+										if((Toolbox->CalculationList+Toolbox->NBCalculations)->lsprocess  == NULL)
+										{
+											g_printf(_("Out of memory.\n"));
+											exit(-1);
+										}
 									}
 									else
 									{
@@ -112,7 +106,7 @@ int fParseFile(t_MainWindow* p_MainWindow,t_toolbox * Toolbox)
 									}
 									break;
 
-				default:			/* This can only happen if you have not the same number of */
+				default:				/* This can only happen if you have not the same number of */
 									/* macros declared and defined in NB_MACRO (script.h) */
 									fprinttextview(p_MainWindow,(gchar*)g_strdup_printf(_("Macro \"%s\" undefined: the parser is bugged.\n"),Tools.String));
 									vParsingOK = 0;
@@ -172,7 +166,7 @@ int fCalculation(t_MainWindow* p_MainWindow,t_whereami * fgsfds, FILE * p_file, 
 	//~ POSSIBILITE DE BUG SUR LA LONGUEUR
 	sCalculation->name = (char*)malloc(sizeof(char)*p_Tools->MaxStringSize);
 	memset(sCalculation->name,'\0',sizeof(char)*p_Tools->MaxStringSize);
-
+	//~ vLengthRead = sscanf(p_Tools->String,"%*s %s",sCalculation.name);
 	vLengthRead = strcspn(p_Tools->String," 	")+1;
 	vLengthRead2 = strcspn(p_Tools->String+vLengthRead," 	");
 	strncpy(sCalculation->name,p_Tools->String+vLengthRead,vLengthRead2);
@@ -185,7 +179,7 @@ int fCalculation(t_MainWindow* p_MainWindow,t_whereami * fgsfds, FILE * p_file, 
 		sprintf(sCalculation->name,"%c",(char)vNbcalculations+1+'0');
 		fprinttextview(p_MainWindow,(gchar*)g_strdup_printf(_("Error: #calculation with no name. Renamed \"%s\".\n"),sCalculation->name));
 	}
-
+	/* This test always finds the first macro in the calculation */
 	/* Gets the matrix size */
 	vTest = 1;
 	vTest2 = 1;
@@ -273,12 +267,12 @@ int fParseCalculation(t_MainWindow* p_MainWindow,FILE * p_file,t_tools * p_Tools
 	vTest= fgetpos(p_file,&stream_pos);
 	if(vTest)
 	{
+		/* What to do here? */
 		fprinttextview(p_MainWindow,(gchar*)_("Error reading file\n"));
 		//~ exit(-1);
 	}
 	else
 	{	
-		/* The context of the parser is restored to " in calculation" */
 		p_Tools->context = calculation;
 		
 		p_Tools->Buffer = (char*)realloc(p_Tools->Buffer,sizeof(char)*p_Tools->MaxStringSize);
@@ -287,7 +281,6 @@ int fParseCalculation(t_MainWindow* p_MainWindow,FILE * p_file,t_tools * p_Tools
 			g_printf(_("Out of memory\n"));
 			exit(-1);
 		}
-
 		do
 		{
 			memset(SuperString,'\0',STRMAXSIZE*sizeof(char));
@@ -338,13 +331,10 @@ int fParseCalculation(t_MainWindow* p_MainWindow,FILE * p_file,t_tools * p_Tools
 									//~ putchar(*(SuperString+i));
 								//~ putchar('\n');
 							//~ }
-
-							if(fVerifyProcessDeclaration(p_MainWindow,p_Tools,SuperString,vShiftSuperString,sCalculation))
+							//~ printf("ssss--%lx\n",&(sCalculation->lsprocess));
+							if(fVerifyProcessDeclaration(p_MainWindow,p_Tools,SuperString,vShiftSuperString,sCalculation) && sCalculation->nbprocesses != NB_MAX_PROCESS)
 							{
-								if(sCalculation->nbprocesses != NB_MAX_PROCESS)
-									sCalculation->nbprocesses++;
-								else
-									fprinttextview(p_MainWindow,(gchar*)g_strdup_printf(_("Warning: Max number of process declared (%d): further declarations are ignored\n"),NB_MAX_PROCESS));
+								sCalculation->nbprocesses++;
 								/* This should be implemented as soon as possible - dynamic memory allocation */
 //								sCalculation->lsprocess = (t_process*)realloc(sCalculation->lsprocess,sizeof(t_process)*((sCalculation->nbprocesses)+2));
 //								g_printf("ss:%d\n",sizeof(*(sCalculation->lsprocess)));

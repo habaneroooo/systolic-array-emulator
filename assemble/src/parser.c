@@ -22,13 +22,22 @@ int fVerifyProcessDeclaration(t_MainWindow* p_MainWindow, t_tools * p_Tools,char
 	char * Instruction = (char*)malloc(sizeof(char)*vLength+1);
 	char * Buffer3 = (char*)malloc(sizeof(char)*vLength+1);
 	char * Process = (char*)malloc(sizeof(char)*vLength+1);
-	t_process ** p_process = &(sCalculation->lsprocess);
+
+	/* I need this because of lvalue assignments errors */
+	t_process ** p_process;
+
+//	sCalculation->lsprocess = (t_process*)realloc(sCalculation->lsprocess,sizeof(t_process)*NB_MAX_PROCESS);
+//	if(sCalculation->lsprocess == NULL)
+//	{
+//		printf("Out of memory\n");
+//		exit(-1);
+//	}
+
+	p_process = &(sCalculation->lsprocess);
+	*p_process += sCalculation->nbprocesses;
 	
-								g_printf("s\n");
 	strncpy(Process,ProcessToParse,vLength);
 	strcat(Process,"\0");
-	/* I need this because of lvalue assignments errors */
-	*p_process += sCalculation->nbprocesses;
 	
 	p_Tools->Buffer = (char*)realloc(p_Tools->Buffer,sizeof(char)*vLength+1);
 	if(p_Tools->Buffer == NULL)
@@ -222,7 +231,6 @@ int fVerifyProcessDeclaration(t_MainWindow* p_MainWindow, t_tools * p_Tools,char
 				FREE_AND_EXIT_VERIFY_PROCESS
 			}
 		}
-		
 		/*Leave this here for testing purposes */
 		//~ if(vIsProperlyDeclared)
 			//~ printf("Found %d arguments for function \"%s\"\n",vNBArgsFound,Instruction);
@@ -308,7 +316,7 @@ unsigned int fVerifyProcessSelector(t_MainWindow* p_MainWindow, t_calculation * 
 			fprinttextview(p_MainWindow,(gchar*)_("Warning: selector too big. The exceeding parameters are ignored.\n"));
 		}
 		
-		/* Quelle variable contient le nombre de process déclarés jusqu'à présent? */
+		/* Quelle variable contient le nombre de process dï¿½clarï¿½s jusqu'ï¿½ prï¿½sent? */
 		do
 		{
 			carac = *(*Buffer+vShift+i);
@@ -329,7 +337,6 @@ unsigned int fVerifyProcessSelector(t_MainWindow* p_MainWindow, t_calculation * 
 	{
 		
 	}
-	
 	return vOK;
 }
 
@@ -351,13 +358,12 @@ int fgetline(FILE* p_file, unsigned int* n,char**p_string)
 			}
 		}
 		c = (char)fgetc(p_file);
-		//~ printf("%3d--%c\n",c,c);
 		*(*p_string + new_n) = (char)c;
 		new_n++;
 	}
 	*(*p_string+new_n-1) = '\0';
 	
-	/* So we know where we are */
+	/* So we know the current size */
 	if(new_n > *n)
 	{
 		*n = strlen(*p_string);
