@@ -43,8 +43,7 @@ int fParseFile(t_MainWindow* p_MainWindow,t_toolbox * Toolbox)
 		/* Initializes parsing results */
 		Toolbox->NBCalculations = 0;
 		Toolbox->CalculationList = (t_calculation*)malloc(sizeof(t_calculation));
-		Toolbox->CalculationList->lsprocess = (t_process**)malloc(sizeof(t_process*));
-		*(Toolbox->CalculationList->lsprocess) = (t_process*)malloc(sizeof(t_process));
+		Toolbox->CalculationList->lsprocess = (t_process*)malloc(sizeof(t_process));
 		/* VERIFY ASSIGNMENT */
 		for(vIndex=0;vIndex<NB_MACRO;vIndex++)
 		{
@@ -87,27 +86,21 @@ int fParseFile(t_MainWindow* p_MainWindow,t_toolbox * Toolbox)
 				case calculation:		fgsfds = calculation;
 									if(fCalculation(p_MainWindow,&fgsfds,Toolbox->file,vNbcalculations,&Tools,Toolbox->CalculationList+Toolbox->NBCalculations))
 									{
-										//~ Toolbox->NBCalculations++;
-									//~ g_printf("qs\n");
-										//~ Toolbox->CalculationList = (t_calculation*)realloc(Toolbox->CalculationList,sizeof(t_calculation)*Toolbox->NBCalculations+1);
-										//~ if(Toolbox->CalculationList == NULL)
-										//~ {
-											//~ g_printf(_("Out of memory\n"));
-											//~ exit(-1);
-										//~ }
-										//~ (Toolbox->CalculationList+Toolbox->NBCalculations)->lsprocess = (t_process**)malloc(sizeof(t_process*));
-									//~ g_printf("qs2\n");
-										//~ if((Toolbox->CalculationList+Toolbox->NBCalculations)->lsprocess  == NULL)
-										//~ {
-											//~ g_printf(_("Out of memory.\n"));
-											//~ exit(-1);
-										//~ }
-										//~ *((Toolbox->CalculationList+Toolbox->NBCalculations)->lsprocess)= (t_process*)malloc(sizeof(t_process));
-										//~ if(*((Toolbox->CalculationList+Toolbox->NBCalculations)->lsprocess)  == NULL)
-										//~ {
-											//~ g_printf(_("Out of memory.\n"));
-											//~ exit(-1);
-										//~ }
+										Toolbox->NBCalculations++;
+									g_printf("qs\n");
+										g_printf("des:%lx\n",((Toolbox->CalculationList)->name));
+										Toolbox->CalculationList = (t_calculation*)realloc(Toolbox->CalculationList,sizeof(t_calculation)*Toolbox->NBCalculations+1);
+										if(Toolbox->CalculationList == NULL)
+										{
+											g_printf(_("Out of memory\n"));
+											exit(-1);
+										}
+										(Toolbox->CalculationList+Toolbox->NBCalculations)->lsprocess = (t_process*)malloc(sizeof(t_process));
+										if((Toolbox->CalculationList+Toolbox->NBCalculations)->lsprocess  == NULL)
+										{
+											g_printf(_("Out of memory.\n"));
+											exit(-1);
+										}
 									}
 									else
 									{
@@ -351,16 +344,10 @@ int fParseCalculation(t_MainWindow* p_MainWindow,FILE * p_file,t_tools * p_Tools
 							if(fVerifyProcessDeclaration(p_MainWindow,p_Tools,SuperString,vShiftSuperString,sCalculation))
 							{
 								sCalculation->nbprocesses++;
-								g_printf("sss-%lx--%lx--%d--%d\n",(*sCalculation->lsprocess)->reg_in,*((sCalculation->lsprocess)+sCalculation->nbprocesses),sizeof(t_process)*((sCalculation->nbprocesses)+1),sCalculation->nbprocesses);
-								sCalculation->lsprocess = (t_process**)realloc(sCalculation->lsprocess,sizeof(t_process*)*((sCalculation->nbprocesses)+1));
+								g_printf("sss-%lx--%lx--%d--%d\n",sCalculation->lsprocess,(sCalculation->lsprocess+sCalculation->nbprocesses),sCalculation->nbprocesses,sizeof(t_process)*((sCalculation->nbprocesses)+1));
+								sCalculation->lsprocess = (t_process*)realloc(sCalculation->lsprocess,sizeof(t_process)*((sCalculation->nbprocesses)+2));
 								g_printf("ss\n");
 								if(sCalculation->lsprocess == NULL)
-								{
-									g_printf(_("Out of memory.\n"));
-									exit(-1);
-								}
-								*((sCalculation->lsprocess)+sCalculation->nbprocesses) = (t_process*)malloc(sizeof(t_process));
-								if(*((sCalculation->lsprocess)+sCalculation->nbprocesses) == NULL)
 								{
 									g_printf(_("Out of memory.\n"));
 									exit(-1);

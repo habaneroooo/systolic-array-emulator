@@ -22,7 +22,7 @@ int fVerifyProcessDeclaration(t_MainWindow* p_MainWindow, t_tools * p_Tools,char
 	char * Instruction = (char*)malloc(sizeof(char)*vLength+1);
 	char * Buffer3 = (char*)malloc(sizeof(char)*vLength+1);
 	char * Process = (char*)malloc(sizeof(char)*vLength+1);
-	t_process ** p_process = sCalculation->lsprocess;
+	t_process ** p_process = &(sCalculation->lsprocess);
 	
 								g_printf("s\n");
 	strncpy(Process,ProcessToParse,vLength);
