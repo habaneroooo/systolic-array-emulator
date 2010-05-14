@@ -89,6 +89,18 @@ void cb_start_parsing(GtkWidget *, gpointer user_data)
 		{
 			fprinttextview(&((static_cast<t_toolbox*>(user_data))->WindowList.main),(gchar*)"The parser detected some errors.\n");
 		}
+		else
+		{
+			int i = 0;
+			/* Translators: leave %d, \n as they are formatting characters */
+			gtk_combo_box_remove_text (GTK_COMBO_BOX((static_cast<t_toolbox*>(user_data))->WindowList.main.combobox),0);
+			fprinttextview(&((static_cast<t_toolbox*>(user_data))->WindowList.main),(gchar*)g_strdup_printf(_("Found %d calculations\n"),(static_cast<t_toolbox*>(user_data))->NBCalculations));
+			for(i=0;i<(static_cast<t_toolbox*>(user_data))->NBCalculations;i++)
+			{
+				gtk_combo_box_insert_text(GTK_COMBO_BOX((static_cast<t_toolbox*>(user_data))->WindowList.main.combobox),i,(gchar*)((static_cast<t_toolbox*>(user_data))->CalculationList+i)->name);
+			}
+			gtk_combo_box_set_active(GTK_COMBO_BOX((static_cast<t_toolbox*>(user_data))->WindowList.main.combobox),0);
+		}
 	}
 	else
 		fprinttextview(&((static_cast<t_toolbox*>(user_data))->WindowList.main),(gchar*)"No file selected.\n");
