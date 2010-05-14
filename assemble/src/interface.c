@@ -20,7 +20,7 @@ void fCreateWindow_main(t_MainWindow * s_MainWindow)
 	width = gdk_screen_get_width(screen);
 	height = gdk_screen_get_height(screen);
 	gtk_window_move(GTK_WINDOW(s_MainWindow->window),width/2-LARG/2,height/2-HAUT/2);
-	
+
 	/* "Fixed" container creation */
 	s_MainWindow->fixed = gtk_fixed_new();
 	gtk_container_add(GTK_CONTAINER(s_MainWindow->window),s_MainWindow->fixed);
@@ -30,8 +30,8 @@ void fCreateWindow_main(t_MainWindow * s_MainWindow)
 	s_MainWindow->frame = gtk_frame_new(_("Message window"));
 	gtk_widget_show(s_MainWindow->frame);
 	gtk_fixed_put(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->frame,LEFT_MARGIN,TOP_MARGIN);
-	gtk_widget_set_size_request(s_MainWindow->frame,LARG/2-LEFT_MARGIN-SPACE_BETWEEN_ELEMENTS/2,HAUT*2/3);
-	
+	gtk_widget_set_size_request(s_MainWindow->frame,(LARG-SPACE_BETWEEN_ELEMENTS-LEFT_MARGIN-RIGHT_MARGIN)*(0.666),(HAUT-TOP_MARGIN-BOTTOM_MARGIN-SPACE_BETWEEN_ELEMENTS)*(0.95));
+
 	/* Scrolling bars creation */
 	s_MainWindow->scrolled_window = gtk_scrolled_window_new(NULL,NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(s_MainWindow->scrolled_window),GTK_POLICY_NEVER,GTK_POLICY_AUTOMATIC);
@@ -51,7 +51,27 @@ void fCreateWindow_main(t_MainWindow * s_MainWindow)
 	gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(s_MainWindow->textview),0);
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(s_MainWindow->textview),wrapmode);
 	gtk_container_add(GTK_CONTAINER(s_MainWindow->scrolled_window),s_MainWindow->textview);
-		
+
+	/* Clear message window button creation */
+	s_MainWindow->button_clear_message_window = gtk_button_new_from_stock(GTK_STOCK_CLEAR);
+	//s_MainWindow->button_clear_message_window = gtk_button_new_with_label(_("Clear message window"));
+	gtk_widget_set_size_request(s_MainWindow->button_clear_message_window,LARG_BUTTONS,HEIGHT_BUTTONS);
+	gtk_container_add(GTK_CONTAINER (s_MainWindow->fixed), s_MainWindow->button_clear_message_window);
+	gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_clear_message_window,LEFT_MARGIN,HAUT-BOTTOM_MARGIN-HEIGHT_BUTTONS);
+
+	/* Save log button creation */
+	s_MainWindow->button_save_log = gtk_button_new_from_stock(GTK_STOCK_SAVE);
+	//s_MainWindow->button_save_log = gtk_button_new_with_label(_("Save log to file..."));
+	gtk_container_add(GTK_CONTAINER (s_MainWindow->fixed), s_MainWindow->button_save_log);
+	gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_save_log,LEFT_MARGIN+SPACE_BETWEEN_ELEMENTS+LARG_BUTTONS,HAUT-BOTTOM_MARGIN-HEIGHT_BUTTONS);
+	gtk_widget_set_size_request(s_MainWindow->button_save_log,LARG_BUTTONS,HEIGHT_BUTTONS);
+
+	/* Close button creation */
+	s_MainWindow->button_close = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
+	gtk_container_add(GTK_CONTAINER (s_MainWindow->fixed), s_MainWindow->button_close);
+	gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_close,LARG-RIGHT_MARGIN-LARG_BUTTONS/2,HAUT-BOTTOM_MARGIN-HEIGHT_BUTTONS);
+	gtk_widget_set_size_request(s_MainWindow->button_close,LARG_BUTTONS/2,HEIGHT_BUTTONS);
+
 	/* File chooser dialog creation */
 	s_MainWindow->file_chooser =	gtk_file_chooser_dialog_new(_("Select source file..."), NULL, 
 									GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -65,43 +85,29 @@ void fCreateWindow_main(t_MainWindow * s_MainWindow)
 	/* File chooser button creation */
 	s_MainWindow->button_file_chooser = gtk_file_chooser_button_new_with_dialog(s_MainWindow->file_chooser);
 	gtk_container_add(GTK_CONTAINER (s_MainWindow->fixed), s_MainWindow->button_file_chooser);
-	gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_file_chooser,LARG-RIGHT_MARGIN-LARG_BUTTONS*2-SPACE_BETWEEN_ELEMENTS,TOP_MARGIN+30);
-	gtk_widget_set_size_request(s_MainWindow->button_file_chooser,LARG_BUTTONS,30);
-	
-	/* File chooser button creation */
-	s_MainWindow->button_file_chooser = gtk_file_chooser_button_new_with_dialog(s_MainWindow->file_chooser);
-	gtk_container_add(GTK_CONTAINER (s_MainWindow->fixed), s_MainWindow->button_file_chooser);
-	gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_file_chooser,LARG-RIGHT_MARGIN-LARG_BUTTONS*2-SPACE_BETWEEN_ELEMENTS,TOP_MARGIN+30);
-	gtk_widget_set_size_request(s_MainWindow->button_file_chooser,LARG_BUTTONS,30);
-	
+	gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_file_chooser,LARG-RIGHT_MARGIN-LARG_BUTTONS,TOP_MARGIN+HEIGHT_BUTTONS);
+	gtk_widget_set_size_request(s_MainWindow->button_file_chooser,LARG_BUTTONS,HEIGHT_BUTTONS);
+
 	/* Start parser button creation */
 	s_MainWindow->button_start_parse = gtk_button_new_with_label(_("Parse file"));
 	gtk_container_add(GTK_CONTAINER (s_MainWindow->fixed), s_MainWindow->button_start_parse);
 	//~ gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_show_result_window,LARG/2+SPACE_BETWEEN_ELEMENTS*3/2+LARG_BUTTONS,TOP_MARGIN+30);
-	gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_start_parse,LARG-RIGHT_MARGIN-LARG_BUTTONS*2-SPACE_BETWEEN_ELEMENTS,TOP_MARGIN+30+SPACE_BETWEEN_ELEMENTS+30);
-	gtk_widget_set_size_request(s_MainWindow->button_start_parse,LARG_BUTTONS,30);
-	
-	/* Clear message window button creation */
-	s_MainWindow->button_clear_message_window = gtk_button_new_with_label(_("Clear message window"));
-	gtk_widget_set_size_request(s_MainWindow->button_clear_message_window,LARG_BUTTONS,30);
-	gtk_container_add(GTK_CONTAINER (s_MainWindow->fixed), s_MainWindow->button_clear_message_window);
-	gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_clear_message_window,LEFT_MARGIN,HAUT*2/3+30);
-	
-	/* Save log button creation */
-	s_MainWindow->button_save_log = gtk_button_new_with_label(_("Save log to file..."));
-	gtk_container_add(GTK_CONTAINER (s_MainWindow->fixed), s_MainWindow->button_save_log);
-	gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_save_log,LEFT_MARGIN+SPACE_BETWEEN_ELEMENTS+LARG_BUTTONS,HAUT*2/3+30);
-	gtk_widget_set_size_request(s_MainWindow->button_save_log,LARG_BUTTONS,30);
-	
+	gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_start_parse,LARG-RIGHT_MARGIN-LARG_BUTTONS,TOP_MARGIN+HEIGHT_BUTTONS*2+SPACE_BETWEEN_ELEMENTS);
+	gtk_widget_set_size_request(s_MainWindow->button_start_parse,LARG_BUTTONS,HEIGHT_BUTTONS);
+
+	/* Combo box (showing the results of parsing) creation */
+	s_MainWindow->combobox = gtk_combo_box_new_text();
+	gtk_combo_box_insert_text(GTK_COMBO_BOX(s_MainWindow->combobox),0,(gchar*)_("---"));
+	gtk_combo_box_set_active(GTK_COMBO_BOX(s_MainWindow->combobox),0);
+	gtk_container_add(GTK_CONTAINER(s_MainWindow->fixed),s_MainWindow->combobox);
+	gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->combobox,LARG-RIGHT_MARGIN-LARG_BUTTONS,TOP_MARGIN+HEIGHT_BUTTONS*4+SPACE_BETWEEN_ELEMENTS*3);
+	gtk_widget_set_size_request(s_MainWindow->combobox,LARG_BUTTONS,HEIGHT_BUTTONS);
+
 	/* Show result window button creation */
 	s_MainWindow->button_show_result_window = gtk_button_new_with_label(_("Show processor matrix"));
 	gtk_container_add(GTK_CONTAINER (s_MainWindow->fixed), s_MainWindow->button_show_result_window);
-	//~ gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_show_result_window,LARG/2+SPACE_BETWEEN_ELEMENTS*3/2+LARG_BUTTONS,TOP_MARGIN+30);
-	gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_show_result_window,LARG-RIGHT_MARGIN-LARG_BUTTONS,TOP_MARGIN+30);
-	gtk_widget_set_size_request(s_MainWindow->button_show_result_window,LARG_BUTTONS,30);
-	
-	/* Expander creation with 2 children and a grand child */
-	//~ GtkWidget * p_ex
+	gtk_fixed_move(GTK_FIXED(s_MainWindow->fixed),s_MainWindow->button_show_result_window,LARG-RIGHT_MARGIN-LARG_BUTTONS,TOP_MARGIN+HEIGHT_BUTTONS*5+SPACE_BETWEEN_ELEMENTS*4);
+	gtk_widget_set_size_request(s_MainWindow->button_show_result_window,LARG_BUTTONS,HEIGHT_BUTTONS);
 	
 	/* Shows everything declared before */
 	gtk_widget_show_all(s_MainWindow->window);

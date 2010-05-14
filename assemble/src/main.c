@@ -27,7 +27,11 @@ int main(int argc, char *argv[])
 	/* Initialization of GTK+ */
 	gtk_init(&argc, &argv);
 	
-	/* Création des sous-fenetres */
+	/* Settings installation */
+	g_type_class_unref (g_type_class_ref (GTK_TYPE_IMAGE_MENU_ITEM));
+	g_object_set(gtk_settings_get_default (), "gtk-button-images", TRUE, NULL);
+
+	/* Crï¿½ation des sous-fenetres */
 	fCreateWindow_results(&sToolbox.WindowList.result);
 	
 	/* Main window creation */
@@ -36,8 +40,9 @@ int main(int argc, char *argv[])
 	/* Callbacks linking */
 	/* Translators: those aren't text,*/
 	g_signal_connect (G_OBJECT(sToolbox.WindowList.main.window), "destroy",G_CALLBACK (cb_quit), NULL);
+	g_signal_connect (G_OBJECT(sToolbox.WindowList.main.button_close), "clicked",G_CALLBACK (cb_quit), NULL);
 	g_signal_connect (G_OBJECT(sToolbox.WindowList.main.button_file_chooser), "file-set", G_CALLBACK (cb_input_file_button), (gpointer)&sToolbox);
-	g_signal_connect (G_OBJECT(sToolbox.WindowList.main.button_clear_message_window), "clicked", G_CALLBACK (cb_clear_textview_button), (gpointer)&sToolbox.WindowList);
+	g_signal_connect (G_OBJECT(sToolbox.WindowList.main.button_clear_message_window), "clicked", G_CALLBACK (cb_clear_textview_button), (gpointer)&(sToolbox.WindowList));
 	g_signal_connect (G_OBJECT(sToolbox.WindowList.main.button_show_result_window), "clicked", G_CALLBACK (cb_show_result_window), (gpointer)&sToolbox.WindowList);
 	g_signal_connect (G_OBJECT(sToolbox.WindowList.result.button_close), "clicked", G_CALLBACK (cb_hide_result_window), (gpointer)&sToolbox.WindowList);
 	g_signal_connect (G_OBJECT(sToolbox.WindowList.result.window), "destroy",G_CALLBACK (cb_hide_result_window), (gpointer)&sToolbox.WindowList);

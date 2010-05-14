@@ -57,11 +57,13 @@ typedef struct {
 }t_list;
 
 typedef struct{
+	GtkSettings * settings;
 	GtkWidget * window;
 	GtkWidget * fixed;
 	GtkWidget * frame;
 	GtkWidget * scrolled_window;
 	GtkWidget * textview;
+	GtkWidget * combobox;
 	//~ GtkWidget * frame_button_file_chooser;
 	GtkWidget * button_file_chooser;
 	GtkWidget * file_chooser;
@@ -69,6 +71,7 @@ typedef struct{
 	GtkWidget * button_clear_message_window;
 	GtkWidget * button_save_log;
 	GtkWidget * button_show_result_window;
+	GtkWidget * button_close;
 }t_MainWindow;
 
 typedef struct{
@@ -78,6 +81,7 @@ typedef struct{
 	GtkWidget * left_fixed;
 	GtkWidget * right_fixed;
 	GtkWidget * button_close;
+	GtkWidget * image;
 }t_ResultWindow;
 
 typedef struct{
@@ -96,6 +100,7 @@ typedef struct
 	int FileOpened;
 	t_calculation * CalculationList;
 	int NBCalculations;
+	int SelectCalculation;
 	t_WindowList WindowList;
 }t_toolbox;
 
