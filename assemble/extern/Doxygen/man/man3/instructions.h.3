@@ -1,0 +1,65 @@
+.TH "include/instructions.h" 3 "16 May 2010" "Version 0.1" "script" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/instructions.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'systolic.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBfvoid\fP (void)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const \fBt_list\fP \fBtab_list\fP [NBINSTRUCTIONS]"
+.br
+.ti -1c
+.RI "const \fBt_reg\fP \fBRegisters\fP [NB_STATIC_REG]"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void fvoid (void)"
+.SH "Variable Documentation"
+.PP 
+.SS "const \fBt_reg\fP \fBRegisters\fP[NB_STATIC_REG]"\fBInitial value:\fP
+.PP
+.nf
+
+{
+        {'C',NB_REG+0},
+        {'CW',NB_REG+1},
+        {'CN',NB_REG+2},
+        {'CE',NB_REG+3},
+        {'CS',NB_REG+4},
+        {'REG',0}
+}
+.fi
+.SS "const \fBt_list\fP \fBtab_list\fP[NBINSTRUCTIONS]"\fBInitial value:\fP
+.PP
+.nf
+ 
+{
+                {'add',fvoid,2,0xFF},
+                {'*',fvoid,2,0xFF},
+                {'-',fvoid,2,100},
+                {'/',fvoid,2,0xFF},
+                {'ø',fvoid,2,0xFF},
+                {'%',fvoid,2,0xFF},
+                {'&',fvoid,2,0xFF},
+                {'|',fvoid,2,0xFF},
+                {'set',fvoid,3,0xFF}
+}
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for script from the source code.

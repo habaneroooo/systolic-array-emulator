@@ -1,30 +1,5 @@
 #ifndef __PARSER__
 #define __PARSER__
-
- /*
-  *
-  */
-#define TTRUE 1
-#define FFALSE 0
-
-#define STRMAXSIZE 100
-#define MAX_NB_PROCESS_IFNDEF 42
-#define MAX_NB_INSTRUCTIONS 42
-#define BUFFERSIZE 12
-#define MAXMACROLENGTH 12
-#define FREE_AND_EXIT_VERIFY_PROCESS {	free(Process);	free(Instruction);	free(Buffer3);	return vIsProperlyDeclared;	}
-
-#define NBINSTRUCTIONS 9
-
-#define TOKEN_BEGIN_PROCESS "<"
-#define TOKEN_END_PROCESS ">;"
-#define TOKEN_END_CALCULATION "end"
-
-#define NB_REG 32
-#define NB_STATIC_REG 6
-
-#define NB_MAX_PROCESS 10
-
 /*
  * Function prototypes
  */

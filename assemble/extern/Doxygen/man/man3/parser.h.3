@@ -1,0 +1,103 @@
+.TH "include/parser.h" 3 "16 May 2010" "Version 0.1" "script" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/parser.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTTRUE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBFFALSE\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSTRMAXSIZE\fP   100"
+.br
+.ti -1c
+.RI "#define \fBMAX_NB_PROCESS_IFNDEF\fP   42"
+.br
+.ti -1c
+.RI "#define \fBMAX_NB_INSTRUCTIONS\fP   42"
+.br
+.ti -1c
+.RI "#define \fBBUFFERSIZE\fP   12"
+.br
+.ti -1c
+.RI "#define \fBMAXMACROLENGTH\fP   12"
+.br
+.ti -1c
+.RI "#define \fBFREE_AND_EXIT_VERIFY_PROCESS\fP   {	free(Process);	free(Instruction);	free(Buffer3);	return vIsProperlyDeclared;	}"
+.br
+.ti -1c
+.RI "#define \fBNBINSTRUCTIONS\fP   9"
+.br
+.ti -1c
+.RI "#define \fBTOKEN_BEGIN_PROCESS\fP   '<'"
+.br
+.ti -1c
+.RI "#define \fBTOKEN_END_PROCESS\fP   '>;'"
+.br
+.ti -1c
+.RI "#define \fBTOKEN_END_CALCULATION\fP   'end'"
+.br
+.ti -1c
+.RI "#define \fBNB_REG\fP   32"
+.br
+.ti -1c
+.RI "#define \fBNB_STATIC_REG\fP   6"
+.br
+.ti -1c
+.RI "#define \fBNB_MAX_PROCESS\fP   10"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "unsigned int \fBfVerifyProcessSelector\fP (\fBt_MainWindow\fP *, \fBt_calculation\fP *, char **, unsigned int, bool **)"
+.br
+.ti -1c
+.RI "int \fBfVerifyProcessDeclaration\fP (\fBt_MainWindow\fP *, \fBt_tools\fP *, char *, unsigned int, \fBt_calculation\fP *)"
+.br
+.ti -1c
+.RI "int \fBfTestRegisterValidity\fP (char **, \fBt_process\fP *, int, unsigned int *)"
+.br
+.ti -1c
+.RI "int \fBfLinkTokenToFunc\fP (char, \fBt_list\fP *, \fBt_tools\fP *)"
+.br
+.ti -1c
+.RI "int \fBfgetline\fP (FILE *, unsigned int *, char **)"
+.br
+.in -1c
+.SH "Define Documentation"
+.PP 
+.SS "#define BUFFERSIZE   12"
+.SS "#define FFALSE   0"
+.SS "#define FREE_AND_EXIT_VERIFY_PROCESS   {	free(Process);	free(Instruction);	free(Buffer3);	return vIsProperlyDeclared;	}"
+.SS "#define MAX_NB_INSTRUCTIONS   42"
+.SS "#define MAX_NB_PROCESS_IFNDEF   42"
+.SS "#define MAXMACROLENGTH   12"
+.SS "#define NB_MAX_PROCESS   10"
+.SS "#define NB_REG   32"
+.SS "#define NB_STATIC_REG   6"
+.SS "#define NBINSTRUCTIONS   9"
+.SS "#define STRMAXSIZE   100"
+.SS "#define TOKEN_BEGIN_PROCESS   '<'"
+.SS "#define TOKEN_END_CALCULATION   'end'"
+.SS "#define TOKEN_END_PROCESS   '>;'"
+.SS "#define TTRUE   1"
+.SH "Function Documentation"
+.PP 
+.SS "int fgetline (FILE *, unsigned int *, char **)"
+.SS "int fLinkTokenToFunc (char, \fBt_list\fP *, \fBt_tools\fP *)"
+.SS "int fTestRegisterValidity (char **, \fBt_process\fP *, int, unsigned int *)"
+.SS "int fVerifyProcessDeclaration (\fBt_MainWindow\fP *, \fBt_tools\fP *, char *, unsigned int, \fBt_calculation\fP *)"
+.SS "unsigned int fVerifyProcessSelector (\fBt_MainWindow\fP *, \fBt_calculation\fP *, char **, unsigned int, bool **)"
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for script from the source code.

@@ -1,0 +1,46 @@
+.TH "src/script.c" 3 "16 May 2010" "Version 0.1" "script" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/script.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio.h>\fP
+.br
+\fC#include <stdlib.h>\fP
+.br
+\fC#include <string.h>\fP
+.br
+\fC#include '../include/types.h'\fP
+.br
+\fC#include '../include/parser.h'\fP
+.br
+\fC#include '../include/interface.h'\fP
+.br
+\fC#include '../include/script.h'\fP
+.br
+\fC#include '../include/gettext.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBfParseFile\fP (\fBt_MainWindow\fP *p_MainWindow, \fBt_toolbox\fP *Toolbox)"
+.br
+.ti -1c
+.RI "int \fBfCalculation\fP (\fBt_MainWindow\fP *p_MainWindow, \fBt_whereami\fP *fgsfds, FILE *p_file, int vNbcalculations, \fBt_tools\fP *p_Tools, \fBt_calculation\fP *sCalculation)"
+.br
+.ti -1c
+.RI "int \fBfParseCalculation\fP (\fBt_MainWindow\fP *p_MainWindow, FILE *p_file, \fBt_tools\fP *p_Tools, \fBt_calculation\fP *sCalculation)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int fCalculation (\fBt_MainWindow\fP * p_MainWindow, \fBt_whereami\fP * fgsfds, FILE * p_file, int vNbcalculations, \fBt_tools\fP * p_Tools, \fBt_calculation\fP * sCalculation)"
+.SS "int fParseCalculation (\fBt_MainWindow\fP * p_MainWindow, FILE * p_file, \fBt_tools\fP * p_Tools, \fBt_calculation\fP * sCalculation)"
+.SS "int fParseFile (\fBt_MainWindow\fP * p_MainWindow, \fBt_toolbox\fP * Toolbox)"
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for script from the source code.

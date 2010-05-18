@@ -52,7 +52,7 @@ int fVerifyProcessDeclaration(t_MainWindow* p_MainWindow, t_tools * p_Tools,char
 	if(vLengthRead <= 0)
 	{
 		vIsProperlyDeclared = 0;
-		fprinttextview(p_MainWindow,_("Warning: No instruction specified\n"));
+		fprinttextview(p_MainWindow,_("Error: No instruction specified\n"));
 		FREE_AND_EXIT_VERIFY_PROCESS
 	}
 	else
@@ -93,7 +93,10 @@ int fVerifyProcessDeclaration(t_MainWindow* p_MainWindow, t_tools * p_Tools,char
 			for(i=0;((i<NBINSTRUCTIONS)&&!vEnd);i++)
 			{
 				if(!strncmp(tab_list[i].carac,Instruction,vLengthRead))
+				{
+					(*p_process)->p_instructions = tab_list[i].func;
 					vEnd = 1;
+				}
 			}
 			i--;
 		}
@@ -321,7 +324,9 @@ unsigned int fVerifyProcessSelector(t_MainWindow* p_MainWindow, t_calculation * 
 		{
 			carac = *(*Buffer+vShift+i);
 			if(isalnum(carac) && (carac == '1' || carac == '0'))
+			{
 				*(*mask+i) = atoi(&carac)&0x1;
+			}
 			else
 			{
 				vOK = 0;

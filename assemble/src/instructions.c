@@ -1,11 +1,17 @@
 #include "../include/types.h"
-
+//
 #include "../include/interface.h"
 #include "../include/parser.h"
+#include "../include/instructions.h"
 
-void inst1(void)
+void print_threadid(int * dest, int * src, int nb_src)
 {
-	g_printf("1");
+	gint vIndex;
+	for(vIndex = 0; vIndex < nb_src;vIndex++)
+	{
+		/* Add in your function here*/
+		*dest = *(src+nb_src);
+	}
 }
 
 void inst2(void)
@@ -23,9 +29,9 @@ void inst4(void)
 	g_printf("4\n");
 }
 
-void fvoid(void)
+void fvoid(int * dest, int *, int)
 {
-	
+	*dest = 42;
 }
 
 /* EOF */
