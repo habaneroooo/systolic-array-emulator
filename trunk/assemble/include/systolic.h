@@ -1,42 +1,14 @@
-#ifndef __SYSTOLIC__
-#define __SYSTOLIC__
+#ifndef __SYSTOLIC_H_
+#define __SYSTOLIC_H_
 
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "handler.h"
+#define POINTER_TO_ARGS static_cast<t_Args*>(user_data)
 
-#define NB_INSTRUCTIONS 2
-#define ROW_SIZE 4
-#define NB_DIAGONALS (2*ROW_SIZE)-1
-#define INSTRUCTION 1
+void fCreateThreads(t_toolbox*, gint);
+void *Handler(gpointer);
+void *CoProcessor_n(gpointer);
 
-#define NB_PROCS ROW_SIZE*ROW_SIZE
+extern pthread_cond_t synchro, depart_handler;
 
-#define NB_REG 32
-#define NB_STATIC_REG 6
-
-void * CoProcessor_n(void *);
-
-typedef struct
-{
-	int threadID;
-	int reg[NB_REG+NB_STATIC_REG];
-	int reg_out;
-	int *reg_in;
-	int nb_reg_in;	
-	pthread_barrier_t * barrier;
-}__attribute__((aligned(sizeof (int)))) t_Args;
-
-typedef struct
-{
-	pthread_t * Handler;
-	pthread_t * ThreadArray;
-	t_Args * ArgsArray;
-	pthread_barrier_t barrier;
-	pthread_cond_t depart_handler; 
-	pthread_mutex_t mutex_depart_handler;
-}t_Handler;
 
 #endif 
 

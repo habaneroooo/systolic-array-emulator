@@ -6,15 +6,39 @@
 #include <glib.h>
 #include <glib/gprintf.h>
 #include <glib/gstdio.h>
+#include <gdk-pixbuf/gdk-pixdata.h>
+#include <pthread.h>
 #include <ctype.h>
 
 #define NB_MACRO 3
 #define MAX_REGISTER_TOKEN_LENGTH 4
 #define MAX_INSTRUCTION_TOKEN_LENGTH 3
+#define SHOW_REGISTERS_IN_RESULT_WINDOW TRUE
+
+#define TTRUE 1
+#define FFALSE 0
+
+#define STRMAXSIZE 100
+#define MAX_NB_PROCESS_IFNDEF 42
+#define MAX_NB_INSTRUCTIONS 42
+#define BUFFERSIZE 12
+#define MAXMACROLENGTH 12
+#define FREE_AND_EXIT_VERIFY_PROCESS {	free(Process);	free(Instruction);	free(Buffer3);	return vIsProperlyDeclared;	}
+
+#define NBINSTRUCTIONS 9
+
+#define TOKEN_BEGIN_PROCESS "<"
+#define TOKEN_END_PROCESS ">;"
+#define TOKEN_END_CALCULATION "end"
+
+#define NB_REG 32
+#define NB_STATIC_REG 6
+
+#define NB_MAX_PROCESS 10
 
 typedef enum {begin,calculation,after_calculation,register_,process} t_whereami;
 
-typedef void (*t_func)(void);
+typedef void (*t_func)(int *, int *, int);
 
 typedef struct {
 	bool * hmask;
@@ -51,7 +75,8 @@ typedef struct
 
 typedef struct {
 	char carac[MAX_INSTRUCTION_TOKEN_LENGTH+1];
-	void (*func)();
+//	void (*func)();
+	t_func func;
 	unsigned char NbMinDataIn;
 	unsigned char NbMaxDataIn;
 }t_list;
@@ -64,7 +89,6 @@ typedef struct{
 	GtkWidget * scrolled_window;
 	GtkWidget * textview;
 	GtkWidget * combobox;
-	//~ GtkWidget * frame_button_file_chooser;
 	GtkWidget * button_file_chooser;
 	GtkWidget * file_chooser;
 	GtkWidget * button_start_parse;
@@ -81,7 +105,14 @@ typedef struct{
 	GtkWidget * left_fixed;
 	GtkWidget * right_fixed;
 	GtkWidget * button_close;
-	GtkWidget * image;
+	GtkWidget * button_start_execute;
+	GtkWidget ** image_proc;
+#if SHOW_REGISTERS_IN_RESULT_WINDOW == TRUE
+	GtkWidget ** entry;
+#else
+	GtkWidget ** image_reg_right;
+	GtkWidget ** image_reg_down;
+#endif
 }t_ResultWindow;
 
 typedef struct{
@@ -96,12 +127,39 @@ typedef struct{
 
 typedef struct
 {
+	gint threadID;
+//	void (*func)();
+	t_func func;
+	gint reg[NB_REG+NB_STATIC_REG];
+	gint reg_out;
+	gint *reg_in;
+	gint nb_reg_in;
+	gint quit;
+	pthread_barrier_t * barrier;
+}__attribute__((aligned(sizeof(gint)))) t_Args;
+
+typedef struct
+{
+	pthread_t * Handler;
+	pthread_t * ThreadArray;
+	t_Args * ArgsArray;
+	pthread_barrier_t barrier;
+	pthread_cond_t depart_handler;
+	pthread_mutex_t mutex_depart_handler;
+}t_Handler;
+
+typedef struct
+{
 	FILE * file;
-	int FileOpened;
+	gint FileOpened;
+	gint NBCalculations;
+	gint iParsed;
+	gint iShowed;
+	gint SelectCalculation;
 	t_calculation * CalculationList;
-	int NBCalculations;
-	int SelectCalculation;
 	t_WindowList WindowList;
+	t_Args * MyArgs;
+	t_Handler systolic_array;
 }t_toolbox;
 
 #endif

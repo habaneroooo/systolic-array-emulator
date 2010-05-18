@@ -1,0 +1,72 @@
+.TH "src/callback.c" 3 "16 May 2010" "Version 0.1" "script" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/callback.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio.h>\fP
+.br
+\fC#include <stdlib.h>\fP
+.br
+\fC#include '../include/types.h'\fP
+.br
+\fC#include <gtk/gtk.h>\fP
+.br
+\fC#include <gio/gio.h>\fP
+.br
+\fC#include <glib.h>\fP
+.br
+\fC#include <glib/gprintf.h>\fP
+.br
+\fC#include <glib/gstdio.h>\fP
+.br
+\fC#include <gdk-pixbuf/gdk-pixdata.h>\fP
+.br
+\fC#include <pthread.h>\fP
+.br
+\fC#include <ctype.h>\fP
+.br
+\fC#include '../include/gettext.h'\fP
+.br
+\fC#include '../include/script.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBcb_quit\fP (GtkWidget *, gpointer user_data)"
+.br
+.ti -1c
+.RI "void \fBcb_input_file_button\fP (GtkWidget *, gpointer user_data)"
+.br
+.ti -1c
+.RI "void \fBcb_clear_textview_button\fP (GtkWidget *, gpointer user_data)"
+.br
+.ti -1c
+.RI "void \fBcb_show_result_window\fP (GtkWidget *, gpointer user_data)"
+.br
+.ti -1c
+.RI "void \fBcb_hide_result_window\fP (GtkWidget *, gpointer user_data)"
+.br
+.ti -1c
+.RI "void \fBcb_save_window\fP (GtkWidget *, gpointer user_data)"
+.br
+.ti -1c
+.RI "void \fBcb_start_parsing\fP (GtkWidget *, gpointer user_data)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void cb_clear_textview_button (GtkWidget *, gpointer user_data)"
+.SS "void cb_hide_result_window (GtkWidget *, gpointer user_data)"
+.SS "void cb_input_file_button (GtkWidget *, gpointer user_data)"
+.SS "void cb_quit (GtkWidget *, gpointer user_data)"
+.SS "void cb_save_window (GtkWidget *, gpointer user_data)"
+.SS "void cb_show_result_window (GtkWidget *, gpointer user_data)"
+.SS "void cb_start_parsing (GtkWidget *, gpointer user_data)"
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for script from the source code.

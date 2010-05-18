@@ -1,0 +1,52 @@
+.TH "src/parser.c" 3 "16 May 2010" "Version 0.1" "script" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/parser.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio.h>\fP
+.br
+\fC#include <stdlib.h>\fP
+.br
+\fC#include <string.h>\fP
+.br
+\fC#include '../include/types.h'\fP
+.br
+\fC#include '../include/parser.h'\fP
+.br
+\fC#include '../include/interface.h'\fP
+.br
+\fC#include '../include/instructions.h'\fP
+.br
+\fC#include 'systolic.h'\fP
+.br
+\fC#include '../include/gettext.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBfVerifyProcessDeclaration\fP (\fBt_MainWindow\fP *p_MainWindow, \fBt_tools\fP *p_Tools, char *ProcessToParse, unsigned int vLength, \fBt_calculation\fP *sCalculation)"
+.br
+.ti -1c
+.RI "int \fBfTestRegisterValidity\fP (char **p_Buffer, \fBt_process\fP *p_process, int vLength, unsigned int *vNBArgsFound)"
+.br
+.ti -1c
+.RI "unsigned int \fBfVerifyProcessSelector\fP (\fBt_MainWindow\fP *p_MainWindow, \fBt_calculation\fP *sCalculation, char **Buffer, unsigned int vLength, bool **mask)"
+.br
+.ti -1c
+.RI "int \fBfgetline\fP (FILE *p_file, unsigned int *n, char **p_string)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int fgetline (FILE * p_file, unsigned int * n, char ** p_string)"
+.SS "int fTestRegisterValidity (char ** p_Buffer, \fBt_process\fP * p_process, int vLength, unsigned int * vNBArgsFound)"
+.SS "int fVerifyProcessDeclaration (\fBt_MainWindow\fP * p_MainWindow, \fBt_tools\fP * p_Tools, char * ProcessToParse, unsigned int vLength, \fBt_calculation\fP * sCalculation)"
+.SS "unsigned int fVerifyProcessSelector (\fBt_MainWindow\fP * p_MainWindow, \fBt_calculation\fP * sCalculation, char ** Buffer, unsigned int vLength, bool ** mask)"
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for script from the source code.

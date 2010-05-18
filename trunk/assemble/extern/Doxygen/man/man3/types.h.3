@@ -1,0 +1,124 @@
+.TH "include/types.h" 3 "16 May 2010" "Version 0.1" "script" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/types.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <gtk/gtk.h>\fP
+.br
+\fC#include <gio/gio.h>\fP
+.br
+\fC#include <glib.h>\fP
+.br
+\fC#include <glib/gprintf.h>\fP
+.br
+\fC#include <glib/gstdio.h>\fP
+.br
+\fC#include <gdk-pixbuf/gdk-pixdata.h>\fP
+.br
+\fC#include <pthread.h>\fP
+.br
+\fC#include <ctype.h>\fP
+.br
+\fC#include '../include/gettext.h'\fP
+.br
+\fC#include <libintl.h>\fP
+.br
+\fC#include <locale.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBt_process\fP"
+.br
+.ti -1c
+.RI "struct \fBt_calculation\fP"
+.br
+.ti -1c
+.RI "struct \fBt_tools\fP"
+.br
+.ti -1c
+.RI "struct \fBt_reg\fP"
+.br
+.ti -1c
+.RI "struct \fBt_list\fP"
+.br
+.ti -1c
+.RI "struct \fBt_MainWindow\fP"
+.br
+.ti -1c
+.RI "struct \fBt_ResultWindow\fP"
+.br
+.ti -1c
+.RI "struct \fBt_SaveWindow\fP"
+.br
+.ti -1c
+.RI "struct \fBt_WindowList\fP"
+.br
+.ti -1c
+.RI "struct \fBt_toolbox\fP"
+.br
+.in -1c
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNB_MACRO\fP   3"
+.br
+.ti -1c
+.RI "#define \fBMAX_REGISTER_TOKEN_LENGTH\fP   4"
+.br
+.ti -1c
+.RI "#define \fBMAX_INSTRUCTION_TOKEN_LENGTH\fP   3"
+.br
+.ti -1c
+.RI "#define \fBSHOW_REGISTERS_IN_RESULT_WINDOW\fP   TRUE"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef void(* \fBt_func\fP )(void)"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBt_whereami\fP { \fBbegin\fP, \fBcalculation\fP, \fBafter_calculation\fP, \fBregister_\fP, \fBprocess\fP }"
+.br
+.in -1c
+.SH "Define Documentation"
+.PP 
+.SS "#define MAX_INSTRUCTION_TOKEN_LENGTH   3"
+.SS "#define MAX_REGISTER_TOKEN_LENGTH   4"
+.SS "#define NB_MACRO   3"
+.SS "#define SHOW_REGISTERS_IN_RESULT_WINDOW   TRUE"
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef void(* \fBt_func\fP)(void)"
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBt_whereami\fP"
+.PP
+\fBEnumerator: \fP
+.in +1c
+.TP
+\fB\fIbegin \fP\fP
+.TP
+\fB\fIcalculation \fP\fP
+.TP
+\fB\fIafter_calculation \fP\fP
+.TP
+\fB\fIregister_ \fP\fP
+.TP
+\fB\fIprocess \fP\fP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for script from the source code.

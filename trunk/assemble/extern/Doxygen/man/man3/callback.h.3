@@ -1,0 +1,59 @@
+.TH "include/callback.h" 3 "16 May 2010" "Version 0.1" "script" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/callback.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBPOINTER_TO_TOOLBOX\fP   static_cast<\fBt_toolbox\fP*>(user_data)"
+.br
+.ti -1c
+.RI "#define \fBPOINTER_TO_FILE\fP   POINTER_TO_TOOLBOX->file"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBcb_quit\fP (GtkWidget *, gpointer)"
+.br
+.ti -1c
+.RI "void \fBcb_input_file_button\fP (GtkWidget *, gpointer)"
+.br
+.ti -1c
+.RI "void \fBcb_clear_textview_button\fP (GtkWidget *, gpointer)"
+.br
+.ti -1c
+.RI "void \fBcb_show_result_window\fP (GtkWidget *, gpointer)"
+.br
+.ti -1c
+.RI "void \fBcb_save_window\fP (GtkWidget *, gpointer)"
+.br
+.ti -1c
+.RI "void \fBcb_start_parsing\fP (GtkWidget *, gpointer)"
+.br
+.ti -1c
+.RI "void \fBcb_hide_result_window\fP (GtkWidget *, gpointer)"
+.br
+.in -1c
+.SH "Define Documentation"
+.PP 
+.SS "#define POINTER_TO_FILE   POINTER_TO_TOOLBOX->file"
+.SS "#define POINTER_TO_TOOLBOX   static_cast<\fBt_toolbox\fP*>(user_data)"
+.SH "Function Documentation"
+.PP 
+.SS "void cb_clear_textview_button (GtkWidget *, gpointer)"
+.SS "void cb_hide_result_window (GtkWidget *, gpointer)"
+.SS "void cb_input_file_button (GtkWidget *, gpointer)"
+.SS "void cb_quit (GtkWidget *, gpointer)"
+.SS "void cb_save_window (GtkWidget *, gpointer)"
+.SS "void cb_show_result_window (GtkWidget *, gpointer)"
+.SS "void cb_start_parsing (GtkWidget *, gpointer)"
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for script from the source code.

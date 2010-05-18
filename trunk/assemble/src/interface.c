@@ -5,6 +5,7 @@
 
 #include "../include/parser.h"
 #include "../include/interface.h"
+#include "../include/systolic.h"
 #include "../include/gettext.h"
 
 void fCreateWindow_main(t_MainWindow * s_MainWindow)
@@ -121,11 +122,11 @@ void fCreateWindow_results(t_ResultWindow* s_ResultWindow)
 	
 	/* Result window creation */
 	s_ResultWindow->window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_default_size(GTK_WINDOW(s_ResultWindow->window),LARG_RESULT,HAUT_RESULT);
+	gtk_window_set_default_size(GTK_WINDOW(s_ResultWindow->window),WIDTH_RESULT,HEIGHT_RESULT);
 	gtk_window_set_resizable(GTK_WINDOW(s_ResultWindow->window),FALSE);
 	width = gdk_screen_get_width(screen);
 	height = gdk_screen_get_height(screen);
-	gtk_window_move(GTK_WINDOW(s_ResultWindow->window),width/2-LARG_RESULT/2,height/2-HAUT_RESULT/2);
+	gtk_window_move(GTK_WINDOW(s_ResultWindow->window),width/2-WIDTH_RESULT/2,height/2-HEIGHT_RESULT/2);
 	
 	/* HPaned creation */
 	s_ResultWindow->hpaned = gtk_hpaned_new();
@@ -144,13 +145,19 @@ void fCreateWindow_results(t_ResultWindow* s_ResultWindow)
 	/* "Fixed2" container creation */
 	s_ResultWindow->right_fixed = gtk_fixed_new();
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(s_ResultWindow->scrolled_window),s_ResultWindow->right_fixed);
-	gtk_widget_set_size_request(s_ResultWindow->right_fixed,LARG_RESULT-GUTTER_SIZE,HAUT_RESULT-60);
+	gtk_widget_set_size_request(s_ResultWindow->right_fixed,WIDTH_RESULT-GUTTER_SIZE,HEIGHT_RESULT-60);
 	
 	/* close window button creation */
-	s_ResultWindow->button_close = gtk_button_new_with_label(_("Close"));
+	s_ResultWindow->button_close = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
 	gtk_container_add(GTK_CONTAINER (s_ResultWindow->left_fixed), s_ResultWindow->button_close);
-	gtk_fixed_move(GTK_FIXED(s_ResultWindow->left_fixed),s_ResultWindow->button_close,LEFT_MARGIN,HAUT_RESULT-(BOTTOM_MARGIN+30+60));
-	gtk_widget_set_size_request(s_ResultWindow->button_close,GUTTER_SIZE-LEFT_MARGIN-RIGHT_MARGIN,30);
+	gtk_fixed_move(GTK_FIXED(s_ResultWindow->left_fixed),s_ResultWindow->button_close,LEFT_MARGIN,HEIGHT_RESULT-BOTTOM_MARGIN-HEIGHT_BUTTONS);
+	gtk_widget_set_size_request(s_ResultWindow->button_close,GUTTER_SIZE-LEFT_MARGIN-RIGHT_MARGIN,HEIGHT_BUTTONS);
+
+	/* Start executing window button creation */
+	s_ResultWindow->button_start_execute = gtk_button_new_with_label(_("Start execution"));
+	gtk_container_add(GTK_CONTAINER (s_ResultWindow->left_fixed), s_ResultWindow->button_start_execute);
+	gtk_fixed_move(GTK_FIXED(s_ResultWindow->left_fixed),s_ResultWindow->button_start_execute,LEFT_MARGIN,TOP_MARGIN);
+	gtk_widget_set_size_request(s_ResultWindow->button_start_execute,GUTTER_SIZE-LEFT_MARGIN-RIGHT_MARGIN,HEIGHT_BUTTONS);
 }
 
 

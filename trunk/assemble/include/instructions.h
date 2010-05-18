@@ -1,12 +1,8 @@
 #ifndef __INSTRUCTIONS__
 #define __INSTRUCTIONS__
 
-#include "systolic.h"
-
-//~ void *Matrix_Multiply(t_Args*);
-//~ void *Do_Nothing(t_Args*);
-void fvoid(void);
-
+void fvoid(int *, int *, int);
+void print_threadid(int *, int *, int);
 
 /*
  * Global variables declaration go here
@@ -14,11 +10,11 @@ void fvoid(void);
  */
 const t_list tab_list[NBINSTRUCTIONS] = 
 {
-		{"add",fvoid,2,0xFF},
-		{"*",fvoid,2,0xFF},
+		{"add",print_threadid,2,0xFF},
+		{"*",print_threadid,2,0xFF},
 		{"-",fvoid,2,100},
 		{"/",fvoid,2,0xFF},
-		{"ø",fvoid,2,0xFF},
+		{"ï¿½",fvoid,2,0xFF},
 		{"%",fvoid,2,0xFF},
 		{"&",fvoid,2,0xFF},
 		{"|",fvoid,2,0xFF},
